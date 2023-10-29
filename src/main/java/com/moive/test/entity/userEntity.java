@@ -20,6 +20,9 @@ public class userEntity {
     private String userid;
 
     @Column
+    private String uid;
+
+    @Column
     private String type;
 
     @Column
