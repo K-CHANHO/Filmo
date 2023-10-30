@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class userDTO {
 
     private String uid;
-    private String userid;
+    private String userid; // 자체 uid
     private String type;
     private String nickname;
 

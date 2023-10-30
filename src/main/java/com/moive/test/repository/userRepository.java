@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface userRepository extends JpaRepository<userEntity, String> {
+
+    userEntity findByUidAndType(String uid, String type);
 }
