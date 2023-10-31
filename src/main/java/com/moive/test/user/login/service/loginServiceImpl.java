@@ -1,8 +1,8 @@
-package com.moive.test.service;
+package com.moive.test.user.login.service;
 
-import com.moive.test.DTO.userDTO;
-import com.moive.test.entity.userEntity;
-import com.moive.test.repository.userRepository;
+import com.moive.test.user.dto.userDTO;
+import com.moive.test.user.entity.userEntity;
+import com.moive.test.user.repository.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

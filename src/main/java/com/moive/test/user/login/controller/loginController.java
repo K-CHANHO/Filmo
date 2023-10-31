@@ -1,13 +1,12 @@
-package com.moive.test.controller;
+package com.moive.test.user.login.controller;
 
 import com.google.gson.JsonObject;
-import com.moive.test.DTO.userDTO;
-import com.moive.test.service.loginService;
-import io.jsonwebtoken.*;
+import com.moive.test.user.dto.userDTO;
+import com.moive.test.user.login.service.loginService;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

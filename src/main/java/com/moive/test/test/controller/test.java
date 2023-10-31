@@ -1,7 +1,7 @@
-package com.moive.test.controller;
+package com.moive.test.test.controller;
 
-import com.moive.test.DTO.testDTO;
-import com.moive.test.service.testService;
+import com.moive.test.test.DTO.testDTO;
+import com.moive.test.test.service.testService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;

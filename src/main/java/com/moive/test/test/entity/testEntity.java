@@ -1,4 +1,4 @@
-package com.moive.test.entity;
+package com.moive.test.test.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,24 +7,19 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table(name = "user")
+@Table(name="test")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
-public class userEntity {
+@ToString
+public class testEntity {
 
     @Id
     @Column
-    private String userid;
+    private String param1;
 
     @Column
-    private String uid;
+    private String param2;
 
-    @Column
-    private String type;
-
-    @Column
-    private String nickname;
 }

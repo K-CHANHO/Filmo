@@ -1,7 +1,7 @@
-package com.moive.test.service;
+package com.moive.test.test.service;
 
-import com.moive.test.DTO.testDTO;
-import com.moive.test.entity.testEntity;
+import com.moive.test.test.DTO.testDTO;
+import com.moive.test.test.entity.testEntity;
 
 public interface testService {
 

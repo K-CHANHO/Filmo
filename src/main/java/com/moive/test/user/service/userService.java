@@ -1,7 +1,7 @@
-package com.moive.test.service;
+package com.moive.test.user.service;
 
-import com.moive.test.DTO.userDTO;
-import com.moive.test.entity.userEntity;
+import com.moive.test.user.dto.userDTO;
+import com.moive.test.user.entity.userEntity;
 
 import java.util.UUID;
 

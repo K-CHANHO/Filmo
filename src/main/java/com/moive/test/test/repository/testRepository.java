@@ -1,6 +1,6 @@
-package com.moive.test.repository;
+package com.moive.test.test.repository;
 
-import com.moive.test.entity.testEntity;
+import com.moive.test.test.entity.testEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

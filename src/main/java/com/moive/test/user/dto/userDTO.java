@@ -1,4 +1,4 @@
-package com.moive.test.DTO;
+package com.moive.test.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
