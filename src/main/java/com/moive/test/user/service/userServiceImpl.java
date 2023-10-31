@@ -6,6 +6,8 @@ import com.moive.test.user.repository.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class userServiceImpl implements userService{
 
@@ -15,7 +17,8 @@ public class userServiceImpl implements userService{
     @Override
     public userDTO userSave(userDTO userDTO) {
 
-        userEntity user = userCreate(userDTO);
+        userDTO.setUserid(UUID.randomUUID().toString());
+        userEntity user = dtoTOentity(userDTO);
         userEntity savedUser = userRepository.save(user);
 
         return entityTOdto(savedUser);
