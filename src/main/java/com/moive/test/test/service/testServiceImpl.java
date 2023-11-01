@@ -1,6 +1,6 @@
 package com.moive.test.test.service;
 
-import com.moive.test.test.DTO.testDTO;
+import com.moive.test.test.dto.testDTO;
 import com.moive.test.test.entity.testEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

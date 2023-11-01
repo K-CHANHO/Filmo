@@ -1,4 +1,4 @@
-package com.moive.test.user.login.service;
+package com.moive.test.login.service;
 
 import com.moive.test.user.dto.userDTO;
 

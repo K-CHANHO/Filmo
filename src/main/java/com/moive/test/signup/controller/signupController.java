@@ -1,4 +1,4 @@
-package com.moive.test.user.signup.controller;
+package com.moive.test.signup.controller;
 
 import com.moive.test.user.dto.userDTO;
 import com.moive.test.user.service.userService;

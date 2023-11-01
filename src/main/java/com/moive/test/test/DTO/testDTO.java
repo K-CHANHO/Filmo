@@ -1,4 +1,4 @@
-package com.moive.test.test.DTO;
+package com.moive.test.test.dto;
 
 import lombok.*;
 
