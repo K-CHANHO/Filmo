@@ -1,7 +1,7 @@
-package com.moive.test.login.service;
+package com.movie.test.login.service;
 
-import com.moive.test.user.dto.userDTO;
-import com.moive.test.user.entity.userEntity;
+import com.movie.test.user.dto.userDTO;
+import com.movie.test.user.entity.userEntity;
 
 public interface loginService {
     userDTO isExistUser(userDTO userDTO);
