@@ -1,4 +1,4 @@
-package com.moive.test.user.dto;
+package com.movie.test.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Data
 @Builder

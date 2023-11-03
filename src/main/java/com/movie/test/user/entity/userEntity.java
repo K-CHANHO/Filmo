@@ -1,4 +1,4 @@
-package com.moive.test.user.entity;
+package com.movie.test.user.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table(name = "user")
