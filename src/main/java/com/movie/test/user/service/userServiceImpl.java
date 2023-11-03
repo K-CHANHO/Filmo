@@ -19,6 +19,7 @@ public class userServiceImpl implements userService{
 
         userDTO.setUserid(UUID.randomUUID().toString());
         userEntity user = dtoTOentity(userDTO);
+
         userEntity savedUser = userRepository.save(user);
 
         return entityTOdto(savedUser);

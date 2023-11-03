@@ -13,6 +13,9 @@ public interface userService {
                 .userid(userDTO.getUserid())
                 .type(userDTO.getType())
                 .nickname(userDTO.getNickname())
+                .create_date(userDTO.getCreate_date())
+                .last_login_date(userDTO.getLast_login_date())
+                .profileURL(userDTO.getProfileURL())
                 .build();
 
         return entity;
@@ -25,6 +28,9 @@ public interface userService {
                 .userid(userEntity.getUserid())
                 .type(userEntity.getType())
                 .nickname(userEntity.getNickname())
+                .create_date(userEntity.getCreate_date())
+                .last_login_date(userEntity.getLast_login_date())
+                .profileURL(userEntity.getProfileURL())
                 .build();
 
         return dto;
