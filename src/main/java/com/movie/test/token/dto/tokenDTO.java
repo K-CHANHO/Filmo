@@ -1,4 +1,4 @@
-package com.moive.test.token.dto;
+package com.movie.test.token.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

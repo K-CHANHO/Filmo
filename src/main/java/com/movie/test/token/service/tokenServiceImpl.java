@@ -1,13 +1,16 @@
-package com.moive.test.token.service;
+package com.movie.test.token.service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+@Service
 public class tokenServiceImpl implements tokenService {
 
     @Value("${jwt.secretKey}")
@@ -33,4 +36,18 @@ public class tokenServiceImpl implements tokenService {
                 .signWith(key)
                 .compact();
     }
+
+    @Override
+    public Claims readJwtToken(String jwt) {
+        System.out.println("@@@@@@@" + jwt);
+        SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+
+        return Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(jwt)
+                .getPayload();
+    }
+
+
 }

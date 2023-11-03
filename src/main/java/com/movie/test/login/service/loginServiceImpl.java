@@ -12,15 +12,15 @@ public class loginServiceImpl implements loginService{
     @Autowired
     private userRepository userRepository;
     @Override
-    public String isExistUser(userDTO logingUserDTO) {
+    public userDTO isExistUser(userDTO logingUserDTO) {
 
         String isExistUser = "false";
 
         userEntity user = userRepository.findByUidAndType(logingUserDTO.getUid(), logingUserDTO.getType());
         if(user != null){
-            isExistUser = "true";
+            return entityTOdto(user);
         }
 
-        return isExistUser;
+        return null;
     }
 }

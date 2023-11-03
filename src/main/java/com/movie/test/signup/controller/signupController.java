@@ -1,11 +1,16 @@
 package com.moive.test.signup.controller;
 
+import com.google.gson.JsonObject;
 import com.moive.test.user.dto.userDTO;
 import com.moive.test.user.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 @RestController
@@ -15,11 +20,13 @@ public class signupController {
     private userService userService;
 
     @PostMapping("/signup")
-    public userDTO userCreate(userDTO userDTO) {
+    public ResponseEntity userCreate(userDTO userDTO) {
 
         userDTO newUser = userService.userSave(userDTO);
 
-        return newUser;
+        JsonObject serverData = new JsonObject();
+
+        return new ResponseEntity<>(serverData, HttpStatus.OK);
 
     }
 }
