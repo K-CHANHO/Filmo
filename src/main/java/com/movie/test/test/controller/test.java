@@ -1,8 +1,8 @@
-package com.moive.test.test.controller;
+package com.movie.test.test.controller;
 
-import com.moive.test.test.dto.testDTO;
-import com.moive.test.test.service.testService;
-import com.moive.test.token.service.tokenService;
+import com.movie.test.test.dto.testDTO;
+import com.movie.test.test.service.testService;
+import com.movie.test.token.service.tokenService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
