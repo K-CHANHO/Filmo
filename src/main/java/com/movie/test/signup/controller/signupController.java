@@ -1,17 +1,13 @@
-package com.moive.test.signup.controller;
+package com.movie.test.signup.controller;
 
 import com.google.gson.JsonObject;
-import com.moive.test.user.dto.userDTO;
-import com.moive.test.user.service.userService;
+import com.movie.test.user.dto.userDTO;
+import com.movie.test.user.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.UUID;
 
 @RestController
 public class signupController {
