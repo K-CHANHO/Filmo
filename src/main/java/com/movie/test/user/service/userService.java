@@ -5,7 +5,7 @@ import com.movie.test.user.entity.userEntity;
 
 public interface userService {
 
-    public userDTO userSave(userDTO userDTO);
+    public userDTO newUserSave(userDTO userDTO);
 
     default userEntity dtoTOentity(userDTO userDTO) {
         userEntity entity = userEntity.builder()

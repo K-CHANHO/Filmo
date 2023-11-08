@@ -15,9 +15,14 @@ public class userServiceImpl implements userService{
     private userRepository userRepository;
 
     @Override
-    public userDTO userSave(userDTO userDTO) {
+    public userDTO newUserSave(userDTO userDTO) {
 
         userDTO.setUserid(UUID.randomUUID().toString());
+
+        /* TODO : 랜덤 닉네임 부여 => 따로 메서드 만들기
+        userDTO.setNickname();
+         */
+
         userEntity user = dtoTOentity(userDTO);
 
         userEntity savedUser = userRepository.save(user);

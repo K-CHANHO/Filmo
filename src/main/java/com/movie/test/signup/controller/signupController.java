@@ -1,6 +1,7 @@
 package com.movie.test.signup.controller;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.movie.test.login.controller.loginController;
 import com.movie.test.user.dto.userDTO;
@@ -11,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class signupController {
 
@@ -20,22 +24,29 @@ public class signupController {
     @Autowired
     private loginController loginController;
 
+    /**
+     * 회원가입 로직
+     * @param userDTO : uid(소셜에서 주는 정보), type, profileURL
+     * @return
+     */
     @PostMapping("/signup")
     public ResponseEntity userCreate(userDTO userDTO) {
-    
-        /* TODO : 랜덤 닉네임 부여 => 따로 메서드 만들기
-        userDTO.setNickname();
-         */
-        userDTO newUser = userService.userSave(userDTO);
+
+
+        userDTO newUser = userService.newUserSave(userDTO);
+        JsonObject userinfo = new JsonObject();
+        userinfo.addProperty("uid", newUser.getUid());
+        userinfo.addProperty("userid", newUser.getUserid());
+        userinfo.addProperty("type", newUser.getType());
+        userinfo.addProperty("nickname", newUser.getNickname());
+        userinfo.addProperty("profileURL", newUser.getProfileURL());
+        userinfo.addProperty("last_login_date", String.valueOf(newUser.getLast_login_date()));
+        userinfo.addProperty("create_date", String.valueOf(newUser.getCreate_date()));
 
         JsonObject serverData = new JsonObject();
-        serverData.addProperty("uid", newUser.getUid());
-        serverData.addProperty("type", newUser.getType());
+        serverData.add("userinfo", userinfo);
 
-        JsonArray userinfo = new JsonArray();
-        userinfo.add(serverData);
-
-        return new ResponseEntity(userinfo, HttpStatus.OK);
+        return new ResponseEntity(serverData, HttpStatus.OK);
 
     }
 }
