@@ -32,8 +32,8 @@ public class signupController {
     @PostMapping("/signup")
     public ResponseEntity userCreate(userDTO userDTO) {
 
-
         userDTO newUser = userService.newUserSave(userDTO);
+
         JsonObject userinfo = new JsonObject();
         userinfo.addProperty("uid", newUser.getUid());
         userinfo.addProperty("userid", newUser.getUserid());

@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface userRepository extends JpaRepository<userEntity, String> {
 
     userEntity findByUidAndType(String uid, String type);
+
+    boolean existsByNickname(String nickname);
 }
