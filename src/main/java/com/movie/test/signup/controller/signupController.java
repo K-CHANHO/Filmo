@@ -46,6 +46,7 @@ public class signupController {
         JsonObject serverData = new JsonObject();
         serverData.add("userinfo", userinfo);
 
+
         return new ResponseEntity(serverData, HttpStatus.OK);
 
     }

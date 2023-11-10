@@ -1,5 +1,6 @@
 package com.movie.test.test.controller;
 
+import com.movie.test.s3.service.S3Service;
 import com.movie.test.test.dto.testDTO;
 import com.movie.test.test.service.testService;
 import com.movie.test.token.service.tokenService;
@@ -18,6 +19,9 @@ public class test {
     @Autowired
     private tokenService tokenService;
 
+    @Autowired
+    private S3Service s3Service;
+
     @PostMapping("/test")
     @ResponseBody
     public testDTO test(testDTO param){
@@ -31,5 +35,11 @@ public class test {
     @ResponseBody
     public Claims getPayloadTest(String jwt){
         return tokenService.readJwtToken(jwt);
+    }
+
+    @PostMapping("/imageUrlTest")
+    @ResponseBody
+    public String imageUrlTest(String imageUrl){
+        return s3Service.uploadImage(imageUrl);
     }
 }

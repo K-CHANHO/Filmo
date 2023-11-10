@@ -1,5 +1,6 @@
 package com.movie.test.user.service;
 
+import com.movie.test.s3.service.S3Service;
 import com.movie.test.user.dto.userDTO;
 import com.movie.test.user.entity.userEntity;
 import com.movie.test.user.repository.userRepository;
@@ -15,11 +16,16 @@ public class userServiceImpl implements userService{
     @Autowired
     private userRepository userRepository;
 
+    @Autowired
+    private S3Service s3Service;
+
     @Override
     public userDTO newUserSave(userDTO userDTO) {
 
         userDTO.setUserid(UUID.randomUUID().toString());
         userDTO.setNickname(makeNickname());
+        userDTO.setProfileURL(s3Service.uploadImage(userDTO.getProfileURL()));
+
 
         userEntity user = dtoTOentity(userDTO);
 
@@ -49,4 +55,5 @@ public class userServiceImpl implements userService{
 
         return nickname;
     }
+
 }
