@@ -39,7 +39,6 @@ public class tokenServiceImpl implements tokenService {
 
     @Override
     public Claims readJwtToken(String jwt) {
-        System.out.println("@@@@@@@" + jwt);
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
         return Jwts.parser()
