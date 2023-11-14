@@ -3,8 +3,6 @@ package com.movie.test.user.service;
 import com.movie.test.user.dto.userDTO;
 import com.movie.test.user.entity.userEntity;
 
-import java.util.Map;
-
 public interface userService {
 
     userDTO newUserSave(userDTO userDTO);

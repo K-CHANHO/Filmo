@@ -6,8 +6,6 @@ import com.movie.test.test.dto.testDTO;
 import com.movie.test.test.service.testService;
 import com.movie.test.token.service.tokenService;
 import io.jsonwebtoken.Claims;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 @Controller
 public class test {

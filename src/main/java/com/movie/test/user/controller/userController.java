@@ -1,6 +1,5 @@
 package com.movie.test.user.controller;
 
-import com.google.gson.JsonObject;
 import com.movie.test.user.dto.userDTO;
 import com.movie.test.user.service.userService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 
 @Controller
