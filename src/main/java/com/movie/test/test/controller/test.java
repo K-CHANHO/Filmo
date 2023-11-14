@@ -9,6 +9,7 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,12 +55,15 @@ public class test {
 
     @PostMapping("/testTokenRefresh")
     @ResponseBody
-    public ResponseEntity testRefreshToken(String token, ServletRequest request, ServletResponse response){
+    public ResponseEntity testRefreshToken(String token, HttpServletRequest request, HttpServletResponse response){
 
-        HttpServletRequest req = (HttpServletRequest) request;
-        String newToken = req.getHeader("token");
+        String originToken  = (String) request.getAttribute("originToken");
+        String newToken =  (String) request.getAttribute("newToken");
+//        String originToken = response.getHeader("originToken");
+//        String newToken = response.getHeader("newToken");
+
         JsonObject serverData = new JsonObject();
-        serverData.addProperty("originToken", token);
+        serverData.addProperty("originToken", originToken);
         serverData.addProperty("newToken", newToken);
 
         return new ResponseEntity(serverData, HttpStatus.OK);

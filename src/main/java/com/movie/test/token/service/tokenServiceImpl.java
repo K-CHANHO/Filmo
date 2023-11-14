@@ -30,7 +30,7 @@ public class tokenServiceImpl implements tokenService {
                 .header().add("typ", "jwt").and()
                 .issuer(issuer)
                 .issuedAt(new Date())
-                .expiration(new Date(new Date().getTime() + expiredMs))
+                .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .claim("uid", uid)
                 .claim("type", type)
                 .signWith(key)
