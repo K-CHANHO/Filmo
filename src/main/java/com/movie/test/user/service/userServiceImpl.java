@@ -7,8 +7,7 @@ import com.movie.test.user.repository.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class userServiceImpl implements userService{
@@ -56,4 +55,12 @@ public class userServiceImpl implements userService{
         return nickname;
     }
 
+    @Override
+    public userDTO getUserInfo(String userid) {
+        Map<String, Object> userinfoMap = new HashMap<>();
+
+        userDTO userDTO = entityTOdto(userRepository.findById(userid).get());
+
+        return userDTO;
+    }
 }

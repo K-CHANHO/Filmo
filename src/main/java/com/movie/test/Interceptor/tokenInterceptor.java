@@ -50,7 +50,7 @@ public class tokenInterceptor implements HandlerInterceptor {
             return true;
         } catch (ExpiredJwtException e){
             response.setStatus(403);
-            log.info("--- End Token Interceptor ---");
+            log.info("--- Expired Token !! ---");
             return false;
         }
     }

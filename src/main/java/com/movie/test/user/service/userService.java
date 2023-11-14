@@ -3,10 +3,15 @@ package com.movie.test.user.service;
 import com.movie.test.user.dto.userDTO;
 import com.movie.test.user.entity.userEntity;
 
+import java.util.Map;
+
 public interface userService {
 
-    public userDTO newUserSave(userDTO userDTO);
-    public String makeNickname();
+    userDTO newUserSave(userDTO userDTO);
+
+    String makeNickname();
+
+    userDTO getUserInfo(String userid);
 
     default userEntity dtoTOentity(userDTO userDTO) {
         userEntity entity = userEntity.builder()
