@@ -25,7 +25,8 @@ public class tokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("--- Start Token Interceptor ---");
 
-        String token = request.getParameter("token");
+//        String token = request.getParameter("token");
+        String token = request.getHeader("token");
         if(token == null){
             response.setStatus(500);
             response.setHeader("token", "testtest");
@@ -41,8 +42,9 @@ public class tokenInterceptor implements HandlerInterceptor {
             String uid = (String) claims.get("uid");
             String type = (String) claims.get("type");
             String newToken = tokenService.makeJwtToken(uid, type);
-            request.setAttribute("originToken", token);
-            request.setAttribute("newToken", newToken);
+//            request.setAttribute("originToken", token);
+//            request.setAttribute("newToken", newToken);
+            response.setHeader("token", newToken);
 //            response.setHeader("originToken", token);
 //            response.setHeader("newToken", newToken);
             response.setStatus(200);

@@ -52,8 +52,8 @@ public class test {
     @ResponseBody
     public ResponseEntity testRefreshToken(String token, HttpServletRequest request, HttpServletResponse response){
 
-        String originToken  = (String) request.getAttribute("originToken");
-        String newToken =  (String) request.getAttribute("newToken");
+        String originToken  = (String) request.getHeader("token");
+        String newToken =  (String) response.getHeader("token");
 //        String originToken = response.getHeader("originToken");
 //        String newToken = response.getHeader("newToken");
 

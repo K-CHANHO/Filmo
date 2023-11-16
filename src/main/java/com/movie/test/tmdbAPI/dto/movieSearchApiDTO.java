@@ -1,4 +1,4 @@
-package com.movie.test.naverAPI.dto;
+package com.movie.test.tmdbAPI.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +12,11 @@ import lombok.NoArgsConstructor;
 public class movieSearchApiDTO {
 
     private String query;
-    private Integer display;
-    private Integer start;
-    private String genre;
-    private String country;
-    private Integer yearfrom;
-    private Integer yearto;
-
+    private Boolean include_adult;
+    private String language;
+    private String primary_release_year;
+    private Integer page;
+    private String region;
+    private String year;
 
 }
