@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface movieSearchService {
 
-    JsonObject getMovieInfo(movieSearchApiDTO searchDTO);
+    Object getMovieInfo(movieSearchApiDTO searchDTO);
 
 
 

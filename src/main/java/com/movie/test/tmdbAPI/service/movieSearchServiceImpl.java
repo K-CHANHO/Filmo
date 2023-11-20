@@ -27,7 +27,7 @@ public class movieSearchServiceImpl implements movieSearchService {
 
 
     @Override
-    public JsonObject getMovieInfo(movieSearchApiDTO searchDTO) {
+    public Object getMovieInfo(movieSearchApiDTO searchDTO) {
 
         WebClient webClient = WebClient.builder()
                 .baseUrl(TMDB_requestURL)
@@ -36,7 +36,7 @@ public class movieSearchServiceImpl implements movieSearchService {
                 .build()
                 ;
 
-        Map<String, Object> resultMap = webClient.get()
+        Map<String, String> resultMap = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .queryParam("query", searchDTO.getQuery())
                         .build())
@@ -44,6 +44,7 @@ public class movieSearchServiceImpl implements movieSearchService {
                 .bodyToMono(Map.class)
                 .block();
 
+        /*
         Object[] objects = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .queryParam("query", searchDTO.getQuery())
@@ -52,13 +53,14 @@ public class movieSearchServiceImpl implements movieSearchService {
                 .bodyToMono(Object[].class)
                 .block()
                 ;
+        */
 
-        log.info(resultMap.get("results").toString());
-        JsonParser jsonParser = new JsonParser();
-        JsonObject jsonObject = (JsonObject) jsonParser.parse(resultMap.get("results").toString());
+        log.info("{}", resultMap);
+//        JsonParser jsonParser = new JsonParser();
+//        JsonObject jsonObject = (JsonObject) jsonParser.parse(resultMap);
 
 
-        return jsonObject;
+        return resultMap;
 
     }
 }

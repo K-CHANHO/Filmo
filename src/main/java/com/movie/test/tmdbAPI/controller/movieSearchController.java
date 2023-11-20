@@ -5,6 +5,7 @@ import com.movie.test.tmdbAPI.dto.movieSearchApiDTO;
 import com.movie.test.tmdbAPI.service.movieSearchService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Controller
+@Slf4j
 public class movieSearchController {
 
     @Autowired
@@ -23,8 +25,9 @@ public class movieSearchController {
     @GetMapping("/search")
     public ResponseEntity movieSearch(movieSearchApiDTO searchDTO, HttpServletRequest request, HttpServletResponse response){
 
-        JsonObject movieInfo = movieSearchService.getMovieInfo(searchDTO);
-
+        log.info("Start Movie Search API");
+        Map<String, String> movieInfo = (Map<String, String>) movieSearchService.getMovieInfo(searchDTO);
+        log.info("End Movie Search API");
         return new ResponseEntity(movieInfo, HttpStatus.OK);
     }
 }
