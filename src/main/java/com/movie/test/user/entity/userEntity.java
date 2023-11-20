@@ -24,7 +24,7 @@ public class userEntity {
     private String userid; // 자체 uid
 
     @Column
-    private String uid;
+    private String uid; // 소셜 uid
 
     @Column
     private String type;
@@ -43,6 +43,7 @@ public class userEntity {
     @Column
     private Timestamp update_date;
 
+    @UpdateTimestamp
     @Column
     private Timestamp last_login_date;
 
