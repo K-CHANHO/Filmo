@@ -27,11 +27,11 @@ public class reportEntity {
     private byte[] content; // 감상문 내용
 
     @Column
-    private String userid; // 작성자 userid
+    private String userId; // 작성자 userId
 
     @CreationTimestamp
     @Column
-    private Timestamp register_date; // 감상문 작성시간
+    private Timestamp create_date; // 감상문 작성시간
 
     @UpdateTimestamp
     @Column

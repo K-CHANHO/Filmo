@@ -16,7 +16,7 @@ public class reportDTO {
     private String reportId;
     private String title;
     private String content;
-    private String userid;
+    private String userId;
 
     private Timestamp create_date;
     private Timestamp update_date;
