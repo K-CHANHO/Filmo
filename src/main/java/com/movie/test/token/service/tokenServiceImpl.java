@@ -1,5 +1,6 @@
 package com.movie.test.token.service;
 
+import com.movie.test.token.dto.tokenDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -22,7 +23,7 @@ public class tokenServiceImpl implements tokenService {
     @Value("${jwt.issuer}")
     String issuer;
 
-    public String makeJwtToken(String uid, String type) {
+    public String makeJwtToken(tokenDTO tokenDTO) {
 
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
@@ -31,8 +32,8 @@ public class tokenServiceImpl implements tokenService {
                 .issuer(issuer)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
-                .claim("uid", uid)
-                .claim("type", type)
+                .claim("uid", tokenDTO.getUid())
+                .claim("type", tokenDTO.getType())
                 .signWith(key)
                 .compact();
     }

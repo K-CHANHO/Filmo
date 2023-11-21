@@ -14,4 +14,5 @@ public class tokenDTO {
     private String uid;
     private String type;
     private String jwt;
+    private String userId;
 }

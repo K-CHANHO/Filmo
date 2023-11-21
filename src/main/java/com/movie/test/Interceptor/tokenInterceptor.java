@@ -1,5 +1,6 @@
 package com.movie.test.Interceptor;
 
+import com.movie.test.token.dto.tokenDTO;
 import com.movie.test.token.service.tokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -25,11 +26,10 @@ public class tokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("--- Start Token Interceptor ---");
 
-//        String token = request.getParameter("token");
         String token = request.getHeader("token");
         if(token == null){
-            response.setStatus(500);
-            response.setHeader("token", "testtest");
+//            response.setStatus(403);
+            response.sendError(403, "Token is NULL !!");
             return false;
         }
 
@@ -37,21 +37,20 @@ public class tokenInterceptor implements HandlerInterceptor {
             Claims claims = tokenService.readJwtToken(token);
             Date expiration = claims.getExpiration();
 
-            log.info("expiration date = {}", expiration);
+            tokenDTO tokenData = tokenDTO.builder()
+                    .userId((String) claims.get("userId"))
+                    .uid((String) claims.get("uid"))
+                    .type((String) claims.get("type"))
+                    .build();
 
-            String uid = (String) claims.get("uid");
-            String type = (String) claims.get("type");
-            String newToken = tokenService.makeJwtToken(uid, type);
-//            request.setAttribute("originToken", token);
-//            request.setAttribute("newToken", newToken);
+            String newToken = tokenService.makeJwtToken(tokenData);
             response.setHeader("token", newToken);
-//            response.setHeader("originToken", token);
-//            response.setHeader("newToken", newToken);
             response.setStatus(200);
             log.info("--- End Token Interceptor ---");
             return true;
         } catch (ExpiredJwtException e){
-            response.setStatus(403);
+//            response.setStatus(403);
+            response.sendError(403, "Token is EXPIRED !!");
             log.info("--- Expired Token !! ---");
             return false;
         }

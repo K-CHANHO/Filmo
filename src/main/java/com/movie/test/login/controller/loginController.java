@@ -1,6 +1,7 @@
 package com.movie.test.login.controller;
 
 import com.google.gson.JsonObject;
+import com.movie.test.token.dto.tokenDTO;
 import com.movie.test.token.service.tokenServiceImpl;
 import com.movie.test.user.dto.userDTO;
 import com.movie.test.login.service.loginService;
@@ -34,7 +35,13 @@ public class loginController {
 
         isExistUser = loginService.isExistUser(logingUser);
         if(isExistUser != null){
-            jwtToken = tokenServiceImpl.makeJwtToken(logingUser.getUid(), logingUser.getType());
+            tokenDTO token = tokenDTO.builder()
+                    .uid(isExistUser.getUid())
+                    .type(isExistUser.getType())
+                    .userId(isExistUser.getUserId())
+                    .build();
+
+            jwtToken = tokenServiceImpl.makeJwtToken(token);
             serverData.addProperty("status", "200");
             serverData.addProperty("jwt", jwtToken);
             return new ResponseEntity<>(serverData, HttpStatus.OK);

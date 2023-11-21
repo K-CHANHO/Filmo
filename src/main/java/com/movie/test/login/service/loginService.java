@@ -15,7 +15,7 @@ public interface loginService {
 
         userEntity user = userEntity.builder()
                 .uid(userDTO.getUid())
-                .userid(userDTO.getUserid())
+                .userId(userDTO.getUserId())
                 .nickname(userDTO.getNickname())
                 .type(userDTO.getType())
                 .profileURL(userDTO.getProfileURL())
@@ -35,7 +35,7 @@ public interface loginService {
 
         userDTO user = userDTO.builder()
                 .uid(userEntity.getUid())
-                .userid(userEntity.getUserid())
+                .userId(userEntity.getUserId())
                 .nickname(userEntity.getNickname())
                 .type(userEntity.getType())
                 .profileURL(userEntity.getProfileURL())
