@@ -21,7 +21,7 @@ public class userEntity {
 
     @Id
     @Column
-    private String userid; // 자체 uid
+    private String userId; // 자체 uid
 
     @Column
     private String uid; // 소셜 uid

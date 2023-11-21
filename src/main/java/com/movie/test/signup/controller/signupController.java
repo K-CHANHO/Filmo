@@ -31,7 +31,7 @@ public class signupController {
 
         JsonObject userinfo = new JsonObject();
         userinfo.addProperty("uid", newUser.getUid());
-        userinfo.addProperty("userid", newUser.getUserid());
+        userinfo.addProperty("userid", newUser.getUserId());
         userinfo.addProperty("type", newUser.getType());
         userinfo.addProperty("nickname", newUser.getNickname());
         userinfo.addProperty("profileURL", newUser.getProfileURL());

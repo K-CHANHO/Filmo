@@ -14,7 +14,7 @@ public interface userService {
     default userEntity dtoTOentity(userDTO userDTO) {
         userEntity entity = userEntity.builder()
                 .uid(userDTO.getUid())
-                .userid(userDTO.getUserid())
+                .userId(userDTO.getUserId())
                 .type(userDTO.getType())
                 .nickname(userDTO.getNickname())
                 .create_date(userDTO.getCreate_date())
@@ -29,7 +29,7 @@ public interface userService {
 
         userDTO dto = userDTO.builder()
                 .uid(userEntity.getUid())
-                .userid(userEntity.getUserid())
+                .userId(userEntity.getUserId())
                 .type(userEntity.getType())
                 .nickname(userEntity.getNickname())
                 .create_date(userEntity.getCreate_date())

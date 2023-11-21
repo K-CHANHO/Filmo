@@ -21,7 +21,7 @@ public class userServiceImpl implements userService{
     @Override
     public userDTO newUserSave(userDTO userDTO) {
 
-        userDTO.setUserid(UUID.randomUUID().toString());
+        userDTO.setUserId(UUID.randomUUID().toString());
         userDTO.setNickname(makeNickname());
         userDTO.setProfileURL(s3Service.uploadImage(userDTO.getProfileURL()));
 

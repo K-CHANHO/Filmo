@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public class userDTO {
 
     private String uid;
-    private String userid; // 자체 uid
+    private String userId; // 자체 uid
     private String type; // kakao OR google OR naver
     private String nickname;
     private String profileURL; // 프로필사진 url

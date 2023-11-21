@@ -23,7 +23,7 @@ public class userController {
     @ResponseBody
     public ResponseEntity userinfo(userDTO userDTO, HttpServletRequest request, HttpServletResponse response) {
 
-        userDTO userinfo = userService.getUserInfo(userDTO.getUserid());
+        userDTO userinfo = userService.getUserInfo(userDTO.getUserId());
 
         HashMap<String, Object> userinfoMap = new HashMap<>();
         userinfoMap.put("userinfo", userinfo);
