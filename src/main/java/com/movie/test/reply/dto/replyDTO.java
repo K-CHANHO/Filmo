@@ -1,0 +1,27 @@
+package com.movie.test.reply.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class replyDTO {
+
+    private String replyId; // 댓글 고유 id
+
+    private String reportId; // 감상문 id
+
+    private String userId; // 댓글 작성자 id
+
+    private String content; // 댓글내용
+
+    private Timestamp createDate; // 댓글작성시간
+
+    private Timestamp updateDate; // 댓글수정시간
+}
