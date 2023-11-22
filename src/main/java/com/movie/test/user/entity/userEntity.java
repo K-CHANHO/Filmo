@@ -1,5 +1,6 @@
 package com.movie.test.user.entity;
 
+import com.movie.test.common.entity.baseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,6 +8,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
 
@@ -17,7 +19,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @ToString
 @Getter
-public class userEntity {
+public class userEntity extends baseTimeEntity {
 
     @Id
     @Column
@@ -27,24 +29,16 @@ public class userEntity {
     private String uid; // 소셜 uid
 
     @Column
-    private String type;
+    private String type; // 소셜 type
 
     @Column
-    private String nickname;
+    private String nickname; // 닉네임
 
     @Column
     private String profileURL; // 프로필사진 url
 
-    @CreationTimestamp
+    @LastModifiedDate
     @Column
-    private Timestamp createDate;
-
-    @UpdateTimestamp
-    @Column
-    private Timestamp updateDate;
-
-    @UpdateTimestamp
-    @Column
-    private Timestamp lastLoginDate;
+    private Timestamp lastLoginDate; // 마지막 로그인 시간
 
 }

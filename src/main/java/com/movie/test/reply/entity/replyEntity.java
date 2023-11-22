@@ -1,5 +1,6 @@
 package com.movie.test.reply.entity;
 
+import com.movie.test.common.entity.baseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,7 +21,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @Getter
-public class replyEntity {
+public class replyEntity extends baseTimeEntity {
 
     @Id
     @Column
@@ -37,13 +38,5 @@ public class replyEntity {
 
     @Column
     private String content; // 댓글내용
-
-    @Column
-    @CreatedDate
-    private Timestamp createDate; // 댓글작성시간
-
-    @Column
-    @LastModifiedDate
-    private Timestamp updateDate; // 댓글수정시간
 
 }

@@ -19,5 +19,5 @@ public class reportDTO {
     private String userId;
 
     private Timestamp createDate;
-    private Timestamp updateDate;
+    private Timestamp lastModifiedDate;
 }

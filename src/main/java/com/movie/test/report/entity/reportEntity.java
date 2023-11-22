@@ -1,5 +1,6 @@
 package com.movie.test.report.entity;
 
+import com.movie.test.common.entity.baseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,7 +17,7 @@ import java.sql.Timestamp;
 @ToString
 @Getter
 @DynamicUpdate
-public class reportEntity {
+public class reportEntity extends baseTimeEntity {
 
     @Id
     private String reportId; // 감상문 id
@@ -31,11 +32,4 @@ public class reportEntity {
     @Column
     private String userId; // 작성자 userId
 
-    @CreationTimestamp
-    @Column
-    private Timestamp createDate; // 감상문 작성시간
-
-    @UpdateTimestamp
-    @Column
-    private Timestamp updateDate; // 감상문 수정시간
 }

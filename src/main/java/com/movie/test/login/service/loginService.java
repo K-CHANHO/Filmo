@@ -19,7 +19,7 @@ public interface loginService {
                 .nickname(userDTO.getNickname())
                 .type(userDTO.getType())
                 .profileURL(userDTO.getProfileURL())
-                .createDate(userDTO.getCreateDate())
+//                .createDate(userDTO.getCreateDate())
                 .lastLoginDate(userDTO.getLastLoginDate())
                 .build();
 

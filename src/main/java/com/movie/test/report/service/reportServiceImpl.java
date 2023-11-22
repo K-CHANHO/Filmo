@@ -42,10 +42,8 @@ public class reportServiceImpl implements reportService {
                         .title(reportDTO.getTitle())
                         .content(reportDTO.getContent().getBytes(StandardCharsets.UTF_8))
                         .userId(originReport.getUserId())
-                        .createDate(originReport.getCreateDate())
                         .reportId(originReport.getReportId())
                         .build();
-
 
         reportRepository.save(newReport);
 

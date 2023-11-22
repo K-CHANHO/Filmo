@@ -19,6 +19,8 @@ public class userDTO {
     private String nickname;
     private String profileURL; // 프로필사진 url
     private Timestamp lastLoginDate;
+
     private Timestamp createDate;
+    private Timestamp lastModifiedDate;
 
 }

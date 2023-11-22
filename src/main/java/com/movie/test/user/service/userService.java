@@ -17,7 +17,6 @@ public interface userService {
                 .userId(userDTO.getUserId())
                 .type(userDTO.getType())
                 .nickname(userDTO.getNickname())
-                .createDate(userDTO.getCreateDate())
                 .lastLoginDate(userDTO.getLastLoginDate())
                 .profileURL(userDTO.getProfileURL())
                 .build();
@@ -33,6 +32,7 @@ public interface userService {
                 .type(userEntity.getType())
                 .nickname(userEntity.getNickname())
                 .createDate(userEntity.getCreateDate())
+                .lastModifiedDate(userEntity.getLastModifiedDate())
                 .lastLoginDate(userEntity.getLastLoginDate())
                 .profileURL(userEntity.getProfileURL())
                 .build();

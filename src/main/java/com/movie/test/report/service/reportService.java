@@ -23,8 +23,6 @@ public interface reportService {
                 .title(reportDTO.getTitle())
                 .content(reportDTO.getContent().getBytes(StandardCharsets.UTF_8))
                 .userId(reportDTO.getUserId())
-                .createDate(reportDTO.getCreateDate())
-                .updateDate(reportDTO.getUpdateDate())
                 .build();
 
         return report;
@@ -37,7 +35,7 @@ public interface reportService {
                 .content(new String(reportEntity.getContent(), StandardCharsets.UTF_8))
                 .userId(reportEntity.getUserId())
                 .createDate(reportEntity.getCreateDate())
-                .updateDate(reportEntity.getUpdateDate())
+                .lastModifiedDate(reportEntity.getLastModifiedDate())
                 .build();
 
         return report;
