@@ -3,6 +3,7 @@ package com.movie.test.report.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @ToString
 @Getter
+@DynamicUpdate
 public class reportEntity {
 
     @Id
@@ -31,9 +33,9 @@ public class reportEntity {
 
     @CreationTimestamp
     @Column
-    private Timestamp create_date; // 감상문 작성시간
+    private Timestamp createDate; // 감상문 작성시간
 
     @UpdateTimestamp
     @Column
-    private Timestamp update_date; // 감상문 수정시간
+    private Timestamp updateDate; // 감상문 수정시간
 }

@@ -23,8 +23,8 @@ public interface reportService {
                 .title(reportDTO.getTitle())
                 .content(reportDTO.getContent().getBytes(StandardCharsets.UTF_8))
                 .userId(reportDTO.getUserId())
-                .create_date(reportDTO.getCreate_date())
-                .update_date(reportDTO.getUpdate_date())
+                .createDate(reportDTO.getCreateDate())
+                .updateDate(reportDTO.getUpdateDate())
                 .build();
 
         return report;
@@ -36,8 +36,8 @@ public interface reportService {
                 .title(reportEntity.getTitle())
                 .content(new String(reportEntity.getContent(), StandardCharsets.UTF_8))
                 .userId(reportEntity.getUserId())
-                .create_date(reportEntity.getCreate_date())
-                .update_date(reportEntity.getUpdate_date())
+                .createDate(reportEntity.getCreateDate())
+                .updateDate(reportEntity.getUpdateDate())
                 .build();
 
         return report;

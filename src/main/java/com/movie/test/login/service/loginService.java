@@ -19,8 +19,8 @@ public interface loginService {
                 .nickname(userDTO.getNickname())
                 .type(userDTO.getType())
                 .profileURL(userDTO.getProfileURL())
-                .create_date(userDTO.getCreate_date())
-                .last_login_date(userDTO.getLast_login_date())
+                .createDate(userDTO.getCreateDate())
+                .lastLoginDate(userDTO.getLastLoginDate())
                 .build();
 
         return user;
@@ -39,8 +39,8 @@ public interface loginService {
                 .nickname(userEntity.getNickname())
                 .type(userEntity.getType())
                 .profileURL(userEntity.getProfileURL())
-                .create_date(userEntity.getCreate_date())
-                .last_login_date(userEntity.getLast_login_date())
+                .createDate(userEntity.getCreateDate())
+                .lastLoginDate(userEntity.getLastLoginDate())
                 .build();
 
         return user;

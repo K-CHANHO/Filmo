@@ -18,9 +18,9 @@ public interface movieSearchService {
         MultiValueMap<String, String> queryMap = new LinkedMultiValueMap<>();
 
         queryMap.add("query", searchDTO.getQuery());
-        queryMap.add("include_adult", searchDTO.getInclude_adult() != null? searchDTO.getInclude_adult().toString() : null);
+        queryMap.add("include_adult", searchDTO.getIncludeAdult() != null? searchDTO.getIncludeAdult().toString() : null);
         queryMap.add("language", searchDTO.getLanguage());
-        queryMap.add("primary_release_year", searchDTO.getPrimary_release_year());
+        queryMap.add("primary_release_year", searchDTO.getPrimaryReleaseYear());
         queryMap.add("page", searchDTO.getPage() != null? searchDTO.getPage().toString() : null);
         queryMap.add("region", searchDTO.getRegion());
         queryMap.add("year", searchDTO.getYear());

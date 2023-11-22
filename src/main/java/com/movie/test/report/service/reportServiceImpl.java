@@ -6,7 +6,9 @@ import com.movie.test.report.repository.reportRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 @Service
@@ -35,10 +37,19 @@ public class reportServiceImpl implements reportService {
 
     @Override
     public String modifyReport(reportDTO reportDTO) {
+        reportEntity originReport = reportRepository.findById(reportDTO.getReportId()).get();
+        reportEntity newReport = reportEntity.builder()
+                        .title(reportDTO.getTitle())
+                        .content(reportDTO.getContent().getBytes(StandardCharsets.UTF_8))
+                        .userId(originReport.getUserId())
+                        .createDate(originReport.getCreateDate())
+                        .reportId(originReport.getReportId())
+                        .build();
 
-        reportEntity modifiedReport = reportRepository.save(dtoTOentity(reportDTO));
 
-        return modifiedReport.getReportId();
+        reportRepository.save(newReport);
+
+        return newReport.getReportId();
     }
 
     @Override

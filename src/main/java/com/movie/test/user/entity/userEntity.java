@@ -37,14 +37,14 @@ public class userEntity {
 
     @CreationTimestamp
     @Column
-    private Timestamp create_date;
+    private Timestamp createDate;
 
     @UpdateTimestamp
     @Column
-    private Timestamp update_date;
+    private Timestamp updateDate;
 
     @UpdateTimestamp
     @Column
-    private Timestamp last_login_date;
+    private Timestamp lastLoginDate;
 
 }

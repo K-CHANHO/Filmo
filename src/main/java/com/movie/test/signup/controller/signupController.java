@@ -35,8 +35,8 @@ public class signupController {
         userinfo.addProperty("type", newUser.getType());
         userinfo.addProperty("nickname", newUser.getNickname());
         userinfo.addProperty("profileURL", newUser.getProfileURL());
-        userinfo.addProperty("last_login_date", String.valueOf(newUser.getLast_login_date()));
-        userinfo.addProperty("create_date", String.valueOf(newUser.getCreate_date()));
+        userinfo.addProperty("last_login_date", String.valueOf(newUser.getLastLoginDate()));
+        userinfo.addProperty("create_date", String.valueOf(newUser.getCreateDate()));
 
         JsonObject serverData = new JsonObject();
         serverData.add("userinfo", userinfo);

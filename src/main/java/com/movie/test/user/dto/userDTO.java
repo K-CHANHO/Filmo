@@ -18,7 +18,7 @@ public class userDTO {
     private String type; // kakao OR google OR naver
     private String nickname;
     private String profileURL; // 프로필사진 url
-    private Timestamp last_login_date;
-    private Timestamp create_date;
+    private Timestamp lastLoginDate;
+    private Timestamp createDate;
 
 }
