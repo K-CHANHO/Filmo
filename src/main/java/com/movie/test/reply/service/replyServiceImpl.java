@@ -23,7 +23,7 @@ public class replyServiceImpl implements replyService{
                 .replyId(UUID.randomUUID().toString())
                 .upReplyId(replyDTO.getUpReplyId())
                 .userId(replyDTO.getUserId())
-                .reportId(replyDTO.getUserId())
+                .reportId(replyDTO.getReportId())
                 .content(replyDTO.getContent())
                 .build();
 
@@ -34,16 +34,16 @@ public class replyServiceImpl implements replyService{
 
     @Override
     public replyDTO modifyReply(replyDTO replyDTO) {
-
-        replyEntity reply = replyEntity.builder()
+        replyEntity originReply = replyRepository.findById(replyDTO.getReplyId()).get();
+        replyEntity modifiedReply = replyEntity.builder()
                 .replyId(replyDTO.getReplyId())
-                .upReplyId(replyDTO.getUpReplyId())
-                .userId(replyDTO.getUserId())
-                .reportId(replyDTO.getUserId())
+                .upReplyId(originReply.getUpReplyId())
+                .userId(originReply.getUserId())
+                .reportId(originReply.getReportId())
                 .content(replyDTO.getContent())
                 .build();
 
-        replyDTO savedReply = entityTOdto(replyRepository.save(reply));
+        replyDTO savedReply = entityTOdto(replyRepository.save(modifiedReply));
 
         return savedReply;
     }
