@@ -15,6 +15,8 @@ public interface replyService {
     List<replyDTO> getReplies(String reportId);
     void deleteReply(String replyId);
 
+    void deleteRepliesByReportId(String reportId);
+
 
     default replyEntity dtoTOentity(replyDTO replyDTO){
         replyEntity reply = replyEntity.builder()
@@ -30,7 +32,7 @@ public interface replyService {
 
     default replyDTO entityTOdto(replyEntity replyEntity) {
         replyDTO reply = replyDTO.builder()
-                .replyId(replyEntity.getReportId())
+                .replyId(replyEntity.getReplyId())
                 .upReplyId(replyEntity.getUpReplyId())
                 .reportId(replyEntity.getReportId())
                 .content(replyEntity.getContent())

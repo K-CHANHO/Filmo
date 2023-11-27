@@ -1,5 +1,8 @@
 package com.movie.test.report.controller;
 
+import com.google.gson.*;
+import com.movie.test.reply.dto.replyDTO;
+import com.movie.test.reply.service.replyService;
 import com.movie.test.report.dto.reportDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,20 +10,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import com.movie.test.report.service.reportService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
 @Slf4j
 public class reportController {
 
     @Autowired
     private reportService reportService;
 
+    @Autowired
+    private replyService replyService;
+
+
     @PostMapping("/registReport")
-    @ResponseBody
     public ResponseEntity registReport(reportDTO reportDTO) {
 
         log.info("Start Report Controller : registReport");
@@ -32,16 +39,19 @@ public class reportController {
     }
 
     @GetMapping("/getReport/{reportId}")
-    @ResponseBody
     public ResponseEntity getReport(@PathVariable String reportId){
 
         reportDTO report = reportService.getReport(reportId);
+        List<replyDTO> replies = replyService.getReplies(reportId);
 
-        return new ResponseEntity(report, HttpStatus.OK);
+        Map<String, Object> serverData = new HashMap<>();
+        serverData.put("report", report);
+        serverData.put("replies", replies);
+
+        return new ResponseEntity(serverData, HttpStatus.OK);
     }
 
     @PostMapping("/modifyReport")
-    @ResponseBody
     public ResponseEntity modifyReport(reportDTO report){
 
         String reportId = reportService.modifyReport(report);
@@ -50,9 +60,9 @@ public class reportController {
     }
 
     @GetMapping("/deleteReport/{reportId}")
-    @ResponseBody
     public ResponseEntity deleteReport(@PathVariable String reportId){
         reportService.deleteReport(reportId);
+        replyService.deleteRepliesByReportId(reportId);
 
         return new ResponseEntity("Success Delete Report", HttpStatus.OK);
     }

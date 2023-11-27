@@ -9,6 +9,10 @@ import java.util.List;
 @Repository
 public interface replyRepository extends JpaRepository<replyEntity, String> {
 
-    List<replyEntity> findByReportId(String reportId);
+    List<replyEntity> findByReportIdOrderByCreateDate(String reportId);
+
+    void deleteByReportId(String reportId);
+
+    void deleteByUpReplyId(String upReplyId);
 
 }

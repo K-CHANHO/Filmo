@@ -5,6 +5,7 @@ import com.movie.test.reply.entity.replyEntity;
 import com.movie.test.reply.repository.replyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class replyServiceImpl implements replyService{
     public List<replyDTO> getReplies(String reportId) {
         List<replyDTO> replyDTOS = new ArrayList<>();
 
-        List<replyEntity> replies = replyRepository.findByReportId(reportId);
+        List<replyEntity> replies = replyRepository.findByReportIdOrderByCreateDate(reportId);
         replies.forEach((reply)->{
             replyDTOS.add(entityTOdto(reply));
         });
@@ -61,7 +62,14 @@ public class replyServiceImpl implements replyService{
     }
 
     @Override
+    @Transactional
     public void deleteReply(String replyId) {
-        replyRepository.deleteById(replyId);
+        replyRepository.deleteById(replyId); // 해당 댓글 삭제
+        replyRepository.deleteByUpReplyId(replyId); // 해당 댓글의 대댓글 삭제. -> TODO. 추후 JPQL 고려해볼 것.
+    }
+
+    @Override
+    public void deleteRepliesByReportId(String reportId) {
+        replyRepository.deleteByReportId(reportId);
     }
 }
