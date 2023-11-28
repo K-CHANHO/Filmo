@@ -7,7 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.nio.charset.StandardCharsets;
 
 @Entity
 @Getter
@@ -16,6 +20,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
+@DynamicInsert
 @Table(name = "inquiry")
 public class inquiryEntity extends baseTimeEntity {
 
@@ -33,17 +38,11 @@ public class inquiryEntity extends baseTimeEntity {
     private byte[] content; // 문의내용
 
     @Column
+    private String userEmail; // 답변받을 email 주소
+
+    @Column
+    @ColumnDefault("'N'")
     private String answerYN; // 답변 여부
 
-    public inquiryEntity toEntity(inquiryDTO inquiryDTO){
-        inquiryEntity inquiry = inquiryEntity.builder()
-                .inquiryId(inquiryDTO.getInquiryId())
-                .userId(inquiryDTO.getUserId())
-                .title(inquiryDTO.getTitle())
-                .content(inquiryDTO.getContent())
-                .answerYN(inquiryDTO.getAnswerYN())
-                .build();
 
-        return inquiry;
-    }
 }

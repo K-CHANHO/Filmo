@@ -20,12 +20,14 @@ public class inquiryDTO extends baseTimeDTO {
     private String title; // 문의제목
     private String content; // 문의내용
     private String answerYN; // 답변 여부
+    private String userEmail; // 답변받을 이메일주소
 
     public static inquiryDTO toDTO(inquiryEntity inquiryEntity){
 
         inquiryDTO inquiry = inquiryDTO.builder()
                 .inquiryId(inquiryEntity.getInquiryId())
                 .userId(inquiryEntity.getUserId())
+                .userEmail(inquiryEntity.getUserEmail())
                 .title(inquiryEntity.getTitle())
                 .content(new String(inquiryEntity.getContent(), StandardCharsets.UTF_8))
                 .answerYN(inquiryEntity.getAnswerYN())
@@ -41,6 +43,7 @@ public class inquiryDTO extends baseTimeDTO {
         inquiryEntity inquiry = inquiryEntity.builder()
                 .inquiryId(inquiryDTO.getInquiryId())
                 .userId(inquiryDTO.getUserId())
+                .userEmail(inquiryDTO.getUserEmail())
                 .title(inquiryDTO.getTitle())
                 .content(inquiryDTO.getContent().getBytes(StandardCharsets.UTF_8))
                 .answerYN(inquiryDTO.getAnswerYN())
