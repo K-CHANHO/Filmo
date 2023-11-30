@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,9 +30,14 @@ public class test {
     @Autowired
     private S3Service s3Service;
 
+    @GetMapping("/test")
+    public String index(){
+        return "index";
+    }
+
     @PostMapping("/test")
     @ResponseBody
-    public testDTO test(testDTO param){
+    public testDTO test(testDTO param) {
 
         testService.insert(param);
 
