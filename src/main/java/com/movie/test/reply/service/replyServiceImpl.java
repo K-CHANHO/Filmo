@@ -37,7 +37,7 @@ public class replyServiceImpl implements replyService{
     public replyDTO modifyReply(replyDTO replyDTO) {
         replyEntity originReply = replyRepository.findById(replyDTO.getReplyId()).get();
         replyEntity modifiedReply = replyEntity.builder()
-                .replyId(replyDTO.getReplyId())
+                .replyId(originReply.getReplyId())
                 .upReplyId(originReply.getUpReplyId())
                 .userId(originReply.getUserId())
                 .reportId(originReply.getReportId())

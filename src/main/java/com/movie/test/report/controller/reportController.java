@@ -4,6 +4,14 @@ import com.google.gson.*;
 import com.movie.test.reply.dto.replyDTO;
 import com.movie.test.reply.service.replyService;
 import com.movie.test.report.dto.reportDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name = "감상문", description = "감상문 관련 API")
 @RestController
 @Slf4j
 public class reportController {
@@ -27,6 +36,13 @@ public class reportController {
     private replyService replyService;
 
 
+    @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")
+    @Parameters({
+            @Parameter(name = "userId", description = "작성자 id", required = true),
+            @Parameter(name = "title", description = "감상문 제목", required = true),
+            @Parameter(name = "content", description = "감상문 내용", required = true)
+    })
+    @ApiResponse(responseCode = "200", description = "등록된 감상문 id 리턴")
     @PostMapping("/registReport")
     public ResponseEntity registReport(reportDTO reportDTO) {
 
@@ -38,6 +54,11 @@ public class reportController {
         return new ResponseEntity(reportId, HttpStatus.OK);
     }
 
+    @Operation(summary = "감상문 조회", description = "감상문을 조회합니다.")
+    @Parameter(name = "reportId", description = "조회할 감상문의 id", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "감상문 정보 및 댓글 정보")
+    })
     @GetMapping("/getReport/{reportId}")
     public ResponseEntity getReport(@PathVariable String reportId){
 
@@ -51,6 +72,12 @@ public class reportController {
         return new ResponseEntity(serverData, HttpStatus.OK);
     }
 
+    @Operation(summary = "감상문 수정", description = "감상문을 수정합니다.")
+    @Parameters(value = {
+            @Parameter(name = "reportId", description = "수정할 감상문의 id", required = true),
+            @Parameter(name = "title", description = "수정할 감상문의 제목", required = true),
+            @Parameter(name = "content", description = "수정할 감상문의 내용", required = true)
+    })
     @PostMapping("/modifyReport")
     public ResponseEntity modifyReport(reportDTO report){
 
@@ -59,6 +86,8 @@ public class reportController {
         return new ResponseEntity(reportId, HttpStatus.OK);
     }
 
+    @Operation(summary = "감상문 삭제", description = "감상문을 삭제하고 해당 댓글도 삭제합니다.")
+    @Parameter(name = "reportId", description = "삭제할 감상문의 id", required = true)
     @GetMapping("/deleteReport/{reportId}")
     public ResponseEntity deleteReport(@PathVariable String reportId){
         reportService.deleteReport(reportId);

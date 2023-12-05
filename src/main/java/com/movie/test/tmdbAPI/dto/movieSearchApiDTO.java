@@ -1,10 +1,12 @@
 package com.movie.test.tmdbAPI.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Hidden
 @Data
 @Builder
 @AllArgsConstructor

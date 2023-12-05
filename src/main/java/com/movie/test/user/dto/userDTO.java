@@ -1,5 +1,6 @@
 package com.movie.test.user.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
+@Hidden
 @Data
 @Builder
 @AllArgsConstructor

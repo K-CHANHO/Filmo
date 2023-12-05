@@ -23,8 +23,11 @@ public class userServiceImpl implements userService{
 
         userDTO.setUserId(UUID.randomUUID().toString());
         userDTO.setNickname(makeNickname());
-        userDTO.setProfileURL(s3Service.uploadImage(userDTO.getProfileURL()));
-
+        if(userDTO.getProfileURL() != null) {
+            userDTO.setProfileURL(s3Service.uploadImage(userDTO.getProfileURL()));
+        } else {
+            // TODO : 기본 프로필사진 설정하기.
+        }
 
         userEntity user = dtoTOentity(userDTO);
 

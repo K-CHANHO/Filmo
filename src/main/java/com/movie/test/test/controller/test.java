@@ -6,6 +6,7 @@ import com.movie.test.test.dto.testDTO;
 import com.movie.test.test.service.testService;
 import com.movie.test.token.service.tokenService;
 import io.jsonwebtoken.Claims;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+@Hidden
 @Controller
 @RequestMapping("/test")
 public class test {

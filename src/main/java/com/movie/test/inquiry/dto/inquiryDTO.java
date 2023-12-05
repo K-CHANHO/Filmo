@@ -2,6 +2,7 @@ package com.movie.test.inquiry.dto;
 
 import com.movie.test.common.dto.baseTimeDTO;
 import com.movie.test.inquiry.entity.inquiryEntity;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.nio.charset.StandardCharsets;
 
+@Hidden
 @SuperBuilder
 @Data
 @AllArgsConstructor
