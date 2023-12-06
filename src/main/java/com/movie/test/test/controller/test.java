@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.movie.test.s3.service.S3Service;
 import com.movie.test.test.dto.testDTO;
 import com.movie.test.test.service.testService;
-import com.movie.test.token.service.tokenService;
+import com.movie.test.token.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class test {
     private testService testService;
 
     @Autowired
-    private tokenService tokenService;
+    private TokenService tokenService;
 
     @Autowired
     private S3Service s3Service;

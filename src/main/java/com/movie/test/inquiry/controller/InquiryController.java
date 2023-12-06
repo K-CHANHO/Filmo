@@ -1,7 +1,7 @@
 package com.movie.test.inquiry.controller;
 
-import com.movie.test.inquiry.dto.inquiryDTO;
-import com.movie.test.inquiry.service.inquiryService;
+import com.movie.test.inquiry.dto.InquiryDTO;
+import com.movie.test.inquiry.service.InquiryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InquiryController {
 
     @Autowired
-    private inquiryService inquiryService;
+    private InquiryService inquiryService;
 
     @Operation(summary = "문의사항 등록", description = "파라미터로 받은 내용을 DB에 저장하고 관리자에게 메일을 보냅니다.")
     @Parameters({
@@ -29,7 +29,7 @@ public class InquiryController {
         @Parameter(name = "userEmail", description = "답변받을 이메일", required = true),
     })
     @PostMapping("/inquiry/regist")
-    public ResponseEntity registInquiry(inquiryDTO inquiryDTO) {
+    public ResponseEntity registInquiry(InquiryDTO inquiryDTO) {
         inquiryService.registInquiry(inquiryDTO);
 
         return new ResponseEntity("success", HttpStatus.OK);

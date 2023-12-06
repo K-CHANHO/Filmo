@@ -1,6 +1,6 @@
 package com.movie.test.complaint.entity;
 
-import com.movie.test.common.entity.baseTimeEntity;
+import com.movie.test.common.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -16,7 +16,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Builder
 @ToString
 @Getter
-public class ComplaintEntity extends baseTimeEntity {
+public class ComplaintEntity extends BaseTimeEntity {
 
     @Id
     private String complaintId; // 신고 id

@@ -1,6 +1,6 @@
 package com.movie.test.complaint.dto;
 
-import com.movie.test.common.dto.baseTimeDTO;
+import com.movie.test.common.dto.BaseTimeDTO;
 import com.movie.test.complaint.entity.ComplaintEntity;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Hidden
 @NoArgsConstructor
 @AllArgsConstructor
-public class ComplaintDTO extends baseTimeDTO {
+public class ComplaintDTO extends BaseTimeDTO {
 
     private String complaintId; // 신고 id
     private String complaintUser; // 신고한 유저
