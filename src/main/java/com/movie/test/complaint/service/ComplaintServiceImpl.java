@@ -24,4 +24,12 @@ public class ComplaintServiceImpl implements ComplaintService {
 
         return ComplaintDTO.toDTO(savedComplaint);
     }
+
+    @Override
+    public long getComplaintCount(String reportId) {
+
+        long complaintCount = complaintRepository.countByReportId(reportId);
+
+        return complaintCount;
+    }
 }

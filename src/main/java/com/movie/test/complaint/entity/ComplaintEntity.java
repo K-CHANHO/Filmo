@@ -22,10 +22,10 @@ public class ComplaintEntity extends BaseTimeEntity {
     private String complaintId; // 신고 id
 
     @Column
-    private String complaintUser; // 신고한 유저
+    private String userId; // 신고한 유저
 
     @Column
-    private String getComplaintReportId; // 신고당한 감상문
+    private String reportId; // 신고당한 감상문
 
     @Column
     private String content; // 신고내용

@@ -6,4 +6,6 @@ public interface ComplaintService {
 
     ComplaintDTO registComplaint(ComplaintDTO complaintDTO);
 
+    long getComplaintCount(String reportId);
+
 }

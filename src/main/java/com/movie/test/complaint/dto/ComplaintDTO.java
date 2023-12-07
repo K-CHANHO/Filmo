@@ -18,16 +18,16 @@ import lombok.experimental.SuperBuilder;
 public class ComplaintDTO extends BaseTimeDTO {
 
     private String complaintId; // 신고 id
-    private String complaintUser; // 신고한 유저
-    private String getComplaintReportId; // 신고당한 감상문
+    private String userId; // 신고한 유저
+    private String reportId; // 신고당한 감상문
     private String content; // 신고내용
 
     public static ComplaintDTO toDTO(ComplaintEntity entity) {
 
         ComplaintDTO dto = ComplaintDTO.builder()
                 .complaintId(entity.getComplaintId())
-                .complaintUser(entity.getComplaintUser())
-                .getComplaintReportId(entity.getGetComplaintReportId())
+                .userId(entity.getUserId())
+                .reportId(entity.getReportId())
                 .content(entity.getContent())
                 .createDate(entity.getCreateDate())
                 .lastModifiedDate(entity.getLastModifiedDate())
@@ -40,8 +40,8 @@ public class ComplaintDTO extends BaseTimeDTO {
 
         ComplaintEntity entity = ComplaintEntity.builder()
                 .complaintId(dto.getComplaintId())
-                .complaintUser(dto.getComplaintUser())
-                .getComplaintReportId(dto.getGetComplaintReportId())
+                .userId(dto.getUserId())
+                .reportId(dto.getReportId())
                 .content(dto.getContent())
                 .build();
 
