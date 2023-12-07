@@ -29,11 +29,11 @@ public class UserServiceImpl implements UserService {
             // TODO : 기본 프로필사진 설정하기.
         }
 
-        UserEntity user = dtoTOentity(userDTO);
+        UserEntity user = UserDTO.toEntity(userDTO);
 
         UserEntity savedUser = userRepository.save(user);
 
-        return entityTOdto(savedUser);
+        return UserDTO.toDTO(savedUser);
 
     }
 
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUserInfo(String userid) {
         Map<String, Object> userinfoMap = new HashMap<>();
 
-        UserDTO userDTO = entityTOdto(userRepository.findById(userid).get());
+        UserDTO userDTO = UserDTO.toDTO(userRepository.findById(userid).get());
 
         return userDTO;
     }

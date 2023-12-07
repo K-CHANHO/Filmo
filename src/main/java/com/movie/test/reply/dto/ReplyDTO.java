@@ -1,19 +1,22 @@
 package com.movie.test.reply.dto;
 
+import com.movie.test.common.dto.BaseTimeDTO;
+import com.movie.test.reply.entity.ReplyEntity;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
 
 @Hidden
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReplyDTO {
+public class ReplyDTO extends BaseTimeDTO {
 
     private String replyId; // 댓글 고유 id
     private String upReplyId; // 대댓글인 경우 원댓글 id
@@ -21,6 +24,30 @@ public class ReplyDTO {
     private String userId; // 댓글 작성자 id
     private String content; // 댓글내용
 
-    private Timestamp createDate; // 댓글작성시간
-    private Timestamp lastModifiedDate; // 댓글수정시간
+    public static ReplyDTO toDTO(ReplyEntity entity) {
+        ReplyDTO dto = ReplyDTO.builder()
+                .replyId(entity.getReplyId())
+                .upReplyId(entity.getUpReplyId())
+                .reportId(entity.getReportId())
+                .userId(entity.getUserId())
+                .content(entity.getContent())
+                .createDate(entity.getCreateDate())
+                .lastModifiedDate(entity.getLastModifiedDate())
+                .build();
+
+        return dto;
+    }
+
+    public static ReplyEntity toEntity(ReplyDTO dto){
+        ReplyEntity entity = ReplyEntity.builder()
+                .replyId(dto.getReplyId())
+                .upReplyId(dto.getUpReplyId())
+                .reportId(dto.getReportId())
+                .userId(dto.getUserId())
+                .content(dto.getContent())
+                .build();
+
+        return entity;
+    }
+
 }

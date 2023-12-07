@@ -28,7 +28,7 @@ public class ReportServiceImpl implements ReportService {
     public String registReport(ReportDTO reportDTO) {
         log.info("Start Report Service : regist");
         reportDTO.setReportId(UUID.randomUUID().toString());
-        reportRepository.save(dtoTOentity(reportDTO));
+        reportRepository.save(ReportDTO.toEntity(reportDTO));
 
         log.info("End Report Service : regist");
         return reportDTO.getReportId();
@@ -36,7 +36,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public ReportDTO getReport(String reportId) {
-        ReportDTO reportDTO = entityTOdto(reportRepository.findById(reportId).get());
+        ReportDTO reportDTO = ReportDTO.toDTO(reportRepository.findById(reportId).get());
+        reportDTO.setComplaintCount(complaintRepository.countByReportId(reportDTO.getReportId()));
 
         return reportDTO;
     }
@@ -47,7 +48,7 @@ public class ReportServiceImpl implements ReportService {
 
         List<ReportDTO> reportDTOS = new ArrayList<>();
         reportEntities.forEach((entity) -> {
-            ReportDTO dto = entityTOdto(entity);
+            ReportDTO dto = ReportDTO.toDTO(entity);
             dto.setComplaintCount(complaintRepository.countByReportId(dto.getReportId()));
             reportDTOS.add(dto);
         });

@@ -20,15 +20,10 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public ReplyDTO registReply(ReplyDTO replyDTO) {
 
-        ReplyEntity reply = ReplyEntity.builder()
-                .replyId(UUID.randomUUID().toString())
-                .upReplyId(replyDTO.getUpReplyId())
-                .userId(replyDTO.getUserId())
-                .reportId(replyDTO.getReportId())
-                .content(replyDTO.getContent())
-                .build();
+        replyDTO.setReplyId(UUID.randomUUID().toString());
+        ReplyEntity reply = ReplyDTO.toEntity(replyDTO);
 
-        ReplyDTO savedReply = entityTOdto(replyRepository.save(reply));
+        ReplyDTO savedReply = ReplyDTO.toDTO(replyRepository.save(reply));
 
         return savedReply;
     }
@@ -36,6 +31,7 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public ReplyDTO modifyReply(ReplyDTO replyDTO) {
         ReplyEntity originReply = replyRepository.findById(replyDTO.getReplyId()).get();
+
         ReplyEntity modifiedReply = ReplyEntity.builder()
                 .replyId(originReply.getReplyId())
                 .upReplyId(originReply.getUpReplyId())
@@ -44,7 +40,7 @@ public class ReplyServiceImpl implements ReplyService {
                 .content(replyDTO.getContent())
                 .build();
 
-        ReplyDTO savedReply = entityTOdto(replyRepository.save(modifiedReply));
+        ReplyDTO savedReply = ReplyDTO.toDTO(replyRepository.save(modifiedReply));
 
         return savedReply;
     }
@@ -55,7 +51,7 @@ public class ReplyServiceImpl implements ReplyService {
 
         List<ReplyEntity> replies = replyRepository.findByReportIdOrderByCreateDate(reportId);
         replies.forEach((reply)->{
-            replyDTOS.add(entityTOdto(reply));
+            replyDTOS.add(ReplyDTO.toDTO(reply));
         });
 
         return replyDTOS;
