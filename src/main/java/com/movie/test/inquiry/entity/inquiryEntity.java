@@ -32,6 +32,9 @@ public class inquiryEntity extends baseTimeEntity {
     private String userId; // 작성자 id
 
     @Column
+    private String category; // 유형
+
+    @Column
     private String title; // 문의제목
 
     @Column

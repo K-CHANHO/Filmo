@@ -40,10 +40,10 @@ public class userServiceImpl implements userService{
     @Override
     public String makeNickname() {
 
-        String[] firstWord = {"영화보는", "노래하는", "춤추는", "달리는", "퇴근하는"};
+        String[] firstWord = {"영화보는", "친절한", "상냥한", "팝콘먹는", "예매하는", "평화주의"};
         int randomIndex1 = (int)(Math.random() * firstWord.length);
 
-        String[] secondWord = {"인어공주", "타노쓰", "디카프리오", "아이언맨", "배트맨"};
+        String[] secondWord = {"케빈", "금자씨", "안톤시거", "트루먼", "코코", "타노스"};
         int randomIndex2 = (int)(Math.random() * secondWord.length);
 
         String randomNumber = String.valueOf((int)(Math.random() * 10000));
