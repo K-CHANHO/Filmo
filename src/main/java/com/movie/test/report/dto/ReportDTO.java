@@ -22,4 +22,6 @@ public class ReportDTO {
 
     private Timestamp createDate;
     private Timestamp lastModifiedDate;
+
+    private long complaintCount; // 신고 횟수
 }

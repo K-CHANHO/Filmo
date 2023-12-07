@@ -1,13 +1,17 @@
 package com.movie.test.report.service;
 
+import com.movie.test.complaint.repository.ComplaintRepository;
 import com.movie.test.report.dto.ReportDTO;
 import com.movie.test.report.entity.ReportEntity;
 import com.movie.test.report.repository.ReportRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -16,6 +20,9 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     private ReportRepository reportRepository;
+
+    @Autowired
+    private ComplaintRepository complaintRepository;
 
     @Override
     public String registReport(ReportDTO reportDTO) {
@@ -32,6 +39,20 @@ public class ReportServiceImpl implements ReportService {
         ReportDTO reportDTO = entityTOdto(reportRepository.findById(reportId).get());
 
         return reportDTO;
+    }
+
+    @Override
+    public List<ReportDTO> getAllReports() {
+        List<ReportEntity> reportEntities = reportRepository.findAll(Sort.by(Sort.Direction.DESC, "createDate"));
+
+        List<ReportDTO> reportDTOS = new ArrayList<>();
+        reportEntities.forEach((entity) -> {
+            ReportDTO dto = entityTOdto(entity);
+            dto.setComplaintCount(complaintRepository.countByReportId(dto.getReportId()));
+            reportDTOS.add(dto);
+        });
+
+        return reportDTOS;
     }
 
     @Override

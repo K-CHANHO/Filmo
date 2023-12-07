@@ -1,5 +1,6 @@
 package com.movie.test.report.controller;
 
+import com.movie.test.complaint.service.ComplaintService;
 import com.movie.test.reply.dto.ReplyDTO;
 import com.movie.test.reply.service.ReplyService;
 import com.movie.test.report.dto.ReportDTO;
@@ -31,6 +32,9 @@ public class ReportController {
     @Autowired
     private ReplyService replyService;
 
+    @Autowired
+    private ComplaintService complaintService;
+
 
     @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")
     @Parameters({
@@ -59,6 +63,10 @@ public class ReportController {
     public ResponseEntity getReport(@PathVariable String reportId){
 
         ReportDTO report = reportService.getReport(reportId);
+
+        long complaintCount = complaintService.getComplaintCount(reportId);
+        report.setComplaintCount(complaintCount);
+
         List<ReplyDTO> replies = replyService.getReplies(reportId);
 
         Map<String, Object> serverData = new HashMap<>();
@@ -90,5 +98,12 @@ public class ReportController {
         replyService.deleteRepliesByReportId(reportId);
 
         return new ResponseEntity("Success Delete Report", HttpStatus.OK);
+    }
+
+    @GetMapping("/report/getAllReports")
+    public ResponseEntity getAllReports(){
+        List<ReportDTO> allReports = reportService.getAllReports();
+
+        return new ResponseEntity(allReports, HttpStatus.OK);
     }
 }
