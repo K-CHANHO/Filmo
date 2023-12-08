@@ -100,6 +100,7 @@ public class ReportController {
         return new ResponseEntity("Success Delete Report", HttpStatus.OK);
     }
 
+    @Operation(summary = "모든 감상문 조회", description = "모든 감상문을 조회합니다.")
     @GetMapping("/report/getAllReports")
     public ResponseEntity getAllReports(){
         List<ReportDTO> allReports = reportService.getAllReports();
