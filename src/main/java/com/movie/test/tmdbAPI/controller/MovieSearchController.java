@@ -1,6 +1,7 @@
 package com.movie.test.tmdbAPI.controller;
 
 import com.movie.test.tmdbAPI.dto.MovieSearchApiDTO;
+import com.movie.test.tmdbAPI.dto.MovieSearchResponseDTO;
 import com.movie.test.tmdbAPI.service.MovieSearchService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -41,7 +42,8 @@ public class MovieSearchController {
     public ResponseEntity movieSearch(MovieSearchApiDTO searchDTO, HttpServletRequest request, HttpServletResponse response){
 
         log.info("Start Movie Search API");
-        Map<String, String> movieInfo = (Map<String, String>) movieSearchService.getMovieInfo(searchDTO);
+        MovieSearchResponseDTO  movieInfo = (MovieSearchResponseDTO) movieSearchService.getMovieInfo(searchDTO);
+
         log.info("End Movie Search API");
         return new ResponseEntity(movieInfo, HttpStatus.OK);
     }
