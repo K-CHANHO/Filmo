@@ -10,13 +10,12 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
 @DynamicUpdate
-@Table(name = "Tags")
+@Table(name = "tags")
 public class TagEntity extends BaseTimeEntity {
 
     @Id
