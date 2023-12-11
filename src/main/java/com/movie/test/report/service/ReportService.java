@@ -17,4 +17,6 @@ public interface ReportService {
 
     void deleteReport(String reportId);
 
+    List<ReportDTO> getSearchReports(String keyword);
+
 }

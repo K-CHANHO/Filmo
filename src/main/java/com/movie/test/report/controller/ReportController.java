@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -110,5 +111,12 @@ public class ReportController {
         List<ReportDTO> allReports = reportService.getAllReports();
 
         return new ResponseEntity(allReports, HttpStatus.OK);
+    }
+
+    @GetMapping("/report/search/{keyword}")
+    public ResponseEntity searchReports(@PathVariable String keyword){
+        List<ReportDTO> searchReports = reportService.getSearchReports(keyword);
+
+        return new ResponseEntity(searchReports, HttpStatus.OK);
     }
 }

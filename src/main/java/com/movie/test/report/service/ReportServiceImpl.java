@@ -35,14 +35,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public ReportDTO getReport(String reportId) {
-        ReportDTO reportDTO = ReportDTO.toDTO(reportRepository.findById(reportId).get());
-        reportDTO.setComplaintCount(complaintRepository.countByReportId(reportDTO.getReportId()));
-
-        return reportDTO;
-    }
-
-    @Override
     public List<ReportDTO> getAllReports() {
         List<ReportEntity> reportEntities = reportRepository.findAll(Sort.by(Sort.Direction.DESC, "createDate"));
 
@@ -54,6 +46,14 @@ public class ReportServiceImpl implements ReportService {
         });
 
         return reportDTOS;
+    }
+
+    @Override
+    public ReportDTO getReport(String reportId) {
+        ReportDTO reportDTO = ReportDTO.toDTO(reportRepository.findById(reportId).get());
+        reportDTO.setComplaintCount(complaintRepository.countByReportId(reportDTO.getReportId()));
+
+        return reportDTO;
     }
 
     @Override
@@ -74,5 +74,16 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void deleteReport(String reportId) {
         reportRepository.deleteById(reportId);
+    }
+
+    @Override
+    public List<ReportDTO> getSearchReports(String keyword) {
+        List<ReportDTO> reportDTOList = new ArrayList<>();
+        List<ReportEntity> reportEntityList = reportRepository.findByTitleContainingAndContentContainingOrderByCreateDateDesc(keyword, keyword);
+        reportEntityList.forEach(entity -> {
+            reportDTOList.add(ReportDTO.toDTO(entity));
+        });
+
+        return reportDTOList;
     }
 }
