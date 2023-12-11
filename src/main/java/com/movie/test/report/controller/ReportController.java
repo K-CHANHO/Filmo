@@ -1,6 +1,7 @@
 package com.movie.test.report.controller;
 
 import com.movie.test.complaint.service.ComplaintService;
+import com.movie.test.hashtag.service.TagService;
 import com.movie.test.reply.dto.ReplyDTO;
 import com.movie.test.reply.service.ReplyService;
 import com.movie.test.report.dto.ReportDTO;
@@ -35,6 +36,9 @@ public class ReportController {
     @Autowired
     private ComplaintService complaintService;
 
+    @Autowired
+    private TagService tagService;
+
 
     @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")
     @Parameters({
@@ -49,7 +53,7 @@ public class ReportController {
         log.info("Start Report Controller : registReport");
 
         String reportId = reportService.registReport(reportDTO);
-
+        tagService.saveTags(reportId, reportDTO.getTagString());
         log.info("End Report Controller : registReport");
         return new ResponseEntity(reportId, HttpStatus.OK);
     }

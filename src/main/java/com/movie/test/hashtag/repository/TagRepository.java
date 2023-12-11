@@ -16,5 +16,7 @@ public interface TagRepository extends JpaRepository<TagEntity, Long> {
             " from tags t" +
             " where t.tagId in :tagIds"
             , nativeQuery = true)
-    List<String> findByReportId(@Param("tagIds") List<Long> tagIds);
+    List<String> findByTagIds(@Param("tagIds") List<Long> tagIds);
+
+    TagEntity findByContent(String content);
 }

@@ -22,5 +22,5 @@ public class TagInReportEntity {
     private String reportId;
 
     @Column
-    private String tagId;
+    private Long tagId;
 }

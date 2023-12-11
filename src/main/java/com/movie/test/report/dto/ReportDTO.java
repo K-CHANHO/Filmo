@@ -24,6 +24,8 @@ public class ReportDTO extends BaseTimeDTO {
 
     private long complaintCount; // 신고 횟수
 
+    private String tagString; // 태그 내용
+
     public static ReportDTO toDTO(ReportEntity entity) {
         ReportDTO dto = ReportDTO.builder()
                 .reportId(entity.getReportId())

@@ -2,14 +2,11 @@ package com.movie.test.hashtag.entity;
 
 import com.movie.test.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
