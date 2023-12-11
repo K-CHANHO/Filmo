@@ -28,7 +28,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         String token = request.getHeader("token");
         if(token == null){
-//            response.setStatus(403);
             response.sendError(403, "Token is NULL !!");
             return false;
         }

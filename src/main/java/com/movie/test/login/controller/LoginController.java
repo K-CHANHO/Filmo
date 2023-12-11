@@ -52,8 +52,8 @@ public class LoginController {
                     .type(isExistUser.getType())
                     .userId(isExistUser.getUserId())
                     .build();
-
             jwtToken = tokenServiceImpl.makeJwtToken(token);
+
             serverData.addProperty("status", "200");
             serverData.addProperty("token", jwtToken);
             response.setHeader("token", jwtToken);

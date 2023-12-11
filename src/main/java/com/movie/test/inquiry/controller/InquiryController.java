@@ -31,6 +31,8 @@ public class InquiryController {
     @PostMapping("/inquiry/regist")
     public ResponseEntity registInquiry(InquiryDTO inquiryDTO) {
         inquiryService.registInquiry(inquiryDTO);
+        log.info("{} 님이 문의를 등록하였습니다.", inquiryDTO.getUserId());
+
 
         return new ResponseEntity("success", HttpStatus.OK);
     }
