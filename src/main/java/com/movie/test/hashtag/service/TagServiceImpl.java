@@ -39,11 +39,15 @@ public class TagServiceImpl implements TagService{
 
         Long tagId = null;
         String[] tags = fullTags.split("#");
+
         for (int i = 1; i <tags.length; i++) {
-            if(tagRepository.findByContent(tags[i]) == null){
+            TagEntity tagEntity = tagRepository.findByContent(tags[i]);
+            if(tagEntity == null){
                 // tag 테이블에 태그 저장
                 TagEntity savedTag = tagRepository.save(TagEntity.builder().content(tags[i]).build());
                 tagId = savedTag.getTagId();
+            } else {
+                tagId = tagEntity.getTagId();
             }
             // tag in report 테이블에 저장
             tagInReportRepository.save(TagInReportEntity.builder()
