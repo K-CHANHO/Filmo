@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ReportRepository extends JpaRepository<ReportEntity, String> {
 
-    List<ReportEntity> findByTitleContainingAndContentContainingOrderByCreateDateDesc(String keyword, String keyword2);
+    List<ReportEntity> findByTitleContainingOrderByCreateDateDesc(String keyword);
 }
