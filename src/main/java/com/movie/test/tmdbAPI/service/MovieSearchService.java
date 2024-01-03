@@ -9,7 +9,6 @@ public interface MovieSearchService {
     Object getMovieInfo(MovieSearchApiDTO searchDTO);
 
 
-
     default MultiValueMap<String, String> dtoToMap(MovieSearchApiDTO searchDTO) {
 
         MultiValueMap<String, String> queryMap = new LinkedMultiValueMap<>();

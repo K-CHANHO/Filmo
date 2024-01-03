@@ -79,7 +79,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<ReportDTO> getSearchReports(String keyword) {
         List<ReportDTO> reportDTOList = new ArrayList<>();
-        List<ReportEntity> reportEntityList = reportRepository.findByTitleContainingAndContentContainingOrderByCreateDateDesc(keyword, keyword);
+        List<ReportEntity> reportEntityList = reportRepository.findByTitleContainingOrderByCreateDateDesc(keyword);
         reportEntityList.forEach(entity -> {
             reportDTOList.add(ReportDTO.toDTO(entity));
         });
