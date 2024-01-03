@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO newUserSave(UserDTO userDTO) {
 
+        if(userRepository.existsByUid(userDTO.getUid())){
+            UserEntity existUser = userRepository.findByUidAndType(userDTO.getUid(), userDTO.getType());
+            return UserDTO.toDTO(existUser);
+        }
+
         userDTO.setUserId(UUID.randomUUID().toString());
         userDTO.setNickname(makeNickname());
         if(userDTO.getProfileURL() != null) {
