@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "로그인", description = "소셜로그인을 이용한 로그인 API")
 @RestController
+@Slf4j
 public class LoginController {
 
     @Autowired
@@ -40,6 +42,8 @@ public class LoginController {
     })
     @PostMapping("/login")
     public ResponseEntity login(UserDTO logingUser, HttpServletResponse response){
+
+        log.info("login 요청 : {}", logingUser.toString());
 
         String jwtToken = null;
         UserDTO isExistUser = null;
