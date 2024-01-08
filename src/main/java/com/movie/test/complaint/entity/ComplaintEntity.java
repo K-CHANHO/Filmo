@@ -9,7 +9,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name = "complaint")
+@Table(name = "mv_complaint")
 @DynamicUpdate
 @AllArgsConstructor
 @NoArgsConstructor

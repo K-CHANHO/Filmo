@@ -11,7 +11,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tagInReport")
+@Table(name = "mv_tagInReport")
 public class TagInReportEntity {
 
     @Id

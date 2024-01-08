@@ -18,7 +18,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "inquiry")
+@Table(name = "mv_inquiry")
 public class InquiryEntity extends BaseTimeEntity {
 
     @Id

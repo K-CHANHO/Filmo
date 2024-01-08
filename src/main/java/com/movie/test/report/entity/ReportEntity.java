@@ -6,7 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name = "report")
+@Table(name = "mv_report")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

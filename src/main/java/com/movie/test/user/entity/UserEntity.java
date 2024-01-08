@@ -1,17 +1,14 @@
 package com.movie.test.user.entity;
 
 import com.movie.test.common.entity.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "user")
+@Table(name = "mv_user", indexes = @Index(name = "idx_nickname", columnList = "nickname", unique = true))
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,7 +26,7 @@ public class UserEntity extends BaseTimeEntity {
     @Column
     private String type; // 소셜 type
 
-    @Column
+    @Column(unique = true)
     private String nickname; // 닉네임
 
     @Column

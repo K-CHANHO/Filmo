@@ -9,7 +9,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name = "reply")
+@Table(name = "mv_reply")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
