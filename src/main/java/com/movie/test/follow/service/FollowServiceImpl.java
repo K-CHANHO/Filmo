@@ -25,4 +25,9 @@ public class FollowServiceImpl implements FollowService{
 
         return FollowDTO.toDTO(savedFollow);
     }
+
+    @Override
+    public void cancleFollow(String followId) {
+        followRepository.deleteById(followId);
+    }
 }
