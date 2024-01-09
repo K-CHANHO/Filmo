@@ -77,4 +77,18 @@ public class FollowController {
 
         return new ResponseEntity(followingList.getContent(), HttpStatus.OK);
     }
+
+    @Operation(summary = "팔로워 목록", description = "팔로워(나를 팔로잉 하는 사람) 목록을 조회합니다.")
+    @Parameter(name = "followTarget", description = "유저 id", required = true)
+    @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
+    @GetMapping("/follow/followerList")
+    public ResponseEntity getFollowerList(String followTarget){
+
+        Slice<FollowDTO> followerList = followService.getFollowerList(followTarget);
+
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("list", followerList.getContent());
+
+        return new ResponseEntity(followerList.getContent(), HttpStatus.OK);
+    }
 }

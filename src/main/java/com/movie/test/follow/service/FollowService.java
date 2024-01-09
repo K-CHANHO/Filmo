@@ -11,4 +11,6 @@ public interface FollowService {
 
 //    Slice<FollowDTO> getFollowingList(String userId, Pageable pageable);
     Slice<FollowDTO> getFollowingList(String userId);
+
+    Slice<FollowDTO> getFollowerList(String followTarget);
 }

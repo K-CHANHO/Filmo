@@ -44,5 +44,12 @@ public class FollowServiceImpl implements FollowService{
         return followingListDTO;
     }
 
+    @Override
+    public Slice<FollowDTO> getFollowerList(String followTarget) {
+        Slice<FollowEntity> followerListEntity = followRepository.findAllByFollowTarget(followTarget);
 
+        Slice<FollowDTO> followerListDTO = followerListEntity.map(FollowDTO::toDTO);
+
+        return followerListDTO;
+    }
 }
