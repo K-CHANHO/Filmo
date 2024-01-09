@@ -9,14 +9,24 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @Tag(name = "팔로우", description = "팔로우 관련 API")
 @RequiredArgsConstructor
+@Slf4j
 public class FollowController {
 
     private final FollowService followService;
@@ -49,5 +59,19 @@ public class FollowController {
         followService.cancleFollow(followId);
 
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Operation(summary = "팔로잉 목록", description = "팔로잉을 목록을 조회합니다.")
+    @Parameter(name = "userId", description = "유저 id", required = true)
+    @ApiResponse(responseCode = "200", description = "팔로잉 목록 리턴")
+    @GetMapping("/follow/followingList")
+    public ResponseEntity getFollowingList(String userId, @PageableDefault(size = 20, sort = "createDate", direction = Sort.Direction.DESC)Pageable pageable){
+
+        Slice<FollowDTO> followingList = followService.getFollowingList(userId, pageable);
+
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("list", followingList.getContent());
+
+        return new ResponseEntity(followingList.getContent(), HttpStatus.OK);
     }
 }

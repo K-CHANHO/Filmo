@@ -4,6 +4,8 @@ import com.movie.test.follow.dto.FollowDTO;
 import com.movie.test.follow.entity.FollowEntity;
 import com.movie.test.follow.repository.FollowRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,5 +31,15 @@ public class FollowServiceImpl implements FollowService{
     @Override
     public void cancleFollow(String followId) {
         followRepository.deleteById(followId);
+    }
+
+    @Override
+    public Slice<FollowDTO> getFollowingList(String userId, Pageable pageable) {
+
+        Slice<FollowEntity> followingListEntity = followRepository.findAllByUserId(userId, pageable);
+
+        Slice<FollowDTO> followingListDTO = followingListEntity.map(FollowDTO::toDTO);
+
+        return followingListDTO;
     }
 }
