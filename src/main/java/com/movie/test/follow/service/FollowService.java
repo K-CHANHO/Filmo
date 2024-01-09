@@ -9,5 +9,6 @@ public interface FollowService {
 
     void cancleFollow(String followId);
 
-    Slice<FollowDTO> getFollowingList(String userId, Pageable pageable);
+//    Slice<FollowDTO> getFollowingList(String userId, Pageable pageable);
+    Slice<FollowDTO> getFollowingList(String userId);
 }

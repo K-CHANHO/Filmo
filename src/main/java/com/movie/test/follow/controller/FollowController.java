@@ -67,7 +67,10 @@ public class FollowController {
     @GetMapping("/follow/followingList")
     public ResponseEntity getFollowingList(String userId, @PageableDefault(size = 20, sort = "createDate", direction = Sort.Direction.DESC)Pageable pageable){
 
-        Slice<FollowDTO> followingList = followService.getFollowingList(userId, pageable);
+        // TODO : JPA, Slice, Pageable 공부
+        // Slice<FollowDTO> followingList = followService.getFollowingList(userId, pageable);
+
+        Slice<FollowDTO> followingList = followService.getFollowingList(userId);
 
         Map<String, Object> resultData = new HashMap<>();
         resultData.put("list", followingList.getContent());
