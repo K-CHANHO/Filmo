@@ -5,6 +5,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface FollowRepository extends JpaRepository<FollowEntity, String> {
     FollowEntity findByUserIdAndFollowTarget(String userId, String followTarget);
@@ -13,4 +15,6 @@ public interface FollowRepository extends JpaRepository<FollowEntity, String> {
     Slice<FollowEntity> findAllByUserId(String userId);
 
     Slice<FollowEntity> findAllByFollowTarget(String followTarget);
+
+    List<String> findFollowTargetByUserId(String userId);
 }

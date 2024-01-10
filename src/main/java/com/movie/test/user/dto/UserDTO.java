@@ -18,11 +18,11 @@ import java.sql.Timestamp;
 public class UserDTO extends BaseTimeDTO {
 
     private String uid;
-    private String userId; // 자체 uid
+    private String userId; // 유저아이디(고유)
     private String type; // kakao OR google OR naver
-    private String nickname;
+    private String nickname; // 별명
     private String profileURL; // 프로필사진 url
-    private Timestamp lastLoginDate;
+    private Timestamp lastLoginDate; // 마지막 로그인 시간
     private String introduction; // 소개글
 
     public static UserDTO toDTO(UserEntity entity) {

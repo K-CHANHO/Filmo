@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FollowServiceImpl implements FollowService{
@@ -43,6 +45,16 @@ public class FollowServiceImpl implements FollowService{
 
         return followingListDTO;
     }
+
+    @Override
+    public List<String> getFollowingIdList(String userId) {
+
+        List<String> followingIdList = followRepository.findFollowTargetByUserId(userId);
+
+        return followingIdList;
+    }
+
+
 
     @Override
     public Slice<FollowDTO> getFollowerList(String followTarget) {

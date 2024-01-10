@@ -2,6 +2,7 @@ package com.movie.test.follow.controller;
 
 import com.movie.test.follow.dto.FollowDTO;
 import com.movie.test.follow.service.FollowService;
+import com.movie.test.user.dto.UserDTO;
 import com.movie.test.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -72,10 +75,19 @@ public class FollowController {
 
         Slice<FollowDTO> followingList = followService.getFollowingList(userId);
 
-        Map<String, Object> resultData = new HashMap<>();
-        resultData.put("list", followingList.getContent());
+        // 팔로잉 userId 리스트 추출
+        List<String> followingIdList = new ArrayList<>();
+        followingList.stream().forEach(following -> followingIdList.add(following.getFollowTarget()));
 
-        return new ResponseEntity(followingList.getContent(), HttpStatus.OK);
+        // 팔로잉하는 user들의 정보 추출
+        List<UserDTO> followingUserInfo = new ArrayList<>();
+        followingIdList.stream().forEach(followingUserId -> followingUserInfo.add(userService.getUserInfo(followingUserId)));
+
+
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("followingUserInfoList", followingUserInfo);
+
+        return new ResponseEntity(followingUserInfo, HttpStatus.OK);
     }
 
     @Operation(summary = "팔로워 목록", description = "팔로워(나를 팔로잉 하는 사람) 목록을 조회합니다.")
@@ -86,9 +98,17 @@ public class FollowController {
 
         Slice<FollowDTO> followerList = followService.getFollowerList(followTarget);
 
-        Map<String, Object> resultData = new HashMap<>();
-        resultData.put("list", followerList.getContent());
+        // 팔로워 userId 리스트 추출
+        List<String> followerIdList = new ArrayList<>();
+        followerList.stream().forEach(follower -> followerIdList.add(follower.getUserId()));
 
-        return new ResponseEntity(followerList.getContent(), HttpStatus.OK);
+        // 나를 팔로잉하는 user들의 정보 추출
+        List<UserDTO> followerUserInfo = new ArrayList<>();
+        followerIdList.stream().forEach(followerUserId -> followerUserInfo.add(userService.getUserInfo(followerUserId)));
+
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("followerUserInfoList", followerUserInfo);
+
+        return new ResponseEntity(followerUserInfo, HttpStatus.OK);
     }
 }
