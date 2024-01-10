@@ -70,6 +70,18 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+#      - name: Download artifact
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: cicdsample
+#          path: "build/libs"
+
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Build App
+        run: ./gradlew bootJar
+
       - name: Deliver File
         uses: appleboy/scp-action@master
         with:
@@ -77,9 +89,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "build/libs/*.jar"
-          target: "/home/ubuntu/"
-          rm: true
+          source: "./build/libs/*.jar"
+          target: "/home/ubuntu"
 
       - name: Execute Server
         uses: appleboy/ssh-action@master
