@@ -42,6 +42,11 @@ dependencies {
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.2.0'
 	// https://mvnrepository.com/artifact/com.h2database/h2
 	implementation group: 'com.h2database', name: 'h2', version: '2.2.224'
+	// Query DSL
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
 
 
 }
@@ -52,4 +57,18 @@ tasks.named('test') {
 
 jar {
 	enabled = false
+}
+
+def querydslDir = 'src/main/generated'
+
+sourceSets {
+	main.java.srcDirs += [ querydslDir ]
+}
+
+tasks.withType(JavaCompile) {
+	options.generatedSourceOutputDirectory.set(file(querydslDir))
+}
+
+clean.doLast {
+	file(querydslDir).deleteDir()
 }
