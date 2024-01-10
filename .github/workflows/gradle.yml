@@ -70,10 +70,15 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
+      - run: mkdir ~/distfiles
+
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: cicdsample
+          name: distfiles
+          path: distfiles
 
       - name: Deliver File
         uses: appleboy/scp-action@master
@@ -82,7 +87,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "./build/libs/*.jar"
+          rm : true
+          source: distfiles/*
           target: "/home/ubuntu"
 
       - name: Execute Server
