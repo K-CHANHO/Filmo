@@ -87,9 +87,9 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          rm : true
+#          rm : true
           source: distfiles/*
-          target: "/home/ubuntu"
+          target: "/home/ubuntu/deploy"
 
       - name: Execute Server
         uses: appleboy/ssh-action@master
