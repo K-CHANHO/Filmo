@@ -95,25 +95,30 @@ jobs:
           source: distfiles/*
           target: "/home/ubuntu/deploy"
 
-      - name: Execute Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            SOURCE_DIR=/home/ubuntu/deploy/distfiles
-            FILE_NAME=`find $SOURCE_DIR/*.jar -printf "%f\n"`
-            PID=`ps -ef | grep occupying | grep sudo | grep -v "bash -c" | awk '{print $2}'`
-            
-            if [ -z "$PID" ]; then
-                    echo "#### THERE IS NO PROCESS ####"
-            else
-                    echo "#### KILL $PID ####"
-                    sudo kill $PID
-            fi
-            
-            echo "#### RUN $SOURCE_DIR/$FILE_NAME ####"
-            
-            sudo nohup java -jar $SOURCE_DIR/$FILE_NAME &
+#      - name: Execute Server
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.SERVER_IP }}
+#          username: ${{ secrets.SSH_USER }}
+#          key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          port: ${{ secrets.SSH_PORT }}
+#          script: |
+#            SOURCE_DIR=/home/ubuntu/deploy/distfiles
+#            FILE_NAME=`find $SOURCE_DIR/*.jar -printf "%f\n"`
+#            PID=`ps -ef | grep sudo | grep .jar | grep nohup | awk '{print $2}'`
+#
+#            if [ -z "$PID" ]; then
+#                    echo "#### THERE IS NO PROCESS ####"
+#            else
+#                    echo "#### KILL $PID ####"
+#                    sudo kill $PID
+#            fi
+#
+#            echo "#### RUN $SOURCE_DIR/$FILE_NAME ####"
+#
+#            sudo nohup java -jar $SOURCE_DIR/$FILE_NAME &
+
+      - name: Execute remote commands
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo fuser -k 8080/tcp || true"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo nohup /usr/bin/java -jar /home/ubuntu/deploy/distfiles/*.jar &"
