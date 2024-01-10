@@ -67,6 +67,8 @@ jobs:
 #          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo nohup /usr/bin/java -jar ~/cicd/*.jar &"
 
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     steps:
       - name: Deliver File
         uses: appleboy/scp-action@master
