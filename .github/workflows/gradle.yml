@@ -79,6 +79,9 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: Build App
         run: ./gradlew bootJar
 
