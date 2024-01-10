@@ -78,10 +78,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: "build/libs/*.jar"
-          target: "source"
+          target: "/home/ubuntu/"
           rm: true
 
-      - name: Deploy
+      - name: Execute Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -89,7 +89,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            SOURCE_DIR=source/build/libs
+            SOURCE_DIR=/home/ubuntu
             FILE_NAME=`find $SOURCE_DIR/*.jar -printf "%f\n"`
             PID=`ps -ef | grep occupying | grep sudo | grep -v "bash -c" | awk '{print $2}'`
             
@@ -102,4 +102,4 @@ jobs:
             
             echo "#### RUN $SOURCE_DIR/$FILE_NAME ####"
             
-            sudo java -jar $SOURCE_DIR/$FILE_NAME > /dev/null 2>&1 &
+            sudo java -jar $SOURCE_DIR/$FILE_NAME &
