@@ -113,7 +113,8 @@ jobs:
                     echo "#### THERE IS NO PROCESS ####"
             else
                     echo "#### KILL $PID ####"
-                    sudo kill $PID
+#                    sudo kill $PID
+                    sudo fuser -k 8080/tcp || true
             fi
 
             echo "#### RUN $SOURCE_DIR/$FILE_NAME ####"
