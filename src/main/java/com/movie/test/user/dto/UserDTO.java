@@ -23,6 +23,7 @@ public class UserDTO extends BaseTimeDTO {
     private String nickname;
     private String profileURL; // 프로필사진 url
     private Timestamp lastLoginDate;
+    private String introduction; // 소개글
 
     public static UserDTO toDTO(UserEntity entity) {
         UserDTO dto = UserDTO.builder()
@@ -34,6 +35,7 @@ public class UserDTO extends BaseTimeDTO {
                 .lastLoginDate(entity.getLastLoginDate())
                 .createDate(entity.getCreateDate())
                 .lastModifiedDate(entity.getLastModifiedDate())
+                .introduction(entity.getIntroduction())
                 .build();
 
         return dto;
@@ -47,8 +49,11 @@ public class UserDTO extends BaseTimeDTO {
                 .nickname(dto.getNickname())
                 .profileURL(dto.profileURL)
                 .lastLoginDate(dto.lastLoginDate)
+                .introduction(dto.getIntroduction())
                 .build();
 
         return entity;
     }
 }
+
+

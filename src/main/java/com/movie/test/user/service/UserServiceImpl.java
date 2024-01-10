@@ -65,7 +65,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserInfo(String userid) {
-        Map<String, Object> userinfoMap = new HashMap<>();
 
         UserDTO userDTO = UserDTO.toDTO(userRepository.findById(userid).get());
 

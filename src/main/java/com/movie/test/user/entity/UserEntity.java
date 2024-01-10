@@ -20,10 +20,10 @@ public class UserEntity extends BaseTimeEntity {
     @Column
     private String userId; // 자체 uid
 
-    @Column
+    @Column(nullable = false)
     private String uid; // 소셜 uid
 
-    @Column
+    @Column(nullable = false)
     private String type; // 소셜 type
 
     @Column(unique = true)
@@ -35,5 +35,8 @@ public class UserEntity extends BaseTimeEntity {
     @LastModifiedDate
     @Column
     private Timestamp lastLoginDate; // 마지막 로그인 시간
+
+    @Column
+    private String introduction; // 소개글
 
 }
