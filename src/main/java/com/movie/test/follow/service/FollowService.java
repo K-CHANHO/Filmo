@@ -1,6 +1,7 @@
 package com.movie.test.follow.service;
 
 import com.movie.test.follow.dto.FollowDTO;
+import com.movie.test.user.dto.UserDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
@@ -11,9 +12,12 @@ public interface FollowService {
 
     void cancleFollow(String followId);
 
-//    Slice<FollowDTO> getFollowingList(String userId, Pageable pageable);
     Slice<FollowDTO> getFollowingList(String userId);
+    Slice<UserDTO> getFollowingUserInfo(String userId, String lastUserId, Pageable pageable);
+
     List<String> getFollowingIdList(String userId);
 
     Slice<FollowDTO> getFollowerList(String followTarget);
+
+
 }

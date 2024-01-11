@@ -8,10 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FollowRepository extends JpaRepository<FollowEntity, String> {
+public interface FollowRepository extends JpaRepository<FollowEntity, String>, FollowRepositoryCustom {
     FollowEntity findByUserIdAndFollowTarget(String userId, String followTarget);
 
-//    Slice<FollowEntity> findAllByUserId(String userId, Pageable pageable);
     Slice<FollowEntity> findAllByUserId(String userId);
 
     Slice<FollowEntity> findAllByFollowTarget(String followTarget);

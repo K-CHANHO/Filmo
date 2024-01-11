@@ -3,6 +3,8 @@ package com.movie.test.follow.service;
 import com.movie.test.follow.dto.FollowDTO;
 import com.movie.test.follow.entity.FollowEntity;
 import com.movie.test.follow.repository.FollowRepository;
+import com.movie.test.user.dto.UserDTO;
+import com.movie.test.user.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -38,12 +40,18 @@ public class FollowServiceImpl implements FollowService{
     @Override
     public Slice<FollowDTO> getFollowingList(String userId) {
 
-//        Slice<FollowEntity> followingListEntity = followRepository.findAllByUserId(userId, pageable);
         Slice<FollowEntity> followingListEntity = followRepository.findAllByUserId(userId);
 
         Slice<FollowDTO> followingListDTO = followingListEntity.map(FollowDTO::toDTO);
 
         return followingListDTO;
+    }
+
+    @Override
+    public Slice<UserDTO> getFollowingUserInfo(String userId, String lastUserId, Pageable pageable) {
+        Slice<UserEntity> followingUserInfoEntity = followRepository.getFollowingUserInfo(userId, lastUserId, pageable);
+        Slice<UserDTO> followingUserInfoDTO = followingUserInfoEntity.map(UserDTO::toDTO);
+        return followingUserInfoDTO;
     }
 
     @Override

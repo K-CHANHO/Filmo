@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class FollowController {
     @Operation(summary = "팔로잉 등록", description = "팔로잉을 등록합니다.")
     @Parameters({
             @Parameter(name = "userId", description = "현재 사용자 id", required = true),
-            @Parameter(name = "followTarget", description = "팔로잉할 상대 id", required = true),
+            @Parameter(name = "followTarget", description = "팔로잉할 상대 id", required = true)
     })
     @ApiResponse(responseCode = "200", description = "등록된 팔로잉 정보 리턴")
     @PostMapping("/follow/regist")
@@ -64,11 +65,14 @@ public class FollowController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Operation(summary = "팔로잉 목록", description = "팔로잉을 목록을 조회합니다.")
-    @Parameter(name = "userId", description = "유저 id", required = true)
+    @Operation(summary = "팔로잉 목록", description = "팔로잉 목록을 조회합니다.")
+    @Parameters({
+        @Parameter(name = "userId", description = "유저 id", required = true),
+        @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id", required = false)
+    })
     @ApiResponse(responseCode = "200", description = "팔로잉 목록 리턴")
     @GetMapping("/follow/followingList")
-    public ResponseEntity getFollowingList(String userId, @PageableDefault(size = 20, sort = "createDate", direction = Sort.Direction.DESC)Pageable pageable){
+    public ResponseEntity getFollowingList(String userId, @RequestParam(defaultValue = "") String lastUserId, Pageable pageable){
 
         // TODO : JPA, Slice, Pageable 공부
         // Slice<FollowDTO> followingList = followService.getFollowingList(userId, pageable);
@@ -83,11 +87,15 @@ public class FollowController {
         List<UserDTO> followingUserInfo = new ArrayList<>();
         followingIdList.stream().forEach(followingUserId -> followingUserInfo.add(userService.getUserInfo(followingUserId)));
 
+        // Slice로 구현 연습 : List를 먼저 구하고 그 안에서 Slice로 자르기.
+        Slice<UserDTO> followingUserInfo2 = followService.getFollowingUserInfo(userId, lastUserId, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
-        resultData.put("followingUserInfoList", followingUserInfo);
+//        resultData.put("followingUserInfoList", followingUserInfo);
+        resultData.put("followingUserInfoList2", followingUserInfo2.getContent());
+        resultData.put("followingUserInfoList2-1", followingUserInfo2.hasNext());
 
-        return new ResponseEntity(followingUserInfo, HttpStatus.OK);
+        return new ResponseEntity(resultData, HttpStatus.OK);
     }
 
     @Operation(summary = "팔로워 목록", description = "팔로워(나를 팔로잉 하는 사람) 목록을 조회합니다.")

@@ -68,3 +68,9 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:522)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 50 more
+2024-01-11 17:36:54.014291+09:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MV_follow\000d\000awhere userid > '05790a48-7647-4e17-9878-f7910fe78038'\000d\000a\000d\000a[*]select* from mv_follow"; SQL statement:
+SELECT * FROM MV_follow
+where userid > '05790a48-7647-4e17-9878-f7910fe78038'
+
+select* from mv_follow [42000-224]
