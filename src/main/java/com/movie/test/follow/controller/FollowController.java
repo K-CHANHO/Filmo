@@ -47,9 +47,8 @@ public class FollowController {
 
         FollowDTO followingResult = followService.registFollowing(followDTO);
 
-        // TODO : 닉네임을 같이 넘겨주는게 좋으려나?
+        // 팔로우 한 유저의 닉네임 추가
         String followTargetNickname = userService.getUserInfo(followingResult.getFollowTarget()).getNickname();
-
         followingResult.setFollowTargetNickname(followTargetNickname);
 
         return new ResponseEntity(followingResult, HttpStatus.OK);

@@ -42,4 +42,6 @@ public class FollowDTO extends BaseTimeDTO {
 
         return entity;
     }
+
+    private String followTargetNickname;
 }
