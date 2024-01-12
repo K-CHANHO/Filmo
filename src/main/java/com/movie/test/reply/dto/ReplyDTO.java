@@ -3,16 +3,14 @@ package com.movie.test.reply.dto;
 import com.movie.test.common.dto.BaseTimeDTO;
 import com.movie.test.reply.entity.ReplyEntity;
 import io.swagger.v3.oas.annotations.Hidden;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
 
 @Hidden
 @Data
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
