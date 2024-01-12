@@ -74,49 +74,34 @@ public class FollowController {
     @GetMapping("/follow/followingList")
     public ResponseEntity getFollowingList(String userId, @RequestParam(defaultValue = "") String lastUserId, Pageable pageable){
 
-        // TODO : JPA, Slice, Pageable 공부
-        // Slice<FollowDTO> followingList = followService.getFollowingList(userId, pageable);
-
-        Slice<FollowDTO> followingList = followService.getFollowingList(userId);
-
-        // 팔로잉 userId 리스트 추출
-        List<String> followingIdList = new ArrayList<>();
-        followingList.stream().forEach(following -> followingIdList.add(following.getFollowTarget()));
-
-        // 팔로잉하는 user들의 정보 추출
-        List<UserDTO> followingUserInfo = new ArrayList<>();
-        followingIdList.stream().forEach(followingUserId -> followingUserInfo.add(userService.getUserInfo(followingUserId)));
-
-        // Slice로 구현 연습 : List를 먼저 구하고 그 안에서 Slice로 자르기.
-        Slice<UserDTO> followingUserInfo2 = followService.getFollowingUserInfo(userId, lastUserId, pageable);
+        // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
+        Slice<UserDTO> followingUserInfo = followService.getFollowingUserInfo(userId, lastUserId, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
-//        resultData.put("followingUserInfoList", followingUserInfo);
-        resultData.put("followingUserInfoList2", followingUserInfo2.getContent());
-        resultData.put("followingUserInfoList2-1", followingUserInfo2.hasNext());
+//        resultData.put("followingUserInfoList", followingUserInfo); -> pageable 중복으로 JSON 변환 에러.. 해결법 찾는 중
+        resultData.put("followingUserInfoList", followingUserInfo.getContent());
+        resultData.put("hasNext", followingUserInfo.hasNext());
 
         return new ResponseEntity(resultData, HttpStatus.OK);
     }
 
     @Operation(summary = "팔로워 목록", description = "팔로워(나를 팔로잉 하는 사람) 목록을 조회합니다.")
-    @Parameter(name = "followTarget", description = "유저 id", required = true)
+    @Parameters({
+            @Parameter(name = "followTarget", description = "유저 id", required = true),
+            @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id", required = false)
+    })
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
     @GetMapping("/follow/followerList")
-    public ResponseEntity getFollowerList(String followTarget){
+    public ResponseEntity getFollowerList(String followTarget, @RequestParam(defaultValue = "") String lastUserId, Pageable pageable){
 
-        Slice<FollowDTO> followerList = followService.getFollowerList(followTarget);
-
-        // 팔로워 userId 리스트 추출
-        List<String> followerIdList = new ArrayList<>();
-        followerList.stream().forEach(follower -> followerIdList.add(follower.getUserId()));
-
-        // 나를 팔로잉하는 user들의 정보 추출
-        List<UserDTO> followerUserInfo = new ArrayList<>();
-        followerIdList.stream().forEach(followerUserId -> followerUserInfo.add(userService.getUserInfo(followerUserId)));
+        // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
+        Slice<UserDTO> followerUserInfo = followService.getFollowerUserInfo(followTarget, lastUserId, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
-        resultData.put("followerUserInfoList", followerUserInfo);
+//        resultData.put("followingUserInfoList", followingUserInfo); -> pageable 중복으로 JSON 변환 에러.. 해결법 찾는 중
+        resultData.put("followingUserInfoList", followerUserInfo.getContent());
+        resultData.put("hasNext", followerUserInfo.hasNext());
 
-        return new ResponseEntity(followerUserInfo, HttpStatus.OK);
+        return new ResponseEntity(resultData, HttpStatus.OK);
     }
 }

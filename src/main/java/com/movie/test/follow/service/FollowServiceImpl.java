@@ -55,21 +55,9 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public List<String> getFollowingIdList(String userId) {
-
-        List<String> followingIdList = followRepository.findFollowTargetByUserId(userId);
-
-        return followingIdList;
-    }
-
-
-
-    @Override
-    public Slice<FollowDTO> getFollowerList(String followTarget) {
-        Slice<FollowEntity> followerListEntity = followRepository.findAllByFollowTarget(followTarget);
-
-        Slice<FollowDTO> followerListDTO = followerListEntity.map(FollowDTO::toDTO);
-
-        return followerListDTO;
+    public Slice<UserDTO> getFollowerUserInfo(String followTarget, String lastUserId, Pageable pageable) {
+        Slice<UserEntity> followerUserInfoEntity = followRepository.getFollowerUserInfo(followTarget, lastUserId, pageable);
+        Slice<UserDTO> followerUserInfoDTO = followerUserInfoEntity.map(UserDTO::toDTO);
+        return followerUserInfoDTO;
     }
 }

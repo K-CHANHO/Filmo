@@ -30,7 +30,6 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
                 .where(
                         follow.userId.eq(userId),
                         follow.followTarget.gt(lastUserId)
-
                 )
                 .orderBy(follow.createDate.desc())
                 .fetch();
@@ -49,6 +48,37 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
 
         Slice<UserEntity> result = new SliceImpl<>(followingUserInfo, pageable, hasNext);
 
+        return result;
+    }
+
+    @Override
+    public Slice<UserEntity> getFollowerUserInfo(String followTarget, String lastUserId, Pageable pageable) {
+        QFollowEntity follow = QFollowEntity.followEntity;
+        QUserEntity user = QUserEntity.userEntity;
+
+        // 팔로워 id 리스트 추출
+        List<String> followerUserId = jpaQueryFactory.select(follow.followTarget)
+                .from(follow)
+                .where(
+                        follow.followTarget.eq(followTarget),
+                        follow.userId.gt(lastUserId)
+                )
+                .orderBy(follow.createDate.desc())
+                .fetch();
+
+        // id 리스트를 통해 유저정보 추출
+        List<UserEntity> followerUserInfo = jpaQueryFactory.selectFrom(user)
+                .where(user.userId.in(followerUserId))
+                .limit(pageable.getPageSize() + 1)
+                .fetch();
+
+        boolean hasNext = false;
+        if(followerUserInfo.size() > pageable.getPageSize()){
+            followerUserInfo.remove(pageable.getPageSize());
+            hasNext = true;
+        }
+
+        Slice<UserEntity> result = new SliceImpl<>(followerUserInfo, pageable, hasNext);
 
         return result;
     }

@@ -9,4 +9,5 @@ public interface FollowRepositoryCustom {
 
     Slice<UserEntity> getFollowingUserInfo(String userId, String lastUserId, Pageable pageable);
 
+    Slice<UserEntity> getFollowerUserInfo(String followTarget, String lastUserId, Pageable pageable);
 }
