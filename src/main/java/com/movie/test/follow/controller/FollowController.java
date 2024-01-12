@@ -31,12 +31,13 @@ public class FollowController {
     private final FollowService followService;
     private final UserService userService;
 
-    @Operation(summary = "팔로잉 등록", description = "팔로잉을 등록합니다.")
+    @Operation(summary = "팔로잉/차단 등록", description = "팔로잉 또는 차단을 등록합니다.")
     @Parameters({
             @Parameter(name = "userId", description = "현재 사용자 id", required = true),
-            @Parameter(name = "followTarget", description = "팔로잉할 상대 id", required = true)
+            @Parameter(name = "followTarget", description = "대상 id", required = true),
+            @Parameter(name = "type", description = "follow(팔로우) 또는 block(차단)", required = true)
     })
-    @ApiResponse(responseCode = "200", description = "등록된 팔로잉 정보 리턴")
+    @ApiResponse(responseCode = "200", description = "등록된 팔로잉/차단 정보 리턴")
     @PostMapping("/regist")
     public ResponseEntity registFollow(FollowDTO followDTO) {
 

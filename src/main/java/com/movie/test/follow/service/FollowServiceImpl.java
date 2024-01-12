@@ -21,15 +21,27 @@ public class FollowServiceImpl implements FollowService{
     @Override
     public FollowDTO registFollowing(FollowDTO followDTO) {
 
-        // 이미 팔로우한 경우 기존 데이터 리턴
+        FollowDTO returnDTO = null;
+
+        // 이미 팔로우한 경우 type 비교
         FollowEntity checkValid = followRepository.findByUserIdAndFollowTarget(followDTO.getUserId(), followDTO.getFollowTarget());
         if(checkValid != null){
-            return FollowDTO.toDTO(checkValid);
+            // type 같을 경우 기존 데이터 리턴
+            if(checkValid.getType().equals(followDTO.getType())){
+                returnDTO = FollowDTO.toDTO(checkValid);
+            }
+            // type 다른 경우 update
+            else {
+                FollowEntity changeTypeEntity = checkValid.toBuilder().type(followDTO.getType()).build();
+                FollowEntity savedFollow = followRepository.save(changeTypeEntity);
+                returnDTO = FollowDTO.toDTO(savedFollow);
+            }
+        } else {
+            FollowEntity savedFollow = followRepository.save(FollowDTO.toEntity(followDTO));
+            returnDTO = FollowDTO.toDTO(savedFollow);
         }
 
-        FollowEntity savedFollow = followRepository.save(FollowDTO.toEntity(followDTO));
-
-        return FollowDTO.toDTO(savedFollow);
+        return returnDTO;
     }
 
     @Override

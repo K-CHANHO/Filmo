@@ -12,7 +12,7 @@ import org.hibernate.annotations.UuidGenerator;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 @DynamicUpdate
 public class FollowEntity extends BaseTimeEntity {
 
@@ -25,4 +25,7 @@ public class FollowEntity extends BaseTimeEntity {
 
     @Column
     private String followTarget; // 팔로우 대상
+
+    @Column
+    private String type; // follow(팔로우) 또는 block(차단)
 }
