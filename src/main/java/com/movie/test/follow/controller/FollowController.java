@@ -67,10 +67,10 @@ public class FollowController {
     })
     @ApiResponse(responseCode = "200", description = "팔로잉 목록 리턴")
     @GetMapping("/followingList")
-    public ResponseEntity getFollowingList(String userId, @RequestParam(defaultValue = "") String lastUserId, Pageable pageable){
+    public ResponseEntity getFollowingList(String userId, @RequestParam(defaultValue = "") String lastUserId, String keyword, Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
-        Slice<UserDTO> followingUserInfo = followService.getFollowingUserInfo(userId, lastUserId, pageable);
+        Slice<UserDTO> followingUserInfo = followService.getFollowingUserInfo(userId, lastUserId, keyword, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
 //        resultData.put("followingUserInfoList", followingUserInfo); -> pageable 중복으로 JSON 변환 에러.. 해결법 찾는 중
@@ -87,10 +87,10 @@ public class FollowController {
     })
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
     @GetMapping("/followerList")
-    public ResponseEntity getFollowerList(String followTarget, @RequestParam(defaultValue = "") String lastUserId, Pageable pageable){
+    public ResponseEntity getFollowerList(String followTarget, @RequestParam(defaultValue = "") String lastUserId, String keyword,  Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
-        Slice<UserDTO> followerUserInfo = followService.getFollowerUserInfo(followTarget, lastUserId, pageable);
+        Slice<UserDTO> followerUserInfo = followService.getFollowerUserInfo(followTarget, lastUserId, keyword, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
 //        resultData.put("followingUserInfoList", followingUserInfo); -> pageable 중복으로 JSON 변환 에러.. 해결법 찾는 중

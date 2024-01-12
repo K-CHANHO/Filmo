@@ -7,7 +7,7 @@ import org.springframework.data.domain.Slice;
 
 public interface FollowRepositoryCustom {
 
-    Slice<UserEntity> getFollowingUserInfo(String userId, String lastUserId, Pageable pageable);
+    Slice<UserEntity> getFollowingUserInfo(String userId, String lastUserId, String keyword, Pageable pageable);
 
-    Slice<UserEntity> getFollowerUserInfo(String followTarget, String lastUserId, Pageable pageable);
+    Slice<UserEntity> getFollowerUserInfo(String followTarget, String lastUserId, String keyword, Pageable pageable);
 }

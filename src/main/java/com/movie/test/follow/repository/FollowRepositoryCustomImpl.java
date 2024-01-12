@@ -3,6 +3,10 @@ package com.movie.test.follow.repository;
 import com.movie.test.follow.entity.QFollowEntity;
 import com.movie.test.user.entity.QUserEntity;
 import com.movie.test.user.entity.UserEntity;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,17 +23,19 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
 
+    private QFollowEntity follow = QFollowEntity.followEntity;
+    private QUserEntity user = QUserEntity.userEntity;
+
     @Override
-    public Slice<UserEntity> getFollowingUserInfo(String userId, String lastUserId, Pageable pageable) {
-        QFollowEntity follow = QFollowEntity.followEntity;
-        QUserEntity user = QUserEntity.userEntity;
+    public Slice<UserEntity> getFollowingUserInfo(String userId, String lastUserId, String keyword, Pageable pageable) {
 
         // 팔로잉 id 리스트 추출
         List<String> followingUserId = jpaQueryFactory.select(follow.followTarget)
-                .from(follow)
+                .from(follow, user).leftJoin(user).on(follow.followTarget.eq(user.userId))
                 .where(
                         follow.userId.eq(userId),
-                        follow.followTarget.gt(lastUserId)
+                        follow.followTarget.gt(lastUserId),
+                        keywordCheck(keyword)
                 )
                 .orderBy(follow.createDate.desc())
                 .fetch();
@@ -52,16 +58,15 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
     }
 
     @Override
-    public Slice<UserEntity> getFollowerUserInfo(String followTarget, String lastUserId, Pageable pageable) {
-        QFollowEntity follow = QFollowEntity.followEntity;
-        QUserEntity user = QUserEntity.userEntity;
+    public Slice<UserEntity> getFollowerUserInfo(String followTarget, String lastUserId, String keyword, Pageable pageable) {
 
         // 팔로워 id 리스트 추출
         List<String> followerUserId = jpaQueryFactory.select(follow.followTarget)
-                .from(follow)
+                .from(follow).leftJoin(user).on(follow.userId.eq(user.userId))
                 .where(
                         follow.followTarget.eq(followTarget),
-                        follow.userId.gt(lastUserId)
+                        follow.userId.gt(lastUserId),
+                        keywordCheck(keyword)
                 )
                 .orderBy(follow.createDate.desc())
                 .fetch();
@@ -80,6 +85,17 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
 
         Slice<UserEntity> result = new SliceImpl<>(followerUserInfo, pageable, hasNext);
 
+        JPAQuery<String> where = jpaQueryFactory.select(follow.followTarget)
+                .from(follow)
+                .where(
+                        follow.followTarget.eq(followTarget),
+                        follow.userId.gt(lastUserId)
+                );
+
         return result;
+    }
+
+    private BooleanExpression keywordCheck(String keyword) {
+        return keyword != null ? user.nickname.contains(keyword) : null;
     }
 }

@@ -12,9 +12,9 @@ public interface FollowService {
 
     void cancleFollow(String followId);
 
-    Slice<UserDTO> getFollowingUserInfo(String userId, String lastUserId, Pageable pageable);
+    Slice<UserDTO> getFollowingUserInfo(String userId, String lastUserId, String keyword, Pageable pageable);
 
-    Slice<UserDTO> getFollowerUserInfo(String followTarget, String lastUserId, Pageable pageable);
+    Slice<UserDTO> getFollowerUserInfo(String followTarget, String lastUserId, String keyword, Pageable pageable);
 
     boolean isFollowing(String userId, String followTarget);
 
