@@ -38,16 +38,6 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public Slice<FollowDTO> getFollowingList(String userId) {
-
-        Slice<FollowEntity> followingListEntity = followRepository.findAllByUserId(userId);
-
-        Slice<FollowDTO> followingListDTO = followingListEntity.map(FollowDTO::toDTO);
-
-        return followingListDTO;
-    }
-
-    @Override
     public Slice<UserDTO> getFollowingUserInfo(String userId, String lastUserId, Pageable pageable) {
         Slice<UserEntity> followingUserInfoEntity = followRepository.getFollowingUserInfo(userId, lastUserId, pageable);
         Slice<UserDTO> followingUserInfoDTO = followingUserInfoEntity.map(UserDTO::toDTO);
@@ -59,5 +49,11 @@ public class FollowServiceImpl implements FollowService{
         Slice<UserEntity> followerUserInfoEntity = followRepository.getFollowerUserInfo(followTarget, lastUserId, pageable);
         Slice<UserDTO> followerUserInfoDTO = followerUserInfoEntity.map(UserDTO::toDTO);
         return followerUserInfoDTO;
+    }
+
+    @Override
+    public boolean isFollowing(String userId, String followTarget) {
+        boolean isFollowing = followRepository.existsByUserIdAndFollowTarget(userId, followTarget);
+        return isFollowing;
     }
 }

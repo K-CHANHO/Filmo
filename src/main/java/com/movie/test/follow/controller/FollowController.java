@@ -48,8 +48,9 @@ public class FollowController {
         FollowDTO followingResult = followService.registFollowing(followDTO);
 
         // TODO : 닉네임을 같이 넘겨주는게 좋으려나?
-        String nickname = userService.getUserInfo(followingResult.getFollowTarget()).getNickname();
-        String msg = nickname + "님을 팔로우하였습니다.";
+        String followTargetNickname = userService.getUserInfo(followingResult.getFollowTarget()).getNickname();
+
+        followingResult.setFollowTargetNickname(followTargetNickname);
 
         return new ResponseEntity(followingResult, HttpStatus.OK);
     }
@@ -103,5 +104,19 @@ public class FollowController {
         resultData.put("hasNext", followerUserInfo.hasNext());
 
         return new ResponseEntity(resultData, HttpStatus.OK);
+    }
+
+    @Operation(summary = "팔로잉 확인", description = "상대를 팔로잉하고 있는 지 확인")
+    @Parameters({
+            @Parameter(name = "userId", description = "유저 id", required = true),
+            @Parameter(name = "followTarget", description = "상대 id", required = true)
+    })
+    @ApiResponse(responseCode = "200", description = "팔로잉하고 있는 경우 true, 아니면 false 리턴")
+    @GetMapping("/follow/isFollow")
+    public ResponseEntity isFollowing(String userId, String followTarget){
+
+        boolean isFollowing = followService.isFollowing(userId, followTarget);
+
+        return new ResponseEntity(isFollowing, HttpStatus.OK);
     }
 }
