@@ -23,7 +23,7 @@ public class FollowServiceImpl implements FollowService{
 
         FollowDTO returnDTO = null;
 
-        // 이미 팔로우한 경우 type 비교
+        // 이미 팔로우/차단한 경우 type 비교
         FollowEntity checkValid = followRepository.findByUserIdAndFollowTarget(followDTO.getUserId(), followDTO.getFollowTarget());
         if(checkValid != null){
             // type 같을 경우 기존 데이터 리턴
@@ -36,7 +36,9 @@ public class FollowServiceImpl implements FollowService{
                 FollowEntity savedFollow = followRepository.save(changeTypeEntity);
                 returnDTO = FollowDTO.toDTO(savedFollow);
             }
-        } else {
+        }
+        // 팔로우/차단 없는 경우 바로 저장
+        else {
             FollowEntity savedFollow = followRepository.save(FollowDTO.toEntity(followDTO));
             returnDTO = FollowDTO.toDTO(savedFollow);
         }
