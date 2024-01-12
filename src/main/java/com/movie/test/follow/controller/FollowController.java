@@ -1,5 +1,6 @@
 package com.movie.test.follow.controller;
 
+import com.google.gson.JsonObject;
 import com.movie.test.follow.dto.FollowDTO;
 import com.movie.test.follow.service.FollowService;
 import com.movie.test.user.dto.UserDTO;
@@ -13,21 +14,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/follow")
 @Tag(name = "팔로우", description = "팔로우 관련 API")
 @RequiredArgsConstructor
 @Slf4j
@@ -42,7 +37,7 @@ public class FollowController {
             @Parameter(name = "followTarget", description = "팔로잉할 상대 id", required = true)
     })
     @ApiResponse(responseCode = "200", description = "등록된 팔로잉 정보 리턴")
-    @PostMapping("/follow/regist")
+    @PostMapping("/regist")
     public ResponseEntity registFollow(FollowDTO followDTO) {
 
         FollowDTO followingResult = followService.registFollowing(followDTO);
@@ -57,7 +52,7 @@ public class FollowController {
     @Operation(summary = "팔로잉 취소", description = "팔로잉을 취소합니다.")
     @Parameter(name = "followId", description = "팔로우 id", required = true)
     @ApiResponse(responseCode = "200")
-    @PostMapping("/follow/cancle")
+    @PostMapping("/cancle")
     public ResponseEntity cancleFollow(String followId){
 
         followService.cancleFollow(followId);
@@ -71,7 +66,7 @@ public class FollowController {
         @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id", required = false)
     })
     @ApiResponse(responseCode = "200", description = "팔로잉 목록 리턴")
-    @GetMapping("/follow/followingList")
+    @GetMapping("/followingList")
     public ResponseEntity getFollowingList(String userId, @RequestParam(defaultValue = "") String lastUserId, Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
@@ -91,7 +86,7 @@ public class FollowController {
             @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id", required = false)
     })
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
-    @GetMapping("/follow/followerList")
+    @GetMapping("/followerList")
     public ResponseEntity getFollowerList(String followTarget, @RequestParam(defaultValue = "") String lastUserId, Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
@@ -111,11 +106,27 @@ public class FollowController {
             @Parameter(name = "followTarget", description = "상대 id", required = true)
     })
     @ApiResponse(responseCode = "200", description = "팔로잉하고 있는 경우 true, 아니면 false 리턴")
-    @GetMapping("/follow/isFollow")
+    @GetMapping("/isFollow")
     public ResponseEntity isFollowing(String userId, String followTarget){
 
         boolean isFollowing = followService.isFollowing(userId, followTarget);
 
         return new ResponseEntity(isFollowing, HttpStatus.OK);
     }
+
+    @Operation(summary = "팔로잉/팔로워 수 확인", description = "유저의 팔로잉/팔로워 수를 확인")
+    @Parameter(name = "userId", description = "확인할 유저의 id", required = true)
+    @GetMapping("/countFollow")
+    public ResponseEntity countFollow(String userId) {
+
+        Long countFollowing = followService.countFollowing(userId);
+        Long countFollower = followService.countFollower(userId);
+
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("countFollowing", countFollowing);
+        resultData.put("countFollower", countFollower);
+
+        return new ResponseEntity(resultData, HttpStatus.OK);
+    }
+
 }

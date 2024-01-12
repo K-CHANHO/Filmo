@@ -12,4 +12,8 @@ public interface FollowRepository extends JpaRepository<FollowEntity, String>, F
     FollowEntity findByUserIdAndFollowTarget(String userId, String followTarget);
 
     boolean existsByUserIdAndFollowTarget(String userId, String followTarget);
+
+    Long countByUserId(String userId);
+
+    Long countByFollowTarget(String userId);
 }

@@ -17,4 +17,8 @@ public interface FollowService {
     Slice<UserDTO> getFollowerUserInfo(String followTarget, String lastUserId, Pageable pageable);
 
     boolean isFollowing(String userId, String followTarget);
+
+    Long countFollowing(String userId);
+
+    Long countFollower(String userId);
 }

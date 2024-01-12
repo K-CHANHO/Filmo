@@ -56,4 +56,14 @@ public class FollowServiceImpl implements FollowService{
         boolean isFollowing = followRepository.existsByUserIdAndFollowTarget(userId, followTarget);
         return isFollowing;
     }
+
+    @Override
+    public Long countFollowing(String userId) {
+        return followRepository.countByUserId(userId);
+    }
+
+    @Override
+    public Long countFollower(String userId) {
+        return followRepository.countByFollowTarget(userId);
+    }
 }
