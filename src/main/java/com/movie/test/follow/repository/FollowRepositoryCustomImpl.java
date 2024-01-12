@@ -3,8 +3,6 @@ package com.movie.test.follow.repository;
 import com.movie.test.follow.entity.QFollowEntity;
 import com.movie.test.user.entity.QUserEntity;
 import com.movie.test.user.entity.UserEntity;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -35,7 +32,7 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
                 .where(
                         follow.userId.eq(userId),
                         follow.followTarget.gt(lastUserId),
-                        keywordCheck(keyword)
+                        nicknameCheck(keyword)
                 )
                 .orderBy(follow.createDate.desc())
                 .fetch();
@@ -66,7 +63,7 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
                 .where(
                         follow.followTarget.eq(followTarget),
                         follow.userId.gt(lastUserId),
-                        keywordCheck(keyword)
+                        nicknameCheck(keyword)
                 )
                 .orderBy(follow.createDate.desc())
                 .fetch();
@@ -95,7 +92,7 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
         return result;
     }
 
-    private BooleanExpression keywordCheck(String keyword) {
+    private BooleanExpression nicknameCheck(String keyword) {
         return keyword != null ? user.nickname.contains(keyword) : null;
     }
 }
