@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "회원가입", description = "회원가입 API")
 @RestController
+@RequiredArgsConstructor
 public class SignupController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private LoginController loginController;
+    private final UserService userService;
+    private final LoginController loginController;
 
     /**
      * 회원가입 로직

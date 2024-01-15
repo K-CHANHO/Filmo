@@ -5,6 +5,7 @@ import com.movie.test.hashtag.entity.TagEntity;
 import com.movie.test.hashtag.entity.TagInReportEntity;
 import com.movie.test.hashtag.repository.TagInReportRepository;
 import com.movie.test.hashtag.repository.TagRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,13 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TagServiceImpl implements TagService{
 
-    @Autowired
-    private TagInReportRepository tagInReportRepository;
-
-    @Autowired
-    private TagRepository tagRepository;
+    private final TagInReportRepository tagInReportRepository;
+    private final TagRepository tagRepository;
 
     @Override
     // 감상문에 사용된 태그 검색

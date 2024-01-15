@@ -3,6 +3,7 @@ package com.movie.test.inquiry.service;
 import com.movie.test.inquiry.dto.InquiryDTO;
 import com.movie.test.inquiry.entity.InquiryEntity;
 import com.movie.test.inquiry.repository.InquiryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,13 +13,11 @@ import java.util.Date;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class InquiryServiceImpl implements InquiryService {
 
-    @Autowired
-    private InquiryRepository inquiryRepository;
-
-    @Autowired
-    private JavaMailSender sender;
+    private final InquiryRepository inquiryRepository;
+    private final JavaMailSender sender;
 
     @Override
     public InquiryDTO getInquiry(String inquiryId) {

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +17,10 @@ import java.util.List;
 
 @Tag(name = "댓글", description = "댓글 관련 API 입니다.")
 @RestController
+@RequiredArgsConstructor
 public class ReplyController {
 
-    @Autowired
-    private ReplyService replyService;
+    private final ReplyService replyService;
 
     @Operation(summary = "댓글 전체 가져오기", description = "해당 감상문의 댓글을 전부 가져옵니다")
     @Parameter(name = "reportId", description = "감상문 id", required = true)

@@ -5,19 +5,21 @@ import com.movie.test.hashtag.service.TagService;
 import com.movie.test.reply.dto.ReplyDTO;
 import com.movie.test.reply.service.ReplyService;
 import com.movie.test.report.dto.ReportDTO;
+import com.movie.test.report.service.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.movie.test.report.service.ReportService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,19 +28,13 @@ import java.util.Map;
 @Tag(name = "감상문", description = "감상문 관련 API")
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 public class ReportController {
 
-    @Autowired
-    private ReportService reportService;
-
-    @Autowired
-    private ReplyService replyService;
-
-    @Autowired
-    private ComplaintService complaintService;
-
-    @Autowired
-    private TagService tagService;
+    private final ReportService reportService;
+    private final ReplyService replyService;
+    private final ComplaintService complaintService;
+    private final TagService tagService;
 
 
     @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")

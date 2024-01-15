@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "문의사항", description = "문의사항 관련 API")
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 public class InquiryController {
 
-    @Autowired
-    private InquiryService inquiryService;
+    private final InquiryService inquiryService;
 
     @Operation(summary = "문의사항 등록", description = "파라미터로 받은 내용을 DB에 저장하고 관리자에게 메일을 보냅니다.")
     @Parameters({

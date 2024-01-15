@@ -4,6 +4,7 @@ import com.movie.test.complaint.repository.ComplaintRepository;
 import com.movie.test.report.dto.ReportDTO;
 import com.movie.test.report.entity.ReportEntity;
 import com.movie.test.report.repository.ReportRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -16,13 +17,11 @@ import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ReportServiceImpl implements ReportService {
 
-    @Autowired
-    private ReportRepository reportRepository;
-
-    @Autowired
-    private ComplaintRepository complaintRepository;
+    private final ReportRepository reportRepository;
+    private final ComplaintRepository complaintRepository;
 
     @Override
     public String registReport(ReportDTO reportDTO) {

@@ -3,16 +3,17 @@ package com.movie.test.complaint.service;
 import com.movie.test.complaint.dto.ComplaintDTO;
 import com.movie.test.complaint.entity.ComplaintEntity;
 import com.movie.test.complaint.repository.ComplaintRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class ComplaintServiceImpl implements ComplaintService {
 
-    @Autowired
-    private ComplaintRepository complaintRepository;
+    private final ComplaintRepository complaintRepository;
 
     @Override
     public ComplaintDTO registComplaint(ComplaintDTO complaintDTO) {

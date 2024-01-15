@@ -3,14 +3,15 @@ package com.movie.test.login.service;
 import com.movie.test.user.dto.UserDTO;
 import com.movie.test.user.entity.UserEntity;
 import com.movie.test.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     @Override
     public UserDTO isExistUser(UserDTO logingUserDTO) {
 

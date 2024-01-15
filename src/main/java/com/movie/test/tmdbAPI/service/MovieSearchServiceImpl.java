@@ -4,6 +4,7 @@ import com.movie.test.tmdbAPI.dto.MovieInfoDTO;
 import com.movie.test.tmdbAPI.dto.MovieProviderDTO;
 import com.movie.test.tmdbAPI.dto.MovieSearchApiDTO;
 import com.movie.test.tmdbAPI.dto.MovieSearchResponseDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

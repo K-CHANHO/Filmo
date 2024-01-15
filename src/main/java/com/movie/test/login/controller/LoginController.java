@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,13 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "로그인", description = "소셜로그인을 이용한 로그인 API")
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 public class LoginController {
 
-    @Autowired
-    private LoginService loginService;
-
-    @Autowired
-    private TokenServiceImpl tokenServiceImpl;
+    private final LoginService loginService;
+    private final TokenServiceImpl tokenServiceImpl;
 
     @Operation(summary = "로그인 요청", description = "소셜로그인으로 부터 받은 정보로 로그인 처리 후 토큰을 발급합니다.")
     @Parameters({

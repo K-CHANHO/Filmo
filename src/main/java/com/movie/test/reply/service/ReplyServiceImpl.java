@@ -3,6 +3,7 @@ package com.movie.test.reply.service;
 import com.movie.test.reply.dto.ReplyDTO;
 import com.movie.test.reply.entity.ReplyEntity;
 import com.movie.test.reply.repository.ReplyRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +13,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
 
-    @Autowired
-    private ReplyRepository replyRepository;
+    private final ReplyRepository replyRepository;
 
     @Override
     public ReplyDTO registReply(ReplyDTO replyDTO) {

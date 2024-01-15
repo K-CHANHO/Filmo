@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +23,10 @@ import java.util.Map;
 @Tag(name = "영화정보", description = "영화 정보 API")
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class MovieSearchController {
 
-    @Autowired
-    private MovieSearchService movieSearchService;
+    private final MovieSearchService movieSearchService;
 
     @Operation(summary = "영화 정보 검색", description = "영화 정보를 검색합니다.")
     @Parameters(value = {

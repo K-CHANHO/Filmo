@@ -4,19 +4,18 @@ import com.movie.test.s3.service.S3Service;
 import com.movie.test.user.dto.UserDTO;
 import com.movie.test.user.entity.UserEntity;
 import com.movie.test.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private S3Service s3Service;
+    private final UserRepository userRepository;
+    private final S3Service s3Service;
 
     @Override
     public UserDTO newUserSave(UserDTO userDTO) {
