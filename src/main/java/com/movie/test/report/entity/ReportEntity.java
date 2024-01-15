@@ -7,7 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "mv_report")
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -27,5 +27,8 @@ public class ReportEntity extends BaseTimeEntity {
 
     @Column
     private String userId; // 작성자 userId
+
+    @Column
+    private String movieId; // 영화ID (TMDB)
 
 }

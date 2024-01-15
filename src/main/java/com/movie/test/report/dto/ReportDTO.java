@@ -24,16 +24,19 @@ public class ReportDTO extends BaseTimeDTO {
     private String content;
     private String userId;
 
-    private long complaintCount; // 신고 횟수
-
+    private String movieId;
     private String tagString; // 태그 내용
+
+    // 아직 구현하지 못 한 것
+    private long complaintCount; // 신고 횟수
 
     public static ReportDTO toDTO(ReportEntity entity) {
         ReportDTO dto = ReportDTO.builder()
+                .userId(entity.getUserId())
                 .reportId(entity.getReportId())
                 .title(entity.getTitle())
                 .content(new String(entity.getContent(), StandardCharsets.UTF_8))
-                .userId(entity.getUserId())
+                .movieId(entity.getMovieId())
                 .createDate(entity.getCreateDate())
                 .lastModifiedDate(entity.getLastModifiedDate())
                 .build();
@@ -43,10 +46,11 @@ public class ReportDTO extends BaseTimeDTO {
 
     public static ReportEntity toEntity(ReportDTO dto) {
         ReportEntity entity = ReportEntity.builder()
+                .userId(dto.getUserId())
                 .reportId(dto.getReportId())
                 .title(dto.getTitle())
                 .content(dto.getContent().getBytes(StandardCharsets.UTF_8))
-                .userId(dto.getUserId())
+                .movieId(dto.getMovieId())
                 .build();
 
         return entity;

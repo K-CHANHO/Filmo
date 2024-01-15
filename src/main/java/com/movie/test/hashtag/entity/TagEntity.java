@@ -12,7 +12,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @ToString
 @Getter
 @DynamicUpdate
-@Table(name = "mv_tags")
+@Table(name = "mv_hashtag")
 public class TagEntity extends BaseTimeEntity {
 
     @Id

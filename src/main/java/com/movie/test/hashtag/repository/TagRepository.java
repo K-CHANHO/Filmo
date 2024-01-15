@@ -13,7 +13,7 @@ import java.util.List;
 public interface TagRepository extends JpaRepository<TagEntity, Long> {
 
     @Query(value = "select t.content" +
-            " from tags t" +
+            " from mv_hashtag t" +
             " where t.tagId in :tagIds"
             , nativeQuery = true)
     List<String> findByTagIds(@Param("tagIds") List<Long> tagIds);

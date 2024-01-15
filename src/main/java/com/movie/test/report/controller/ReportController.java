@@ -16,10 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +26,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/report")
 public class ReportController {
 
     private final ReportService reportService;
@@ -41,17 +39,17 @@ public class ReportController {
     @Parameters({
             @Parameter(name = "userId", description = "작성자 id", required = true),
             @Parameter(name = "title", description = "감상문 제목", required = true),
-            @Parameter(name = "content", description = "감상문 내용", required = true)
+            @Parameter(name = "content", description = "감상문 내용", required = true),
+            @Parameter(name = "movieId", description = "선택한 영화 id (TMDB)", required = true),
+            @Parameter(name = "tagString", description = "해쉬태그", required = true, example = "#한국영화#액션#꿀잼")
     })
     @ApiResponse(responseCode = "200", description = "등록된 감상문 id 리턴")
     @PostMapping("/registReport")
     public ResponseEntity registReport(ReportDTO reportDTO) {
 
-        log.info("Start Report Controller : registReport");
-
         String reportId = reportService.registReport(reportDTO);
         tagService.saveTags(reportId, reportDTO.getTagString());
-        log.info("End Report Controller : registReport");
+
         return new ResponseEntity(reportId, HttpStatus.OK);
     }
 
@@ -63,14 +61,29 @@ public class ReportController {
     @GetMapping("/getReport/{reportId}")
     public ResponseEntity getReport(@PathVariable String reportId){
 
-        ReportDTO report = reportService.getReport(reportId);
+        // 리턴값
+        Map<String, Object> serverData = new HashMap<>();
 
+        // 감상문
+        // 해당 감상문 없을 경우 에러메시지 담아서 리턴
+        ReportDTO report = reportService.getReport(reportId);
+        if(report == null){
+            serverData.put("error", "해당 게시물은 존재하지 않습니다");
+            return new ResponseEntity(serverData, HttpStatus.valueOf(404));
+        }
+
+        // 사용한 태그
+        List<String> tagsInReport = tagService.getTagsInReport(reportId);
+        String tagString = String.join("#", tagsInReport);
+        report.setTagString("#" + tagString);
+
+        // 신고당한 횟수
         long complaintCount = complaintService.getComplaintCount(reportId);
         report.setComplaintCount(complaintCount);
 
+        // 댓글
         List<ReplyDTO> replies = replyService.getReplies(reportId);
 
-        Map<String, Object> serverData = new HashMap<>();
         serverData.put("report", report);
         serverData.put("replies", replies);
 
@@ -81,12 +94,20 @@ public class ReportController {
     @Parameters(value = {
             @Parameter(name = "reportId", description = "수정할 감상문의 id", required = true),
             @Parameter(name = "title", description = "수정할 감상문의 제목", required = true),
-            @Parameter(name = "content", description = "수정할 감상문의 내용", required = true)
+            @Parameter(name = "content", description = "수정할 감상문의 내용", required = true),
+            @Parameter(name = "movieId", description = "선택한 영화 id (TMDB)", required = true),
+            @Parameter(name = "tagString", description = "해쉬태그", required = true, example = "#한국영화#액션#꿀잼")
     })
     @PostMapping("/modifyReport")
     public ResponseEntity modifyReport(ReportDTO report){
 
+        // 감상문 수정
         String reportId = reportService.modifyReport(report);
+
+        // 태그 수정
+        // 먼저 TagInReport 삭제 후 다시 저장
+        tagService.deleteTagInReport(report.getReportId());
+        tagService.saveTags(report.getReportId(), report.getTagString());
 
         return new ResponseEntity(reportId, HttpStatus.OK);
     }
@@ -116,3 +137,4 @@ public class ReportController {
         return new ResponseEntity(searchReports, HttpStatus.OK);
     }
 }
+

@@ -13,10 +13,11 @@ import java.util.List;
 public interface TagInReportRepository extends JpaRepository<TagInReportEntity, Long> {
 
     @Query(value = "select t.tagId" +
-            " from tagInReport t" +
+            " from mv_tagInReport t" +
             " where t.reportId = :reportId"
             , nativeQuery = true)
     List<Long> findTagIdByReportId(@Param("reportId") String reportId);
 
 
+    void deleteByReportId(String reportId);
 }
