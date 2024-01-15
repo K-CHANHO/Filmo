@@ -2,6 +2,7 @@ package com.movie.test.follow.controller;
 
 import com.google.gson.JsonObject;
 import com.movie.test.follow.dto.FollowDTO;
+import com.movie.test.follow.dto.FollowListSearchDTO;
 import com.movie.test.follow.service.FollowService;
 import com.movie.test.user.dto.UserDTO;
 import com.movie.test.user.service.UserService;
@@ -50,7 +51,7 @@ public class FollowController {
         return new ResponseEntity(followingResult, HttpStatus.OK);
     }
 
-    @Operation(summary = "팔로잉 취소", description = "팔로잉을 취소합니다.")
+    @Operation(summary = "팔로잉/차단 취소", description = "팔로잉/차단을 취소합니다.")
     @Parameter(name = "followId", description = "팔로우 id", required = true)
     @ApiResponse(responseCode = "200")
     @PostMapping("/cancle")
@@ -61,17 +62,19 @@ public class FollowController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Operation(summary = "팔로잉 목록", description = "팔로잉 목록을 조회합니다.")
+    @Operation(summary = "팔로잉/차단 목록", description = "팔로잉/차단 목록을 조회합니다.")
     @Parameters({
         @Parameter(name = "userId", description = "유저 id", required = true),
-        @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id", required = false)
+        @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id"),
+        @Parameter(name = "keyword", description = "검색어"),
+        @Parameter(name = "type", description = "follow 또는 block", required = true)
     })
-    @ApiResponse(responseCode = "200", description = "팔로잉 목록 리턴")
+    @ApiResponse(responseCode = "200", description = "팔로잉/차단 목록 리턴")
     @GetMapping("/followingList")
-    public ResponseEntity getFollowingList(String userId, @RequestParam(defaultValue = "") String lastUserId, String keyword, Pageable pageable){
+    public ResponseEntity getFollowingList(FollowListSearchDTO followListSearchDTO, Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
-        Slice<UserDTO> followingUserInfo = followService.getFollowingUserInfo(userId, lastUserId, keyword, pageable);
+        Slice<UserDTO> followingUserInfo = followService.getFollowingUserInfo(followListSearchDTO, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
 //        resultData.put("followingUserInfoList", followingUserInfo); -> pageable 중복으로 JSON 변환 에러.. 해결법 찾는 중
@@ -83,15 +86,16 @@ public class FollowController {
 
     @Operation(summary = "팔로워 목록", description = "팔로워(나를 팔로잉 하는 사람) 목록을 조회합니다.")
     @Parameters({
-            @Parameter(name = "followTarget", description = "유저 id", required = true),
-            @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id", required = false)
+            @Parameter(name = "userId", description = "유저 id", required = true),
+            @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id", required = false),
+            @Parameter(name = "keyword", description = "검색어")
     })
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
     @GetMapping("/followerList")
-    public ResponseEntity getFollowerList(String followTarget, @RequestParam(defaultValue = "") String lastUserId, String keyword,  Pageable pageable){
+    public ResponseEntity getFollowerList(FollowListSearchDTO followListSearchDTO,  Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
-        Slice<UserDTO> followerUserInfo = followService.getFollowerUserInfo(followTarget, lastUserId, keyword, pageable);
+        Slice<UserDTO> followerUserInfo = followService.getFollowerUserInfo(followListSearchDTO, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
 //        resultData.put("followingUserInfoList", followingUserInfo); -> pageable 중복으로 JSON 변환 에러.. 해결법 찾는 중
@@ -101,31 +105,33 @@ public class FollowController {
         return new ResponseEntity(resultData, HttpStatus.OK);
     }
 
-    @Operation(summary = "팔로잉 확인", description = "상대를 팔로잉하고 있는 지 확인")
+    @Operation(summary = "팔로잉/차단 확인", description = "상대를 팔로잉하고 있는 지 확인")
     @Parameters({
             @Parameter(name = "userId", description = "유저 id", required = true),
             @Parameter(name = "followTarget", description = "상대 id", required = true)
     })
-    @ApiResponse(responseCode = "200", description = "팔로잉하고 있는 경우 true, 아니면 false 리턴")
+    @ApiResponse(responseCode = "200", description = "팔로잉하고 있는 경우 type(follow/block), 아닌 경우 no-follow 리턴")
     @GetMapping("/isFollow")
     public ResponseEntity isFollowing(String userId, String followTarget){
 
-        boolean isFollowing = followService.isFollowing(userId, followTarget);
+        String followType = followService.isFollowing(userId, followTarget);
 
-        return new ResponseEntity(isFollowing, HttpStatus.OK);
+        return new ResponseEntity(followType, HttpStatus.OK);
     }
 
-    @Operation(summary = "팔로잉/팔로워 수 확인", description = "유저의 팔로잉/팔로워 수를 확인")
+    @Operation(summary = "팔로잉/팔로워/차단 수 확인", description = "유저의 팔로잉/팔로워 수를 확인")
     @Parameter(name = "userId", description = "확인할 유저의 id", required = true)
     @GetMapping("/countFollow")
     public ResponseEntity countFollow(String userId) {
 
         Long countFollowing = followService.countFollowing(userId);
         Long countFollower = followService.countFollower(userId);
+        Long countBlock = followService.countBlock(userId);
 
         Map<String, Object> resultData = new HashMap<>();
         resultData.put("countFollowing", countFollowing);
         resultData.put("countFollower", countFollower);
+        resultData.put("countBlock", countBlock);
 
         return new ResponseEntity(resultData, HttpStatus.OK);
     }

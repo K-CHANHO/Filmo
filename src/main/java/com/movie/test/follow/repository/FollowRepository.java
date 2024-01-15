@@ -11,9 +11,8 @@ import java.util.List;
 public interface FollowRepository extends JpaRepository<FollowEntity, String>, FollowRepositoryCustom {
     FollowEntity findByUserIdAndFollowTarget(String userId, String followTarget);
 
-    boolean existsByUserIdAndFollowTarget(String userId, String followTarget);
 
-    Long countByUserId(String userId);
+    Long countByUserIdAndType(String userId, String type);
 
     Long countByFollowTarget(String userId);
 }

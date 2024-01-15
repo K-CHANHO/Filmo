@@ -1,6 +1,7 @@
 package com.movie.test.follow.service;
 
 import com.movie.test.follow.dto.FollowDTO;
+import com.movie.test.follow.dto.FollowListSearchDTO;
 import com.movie.test.follow.entity.FollowEntity;
 import com.movie.test.follow.repository.FollowRepository;
 import com.movie.test.user.dto.UserDTO;
@@ -52,32 +53,43 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public Slice<UserDTO> getFollowingUserInfo(String userId, String lastUserId, String keyword, Pageable pageable) {
-        Slice<UserEntity> followingUserInfoEntity = followRepository.getFollowingUserInfo(userId, lastUserId, keyword, pageable);
+    public Slice<UserDTO> getFollowingUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable) {
+        Slice<UserEntity> followingUserInfoEntity = followRepository.getFollowingUserInfo(followListSearchDTO, pageable);
         Slice<UserDTO> followingUserInfoDTO = followingUserInfoEntity.map(UserDTO::toDTO);
         return followingUserInfoDTO;
     }
 
     @Override
-    public Slice<UserDTO> getFollowerUserInfo(String followTarget, String lastUserId, String keyword, Pageable pageable) {
-        Slice<UserEntity> followerUserInfoEntity = followRepository.getFollowerUserInfo(followTarget, lastUserId, keyword, pageable);
+    public Slice<UserDTO> getFollowerUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable) {
+        Slice<UserEntity> followerUserInfoEntity = followRepository.getFollowerUserInfo(followListSearchDTO, pageable);
         Slice<UserDTO> followerUserInfoDTO = followerUserInfoEntity.map(UserDTO::toDTO);
         return followerUserInfoDTO;
     }
 
     @Override
-    public boolean isFollowing(String userId, String followTarget) {
-        boolean isFollowing = followRepository.existsByUserIdAndFollowTarget(userId, followTarget);
-        return isFollowing;
+    public String isFollowing(String userId, String followTarget) {
+        FollowEntity isFollowing = followRepository.findByUserIdAndFollowTarget(userId, followTarget);
+
+        String followType = "no-follow";
+        if(isFollowing != null){
+            followType = isFollowing.getType();
+        }
+
+        return followType;
     }
 
     @Override
     public Long countFollowing(String userId) {
-        return followRepository.countByUserId(userId);
+        return followRepository.countByUserIdAndType(userId, "follow");
     }
 
     @Override
     public Long countFollower(String userId) {
         return followRepository.countByFollowTarget(userId);
+    }
+
+    @Override
+    public Long countBlock(String userId) {
+        return followRepository.countByUserIdAndType(userId, "block");
     }
 }
