@@ -28,16 +28,15 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         String token = request.getHeader("token");
         if(token == null){
-            response.sendError(403, "Token is NULL !!");
+            log.error("--- Toke is Null! ---");
+            response.sendError(403, "Token is NULL! Please Login Again");
             return false;
         }
 
         try{
             Claims claims = tokenService.readJwtToken(token);
-            Date expiration = claims.getExpiration();
 
             TokenDTO tokenData = TokenDTO.builder()
-                    .userId((String) claims.get("userId"))
                     .uid((String) claims.get("uid"))
                     .type((String) claims.get("type"))
                     .build();
@@ -48,9 +47,8 @@ public class TokenInterceptor implements HandlerInterceptor {
             log.info("--- End Token Interceptor ---");
             return true;
         } catch (ExpiredJwtException e){
-//            response.setStatus(403);
-            response.sendError(403, "Token is EXPIRED !!");
-            log.info("--- Expired Token !! ---");
+            response.sendError(403, "Token is EXPIRED! Please Login Again");
+            log.error("--- Expired Token! : {} ---", e);
             return false;
         }
     }

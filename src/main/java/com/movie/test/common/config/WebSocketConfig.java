@@ -1,4 +1,4 @@
-package com.movie.test.config;
+package com.movie.test.common.config;
 
 import com.movie.test.websocket.MyWebSocketHandler;
 import org.springframework.context.annotation.Bean;

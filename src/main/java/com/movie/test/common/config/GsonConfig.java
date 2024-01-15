@@ -1,4 +1,4 @@
-package com.movie.test.config;
+package com.movie.test.common.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
