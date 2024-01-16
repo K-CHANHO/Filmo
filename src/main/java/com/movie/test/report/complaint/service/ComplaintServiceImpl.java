@@ -44,7 +44,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     }
 
     @Override
-    public void deleteById(String complaintId) {
-        complaintRepository.deleteById(complaintId);
+    public void deleteById(String userId, String reportId) {
+        complaintRepository.deleteByUserIdAndReportId(userId, reportId);
     }
 }

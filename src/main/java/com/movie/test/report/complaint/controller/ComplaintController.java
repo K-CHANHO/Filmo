@@ -36,10 +36,15 @@ public class ComplaintController {
         return new ResponseEntity(registedComplaint.getComplaintId(), HttpStatus.OK);
     }
 
-    @GetMapping("/deleteComplaint/{complaintId}")
-    public ResponseEntity deleteComplaint(@PathVariable String complaintId){
+    @Operation(summary = "감상문 신고 취소", description = "감상문 신고를 취소합니다.")
+    @Parameters(value = {
+            @Parameter(name = "userId", description = "신고자 id"),
+            @Parameter(name = "reportId", description = "신고당한 감상문 id"),
+    })
+    @PostMapping("/deleteComplaint/{complaintId}")
+    public ResponseEntity deleteComplaint(String userId, String reportId){
 
-        complaintService.deleteById(complaintId);
+        complaintService.deleteById(userId, reportId);
 
         return new ResponseEntity(HttpStatus.OK);
     }

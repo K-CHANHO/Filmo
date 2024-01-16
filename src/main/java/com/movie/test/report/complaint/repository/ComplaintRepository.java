@@ -14,4 +14,6 @@ public interface ComplaintRepository extends JpaRepository<ComplaintEntity, Stri
     boolean existsByUserIdAndReportId(String userId, String reportId);
 
     ComplaintEntity findByUserIdAndReportId(String userId, String reportId);
+
+    void deleteByUserIdAndReportId(String userId, String reportId);
 }

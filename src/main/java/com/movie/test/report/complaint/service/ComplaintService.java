@@ -10,5 +10,5 @@ public interface ComplaintService {
 
     void deleteComplaintByReportId(String reportId);
 
-    void deleteById(String complaintId);
+    void deleteById(String userId, String reportId);
 }
