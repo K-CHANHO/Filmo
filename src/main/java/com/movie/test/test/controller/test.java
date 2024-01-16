@@ -1,7 +1,7 @@
 package com.movie.test.test.controller;
 
 import com.google.gson.JsonObject;
-import com.movie.test.hashtag.service.TagService;
+import com.movie.test.report.hashtag.service.TagService;
 import com.movie.test.s3.service.S3Service;
 import com.movie.test.test.dto.testDTO;
 import com.movie.test.test.service.testService;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Hidden
