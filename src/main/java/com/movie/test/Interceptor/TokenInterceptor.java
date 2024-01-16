@@ -43,7 +43,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 
             String newToken = tokenService.makeJwtToken(tokenData);
             response.setHeader("token", newToken);
-            response.setStatus(200);
             log.info("--- End Token Interceptor ---");
             return true;
         } catch (ExpiredJwtException e){
