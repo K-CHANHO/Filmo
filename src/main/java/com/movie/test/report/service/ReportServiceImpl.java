@@ -1,7 +1,9 @@
 package com.movie.test.report.service;
 
 import com.movie.test.complaint.repository.ComplaintRepository;
+import com.movie.test.hashtag.repository.TagInReportRepository;
 import com.movie.test.hashtag.repository.TagRepository;
+import com.movie.test.reply.repository.ReplyRepository;
 import com.movie.test.report.dto.ReportDTO;
 import com.movie.test.report.entity.ReportEntity;
 import com.movie.test.report.repository.ReportRepository;
@@ -25,8 +27,8 @@ public class ReportServiceImpl implements ReportService {
 
     private final ReportRepository reportRepository;
     private final ComplaintRepository complaintRepository;
-    private final TagRepository tagRepository;
-
+    private final ReplyRepository replyRepository;
+    private final TagInReportRepository tagInReportRepository;
     @Override
     public String registReport(ReportDTO reportDTO) {
 
@@ -81,7 +83,16 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void deleteReport(String reportId) {
+
+        // 게시물 삭제
         reportRepository.deleteById(reportId);
+
+        // 댓글 삭제
+        replyRepository.deleteByReportId(reportId);
+
+        // 태그 삭제
+        tagInReportRepository.deleteByReportId(reportId);
+
     }
 
     @Override

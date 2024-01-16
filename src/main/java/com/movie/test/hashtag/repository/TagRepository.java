@@ -19,4 +19,5 @@ public interface TagRepository extends JpaRepository<TagEntity, Long> {
     List<String> findByTagIds(@Param("tagIds") List<Long> tagIds);
 
     TagEntity findByContent(String content);
+
 }

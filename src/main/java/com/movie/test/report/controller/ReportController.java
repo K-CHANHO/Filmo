@@ -116,6 +116,7 @@ public class ReportController {
     @Parameter(name = "reportId", description = "삭제할 감상문의 id", required = true)
     @GetMapping("/deleteReport/{reportId}")
     public ResponseEntity deleteReport(@PathVariable String reportId){
+
         reportService.deleteReport(reportId);
         replyService.deleteRepliesByReportId(reportId);
 
