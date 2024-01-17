@@ -1,6 +1,8 @@
 package com.movie.test.common.config;
 
 import com.movie.test.Interceptor.ControllerInterceptor;
+import com.movie.test.Interceptor.TokenInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -8,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
 
-    private String[] excludePath = {"/login", "/signup"};
+    private String[] excludePath = {"/login", "/signup", "/error"};
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -20,12 +22,15 @@ public class InterceptorConfig implements WebMvcConfigurer {
         ;
 
         // 토큰 인터셉터 -> 개발 편의를 위해 주석.
-//        registry.addInterceptor(new TokenInterceptor())
-//                .addPathPatterns("/*")
+//        registry.addInterceptor(tokenInterceptor())
+//                .addPathPatterns("/**")
 //                .excludePathPatterns(excludePath)
 //                .order(1)
 //        ;
+    }
 
-
+    @Bean
+    public TokenInterceptor tokenInterceptor(){
+        return new TokenInterceptor();
     }
 }
