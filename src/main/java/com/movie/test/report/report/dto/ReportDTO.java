@@ -1,6 +1,7 @@
 package com.movie.test.report.report.dto;
 
 import com.movie.test.common.dto.BaseTimeDTO;
+import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.report.entity.ReportEntity;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Hidden
 @SuperBuilder
@@ -25,17 +27,19 @@ public class ReportDTO extends BaseTimeDTO {
     private String userId;
 
     private String movieId;
+
     private String tagString; // 태그 내용
 
-    // 아직 구현하지 못 한 것
     private long complaintCount; // 신고 횟수
+
+    private Long replyCount; // 댓글 수
 
     public static ReportDTO toDTO(ReportEntity entity) {
         ReportDTO dto = ReportDTO.builder()
                 .userId(entity.getUserId())
                 .reportId(entity.getReportId())
                 .title(entity.getTitle())
-                .content(new String(entity.getContent(), StandardCharsets.UTF_8))
+                .content(entity.getContent())
                 .movieId(entity.getMovieId())
                 .createDate(entity.getCreateDate())
                 .lastModifiedDate(entity.getLastModifiedDate())
@@ -49,7 +53,7 @@ public class ReportDTO extends BaseTimeDTO {
                 .userId(dto.getUserId())
                 .reportId(dto.getReportId())
                 .title(dto.getTitle())
-                .content(dto.getContent().getBytes(StandardCharsets.UTF_8))
+                .content(dto.getContent())
                 .movieId(dto.getMovieId())
                 .build();
 

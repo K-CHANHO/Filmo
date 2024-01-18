@@ -6,6 +6,7 @@ import com.movie.test.report.hashtag.service.TagService;
 import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.reply.service.ReplyService;
 import com.movie.test.report.report.dto.ReportDTO;
+import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.service.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,6 +16,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +35,7 @@ import java.util.Map;
 public class ReportController {
 
     private final ReportService reportService;
-    private final ReplyService replyService;
-    private final ComplaintService complaintService;
-    private final TagService tagService;
-
     private final ReportCompactService reportCompactService;
-
 
     @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")
     @Parameters({
@@ -68,28 +67,15 @@ public class ReportController {
 
         // 감상문
         // 해당 감상문 없을 경우 에러메시지 담아서 리턴
-        ReportDTO report = reportService.getReport(reportId);
-        if(report == null){
+        ReportDTO singleReport = reportCompactService.getSingleReport(reportId);
+        if(singleReport == null){
             serverData.put("error", "해당 게시물은 존재하지 않습니다");
             return new ResponseEntity(serverData, HttpStatus.valueOf(404));
         }
 
-        // 사용한 태그
-        List<String> tagsInReport = tagService.getTagsInReport(reportId);
-        String tagString = String.join("#", tagsInReport);
-        report.setTagString("#" + tagString);
+        // 댓글 페이지 따로 있는 경우 따로 호출.
 
-        // 신고당한 횟수
-        long complaintCount = complaintService.getComplaintCount(reportId);
-        report.setComplaintCount(complaintCount);
-
-        // 댓글
-        List<ReplyDTO> replies = replyService.getReplies(reportId);
-
-        serverData.put("report", report);
-        serverData.put("replies", replies);
-
-        return new ResponseEntity(serverData, HttpStatus.OK);
+        return new ResponseEntity(singleReport, HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 수정", description = "감상문을 수정합니다.")
@@ -118,19 +104,23 @@ public class ReportController {
         return new ResponseEntity("Success Delete Report", HttpStatus.OK);
     }
 
-    @Operation(summary = "모든 감상문 조회", description = "모든 감상문을 조회합니다.")
-    @GetMapping("/report/getAllReports")
-    public ResponseEntity getAllReports(){
-        List<ReportDTO> allReports = reportService.getAllReports();
+    @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다.")
+    @Parameters({
+            @Parameter(name = "lastReportId", description = "마지막으로 조회된 감상문 id"),
+            @Parameter(name = "keyword", description = "검색어"),
+    })
+    @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
+    @GetMapping("/searchReport")
+    public ResponseEntity getSearchReport(ReportListSearchDTO reportListSearchDTO, Pageable pageable){
 
-        return new ResponseEntity(allReports, HttpStatus.OK);
+        Slice<ReportDTO> searchReport = reportCompactService.getReportList(reportListSearchDTO, pageable);
+
+        Map<String, Object> resultData = new HashMap<>();
+        resultData.put("reportList", searchReport.getContent());
+        resultData.put("hasNext", searchReport.hasNext());
+
+        return new ResponseEntity(resultData, HttpStatus.OK);
     }
 
-    @GetMapping("/report/search/{keyword}")
-    public ResponseEntity searchReports(@PathVariable String keyword){
-        List<ReportDTO> searchReports = reportService.getSearchReports(keyword);
-
-        return new ResponseEntity(searchReports, HttpStatus.OK);
-    }
 }
 

@@ -21,7 +21,7 @@ public class QReportEntity extends EntityPathBase<ReportEntity> {
 
     public final com.movie.test.common.entity.QBaseTimeEntity _super = new com.movie.test.common.entity.QBaseTimeEntity(this);
 
-    public final ArrayPath<byte[], Byte> content = createArray("content", byte[].class);
+    public final StringPath content = createString("content");
 
     //inherited
     public final DateTimePath<java.sql.Timestamp> createDate = _super.createDate;

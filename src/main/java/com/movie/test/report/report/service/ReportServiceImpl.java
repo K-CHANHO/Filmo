@@ -1,20 +1,17 @@
 package com.movie.test.report.report.service;
 
-import com.movie.test.report.complaint.repository.ComplaintRepository;
-import com.movie.test.report.hashtag.repository.TagInReportRepository;
-import com.movie.test.report.reply.repository.ReplyRepository;
 import com.movie.test.report.report.dto.ReportDTO;
+import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.entity.ReportEntity;
-import com.movie.test.report.repository.ReportRepository;
+import com.movie.test.report.report.repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,9 +21,7 @@ import java.util.UUID;
 public class ReportServiceImpl implements ReportService {
 
     private final ReportRepository reportRepository;
-    private final ComplaintRepository complaintRepository;
-    private final ReplyRepository replyRepository;
-    private final TagInReportRepository tagInReportRepository;
+
     @Override
     public String registReport(ReportDTO reportDTO) {
 
@@ -37,20 +32,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<ReportDTO> getAllReports() {
-        List<ReportEntity> reportEntities = reportRepository.findAll(Sort.by(Sort.Direction.DESC, "createDate"));
-
-        List<ReportDTO> reportDTOS = new ArrayList<>();
-        reportEntities.forEach((entity) -> {
-            ReportDTO dto = ReportDTO.toDTO(entity);
-            dto.setComplaintCount(complaintRepository.countByReportId(dto.getReportId()));
-            reportDTOS.add(dto);
-        });
-
-        return reportDTOS;
-    }
-
-    @Override
     public ReportDTO getReport(String reportId) {
 
         ReportEntity reportEntity = reportRepository.findById(reportId).orElseGet(() -> new ReportEntity());
@@ -58,9 +39,7 @@ public class ReportServiceImpl implements ReportService {
             return null;
         }
 
-        ReportDTO reportDTO = ReportDTO.toDTO(reportEntity);
-        reportDTO.setComplaintCount(complaintRepository.countByReportId(reportDTO.getReportId()));
-        return reportDTO;
+        return ReportDTO.toDTO(reportEntity);
     }
 
     @Override
@@ -70,7 +49,7 @@ public class ReportServiceImpl implements ReportService {
         // 감상문 수정
         ReportEntity modifiedReport = originReport.toBuilder()
                                 .title(reportDTO.getTitle())
-                                .content(reportDTO.getContent().getBytes(StandardCharsets.UTF_8))
+                                .content(reportDTO.getContent())
                                 .movieId(reportDTO.getMovieId() == null ? originReport.getMovieId() : reportDTO.getMovieId())
                                 .build();
 
@@ -82,25 +61,12 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void deleteReport(String reportId) {
 
-        // 게시물 삭제
         reportRepository.deleteById(reportId);
-
-        // 댓글 삭제
-        replyRepository.deleteByReportId(reportId);
-
-        // 태그 삭제
-        tagInReportRepository.deleteByReportId(reportId);
-
     }
 
     @Override
-    public List<ReportDTO> getSearchReports(String keyword) {
-        List<ReportDTO> reportDTOList = new ArrayList<>();
-        List<ReportEntity> reportEntityList = reportRepository.findByTitleContainingOrderByCreateDateDesc(keyword);
-        reportEntityList.forEach(entity -> {
-            reportDTOList.add(ReportDTO.toDTO(entity));
-        });
+    public Slice<String> getSearchReportId(ReportListSearchDTO reportListSearchDTO, Pageable pageable) {
 
-        return reportDTOList;
+        return reportRepository.getReportListId(reportListSearchDTO, pageable);
     }
 }

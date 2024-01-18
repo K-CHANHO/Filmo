@@ -23,7 +23,7 @@ public class ReportEntity extends BaseTimeEntity {
 
     @Column
     @Lob
-    private byte[] content; // 감상문 내용
+    private String content; // 감상문 내용
 
     @Column
     private String userId; // 작성자 userId
