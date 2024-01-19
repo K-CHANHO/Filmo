@@ -26,5 +26,7 @@ public class MovieInfoDTO {
         private Integer vote_count;
 
         private Object providers;
+        private String videoURL;
+        private String[] images;
 
 }

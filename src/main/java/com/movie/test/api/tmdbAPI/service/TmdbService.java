@@ -4,9 +4,10 @@ import com.movie.test.api.tmdbAPI.dto.MovieSearchApiDTO;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-public interface MovieSearchService {
+public interface TmdbService {
 
-    Object getMovieInfo(MovieSearchApiDTO searchDTO);
+    Object getMovieDetailInfo(MovieSearchApiDTO searchDTO);
+    Object getMovieSearchList(MovieSearchApiDTO searchDTO);
 
 
     default MultiValueMap<String, String> dtoToMap(MovieSearchApiDTO searchDTO) {
@@ -17,7 +18,7 @@ public interface MovieSearchService {
         queryMap.add("include_adult", searchDTO.getIncludeAdult() != null? searchDTO.getIncludeAdult().toString() : null);
         queryMap.add("language", searchDTO.getLanguage());
         queryMap.add("primary_release_year", searchDTO.getPrimaryReleaseYear());
-        queryMap.add("page", searchDTO.getPage() != null? searchDTO.getPage().toString() : null);
+        queryMap.add("page", String.valueOf(searchDTO.getPage()));
         queryMap.add("region", searchDTO.getRegion());
         queryMap.add("year", searchDTO.getYear());
 

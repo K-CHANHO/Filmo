@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class MovieSearchResponseDTO {
 
     private Integer page;
-    private ArrayList<MovieInfoDTO> results;
+    private List<MovieInfoDTO> results;
     private Integer total_pages;
     private Integer total_results;
 
