@@ -36,4 +36,6 @@ public class MovieDetailInfoDTO {
     private Number vote_average;
     private Integer vote_count;
 
+    private Object providers;
+
 }

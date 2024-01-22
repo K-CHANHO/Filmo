@@ -47,38 +47,6 @@ public class TmdbServiceImpl implements TmdbService {
         .bodyToMono(MovieSearchResponseDTO.class)
         .block();
 
-        // 제공하는 OTT 정보 추가 TODO : 따로 빼기
-        List<MovieInfoDTO> list = resultDTO.getResults().stream().map(result -> {
-            Integer movieId = result.getId();
-
-            MovieProviderDTO providers = webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path("/3/movie/" + movieId + "/watch/providers")
-                            .build())
-                    .retrieve()
-                    .bodyToMono(MovieProviderDTO.class)
-                    .block();
-
-            result.setProviders(providers.getKR());
-
-            return result;
-        }).toList();
-        resultDTO.setResults(list);
-
-//        for (MovieInfoDTO result : resultDTO.getResults()) {
-//            Integer movieId = result.getId();
-//
-//            MovieProviderDTO providers = webClient.get()
-//                    .uri(uriBuilder -> uriBuilder
-//                            .path("/3/movie/" + movieId + "/watch/providers")
-//                            .build())
-//                    .retrieve()
-//                    .bodyToMono(MovieProviderDTO.class)
-//                    .block();
-//
-//            result.setProviders(providers.getKR());
-//        }
-
         return resultDTO;
 
     }
@@ -98,5 +66,23 @@ public class TmdbServiceImpl implements TmdbService {
                 .block();
 
         return resultDTO;
+    }
+
+    @Override
+    public Object getProviders(String moiveId) {
+
+        WebClient webClient = getWebClient();
+
+        MovieProviderDTO providers = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/3/movie/" + moiveId + "/watch/providers")
+                        .build())
+                .retrieve()
+                .bodyToMono(MovieProviderDTO.class)
+                .block();
+
+
+
+        return providers.getKR();
     }
 }

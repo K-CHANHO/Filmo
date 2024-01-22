@@ -1,13 +1,17 @@
 package com.movie.test.api.tmdbAPI.service;
 
+import com.movie.test.api.tmdbAPI.dto.MovieInfoDTO;
 import com.movie.test.api.tmdbAPI.dto.MovieSearchApiDTO;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import java.util.List;
 
 public interface TmdbService {
 
     Object getMovieDetailInfo(MovieSearchApiDTO searchDTO);
     Object getMovieSearchList(MovieSearchApiDTO searchDTO);
+    Object getProviders(String moiveId);
 
 
     default MultiValueMap<String, String> dtoToMap(MovieSearchApiDTO searchDTO) {
