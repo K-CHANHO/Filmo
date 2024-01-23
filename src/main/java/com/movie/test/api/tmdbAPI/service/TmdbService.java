@@ -9,5 +9,6 @@ public interface TmdbService {
     Object getProviders(String movieId);
     Object getImages(MovieSearchApiDTO movieSearchApiDTO);
     Object getConfiguration();
+    Object getVideos(MovieSearchApiDTO movieSearchApiDTO);
 
 }

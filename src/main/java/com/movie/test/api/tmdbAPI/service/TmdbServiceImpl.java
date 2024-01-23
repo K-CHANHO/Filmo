@@ -116,4 +116,22 @@ public class TmdbServiceImpl implements TmdbService {
 
         return configuration;
     }
+
+    @Override
+    public Object getVideos(MovieSearchApiDTO movieSearchApiDTO) {
+
+        WebClient webClient = getWebClient();
+
+        MovieVideoDTO video = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/videos")
+                        .queryParam("language", movieSearchApiDTO.getLanguage())
+                        .build())
+                .retrieve()
+                .bodyToMono(MovieVideoDTO.class)
+                .block();
+
+
+        return video;
+    }
 }

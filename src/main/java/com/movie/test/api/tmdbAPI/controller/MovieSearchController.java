@@ -57,11 +57,11 @@ public class MovieSearchController {
         return new ResponseEntity(movieInfo, HttpStatus.OK);
     }
 
-    @Operation(summary = "영화 이미지 검색", description = "영화 이미지를 검색합니다.")
+    @Operation(summary = "영화 이미지 조회", description = "영화 이미지를 조회합니다.")
     @Parameters(value = {
             @Parameter(name = "movieId", description = "영화 id", required = true),
     })
-    @ApiResponse(responseCode = "200", description = "영화 이미지 정보 리턴, 사용법 : base_url + size + file_path")
+    @ApiResponse(responseCode = "200", description = "영화 이미지 정보 리턴, 사용법 : {base_url} + {size} + {file_path}")
     @GetMapping("/getPoster")
     public ResponseEntity getMoviePoster(MovieSearchApiDTO movieSearchApiDTO){
 
@@ -76,6 +76,17 @@ public class MovieSearchController {
         return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
+    @Operation(summary = "영화 관련 동영상 조회", description = "영화 동영상을 조회합니다.")
+    @Parameters(value = {
+            @Parameter(name = "movieId", description = "영화 id", required = true),
+    })
+    @ApiResponse(responseCode = "200", description = "영화 동영상 정보 리턴, 사용법 => 'site'가 'YouTube'일 경우 : https://www.youtube.com/embed/ + {key}")
+    @GetMapping("/getVideo")
+    public ResponseEntity getMovieVideo(MovieSearchApiDTO movieSearchApiDTO){
 
+        MovieVideoDTO videos = (MovieVideoDTO) tmdbService.getVideos(movieSearchApiDTO);
+
+        return new ResponseEntity(videos, HttpStatus.OK);
+    }
 
 }
