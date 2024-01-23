@@ -21,4 +21,6 @@ public class MovieSearchApiDTO {
     // 영화 상세 정보
     private String movieId;
 
+
+
 }

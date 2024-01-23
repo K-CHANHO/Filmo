@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.List;
-
 @Service
 @Slf4j
 public class TmdbServiceImpl implements TmdbService {
@@ -69,13 +67,13 @@ public class TmdbServiceImpl implements TmdbService {
     }
 
     @Override
-    public Object getProviders(String moiveId) {
+    public Object getProviders(String movieId) {
 
         WebClient webClient = getWebClient();
 
         MovieProviderDTO providers = webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/3/movie/" + moiveId + "/watch/providers")
+                        .path("/3/movie/" + movieId + "/watch/providers")
                         .build())
                 .retrieve()
                 .bodyToMono(MovieProviderDTO.class)
@@ -84,5 +82,38 @@ public class TmdbServiceImpl implements TmdbService {
 
 
         return providers.getKR();
+    }
+
+    @Override
+    public Object getImages(MovieSearchApiDTO movieSearchApiDTO) {
+
+        WebClient webClient = getWebClient();
+
+        MovieImageDTO images = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/images")
+                        .queryParam("language", movieSearchApiDTO.getLanguage())
+                        .build())
+                .retrieve()
+                .bodyToMono(MovieImageDTO.class)
+                .block();
+
+        return images;
+    }
+
+    @Override
+    public Object getConfiguration() {
+
+        WebClient webClient = getWebClient();
+
+        MovieConfigurationDTO configuration = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/3/configuration")
+                        .build())
+                .retrieve()
+                .bodyToMono(MovieConfigurationDTO.class)
+                .block();
+
+        return configuration;
     }
 }
