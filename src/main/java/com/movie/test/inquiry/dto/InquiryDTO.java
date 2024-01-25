@@ -21,7 +21,7 @@ public class InquiryDTO extends BaseTimeDTO {
 
     private String inquiryId;
     private String userId;
-    private String category; // 유형
+    private String category; // 문의유형
     private String title; // 문의제목
     private String content; // 문의내용
     private String answerYN; // 답변 여부

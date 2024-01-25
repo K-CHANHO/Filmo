@@ -21,7 +21,7 @@ public class InquiryServiceImpl implements InquiryService {
 
     @Override
     public InquiryDTO getInquiry(String inquiryId) {
-        InquiryEntity inquiryEntity = inquiryRepository.findById(inquiryId).get();
+        InquiryEntity inquiryEntity = inquiryRepository.findById(inquiryId).orElseThrow(NullPointerException::new);
         InquiryDTO dto = InquiryDTO.toDTO(inquiryEntity);
 
         return dto;
@@ -29,6 +29,7 @@ public class InquiryServiceImpl implements InquiryService {
 
     @Override
     public void registInquiry(InquiryDTO inquiry) {
+
         inquiry.setInquiryId(UUID.randomUUID().toString());
         inquiryRepository.save(InquiryDTO.toEntity(inquiry));
 
