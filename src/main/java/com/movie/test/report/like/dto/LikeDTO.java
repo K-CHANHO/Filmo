@@ -1,5 +1,6 @@
 package com.movie.test.report.like.dto;
 
+import com.movie.test.report.like.entity.LikeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +16,24 @@ public class LikeDTO {
     private String reportId;
     private String userId;
 
+    public static LikeEntity toEntity(LikeDTO dto){
+
+        LikeEntity entity = LikeEntity.builder()
+                .reportId(dto.getReportId())
+                .userId(dto.getUserId())
+                .build();
+
+        return entity;
+    }
+
+    public static LikeDTO toDTO(LikeEntity entity) {
+
+        LikeDTO dto = LikeDTO.builder()
+                .likeId(entity.getLikeId())
+                .reportId(entity.getReportId())
+                .userId(entity.getUserId())
+                .build();
+
+        return dto;
+    }
 }
