@@ -37,6 +37,8 @@ public class ReportDTO extends BaseTimeDTO {
     private Long likeCount; // 좋아요 수
     private boolean isLike; // 좋아요 유무 상택
 
+    private Long viewCount; // 조회수
+
     public static ReportDTO toDTO(ReportEntity entity) {
         ReportDTO dto = ReportDTO.builder()
                 .userId(entity.getUserId())

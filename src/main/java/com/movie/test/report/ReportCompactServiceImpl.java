@@ -8,6 +8,7 @@ import com.movie.test.report.reply.service.ReplyService;
 import com.movie.test.report.report.dto.ReportDTO;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.service.ReportService;
+import com.movie.test.report.view.service.ViewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -26,18 +27,21 @@ public class ReportCompactServiceImpl implements ReportCompactService{
     private final TagService tagService;
     private final ComplaintService complaintService;
     private final LikeService likeService;
+    private final ViewService viewService;
 
 
     /**
      * 감상문 등록
      * 1. 감상문 저장
      * 2. 감상문에 사용된 태그 저장
+     * 3. 조회수 데이터 생성
      */
     @Override
     public String registReport(ReportDTO reportDTO) {
 
         String reportId = reportService.registReport(reportDTO);
         tagService.saveTags(reportId, reportDTO.getTagString());
+        viewService.addViewCount(reportId);
 
         return reportId;
     }
@@ -65,7 +69,8 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 2. 신고횟수 조회
      * 3. 댓글 조회
      * 4. 태그 조회
-     * 5. 좋아요 수 조회
+     * 5. 좋아요수 조회
+     * 6. 조회수 조회
      */
     @Override
     public ReportDTO getSingleReport(String reportId) {
@@ -88,6 +93,9 @@ public class ReportCompactServiceImpl implements ReportCompactService{
 
         Long countLike = likeService.countLike(reportId);
         report.setLikeCount(countLike);
+
+        Long viewCount = viewService.getViewCount(reportId);
+        report.setViewCount(viewCount);
 
         return report;
     }
@@ -118,6 +126,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 3. 태그 삭제
      * 4. 신고 삭제
      * 5. 좋아요 삭제
+     * 6. 조회수 삭제
      */
     @Override
     public void deleteReport(String reportId) {
@@ -127,6 +136,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         tagService.deleteTagInReport(reportId);
         complaintService.deleteComplaintByReportId(reportId);
         likeService.deleteLike(reportId);
+        viewService.deleteViewCount(reportId);
 
     }
 
