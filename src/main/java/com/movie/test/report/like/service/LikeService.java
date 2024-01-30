@@ -6,4 +6,6 @@ public interface LikeService {
     void registOrDelete(LikeDTO likeDTO);
 
     LikeDTO checkLike(LikeDTO likeDTO);
+
+    Long countLike(LikeDTO likeDTO);
 }

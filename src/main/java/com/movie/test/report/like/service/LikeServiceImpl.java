@@ -32,4 +32,10 @@ public class LikeServiceImpl implements LikeService{
 
         return null;
     }
+
+    @Override
+    public Long countLike(LikeDTO likeDTO) {
+        Long count = likeRepository.countByReportId(likeDTO.getReportId());
+        return count;
+    }
 }

@@ -34,6 +34,11 @@ public class LikeController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @Operation(summary = "좋아요 확인", description = "감상문을 좋아요 했는지 확인합니다.")
+    @Parameters(value = {
+            @Parameter(name = "reportId", description = "감상문의 id", required = true),
+            @Parameter(name = "userId", description = "유저의 id", required = true),
+    })
     @GetMapping("/check")
     public ResponseEntity checkLikst(LikeDTO likeDTO){
 
@@ -45,5 +50,17 @@ public class LikeController {
         }
 
         return new ResponseEntity(isExistLike, HttpStatus.OK);
+    }
+
+    @Operation(summary = "좋아요 수 확인", description = "감상문의 좋아요 수를 확인합니다.")
+    @Parameters(value = {
+            @Parameter(name = "reportId", description = "감상문의 id", required = true)
+    })
+    @GetMapping("/count")
+    public ResponseEntity countLike(LikeDTO likeDTO){
+
+        Long countLike = likeService.countLike(likeDTO);
+
+        return new ResponseEntity(countLike, HttpStatus.OK);
     }
 }
