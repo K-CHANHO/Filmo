@@ -65,6 +65,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 2. 신고횟수 조회
      * 3. 댓글 조회
      * 4. 태그 조회
+     * 5. 좋아요 수 조회
      */
     @Override
     public ReportDTO getSingleReport(String reportId) {
@@ -84,6 +85,9 @@ public class ReportCompactServiceImpl implements ReportCompactService{
             String tagString = String.join("#", tagsInReport);
             report.setTagString("#" + tagString);
         }
+
+        Long countLike = likeService.countLike(reportId);
+        report.setLikeCount(countLike);
 
         return report;
     }

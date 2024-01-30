@@ -7,7 +7,7 @@ public interface LikeService {
 
     LikeDTO checkLike(LikeDTO likeDTO);
 
-    Long countLike(LikeDTO likeDTO);
+    Long countLike(String reportId);
 
     void deleteLike(String reportId);
 }

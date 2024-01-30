@@ -34,8 +34,8 @@ public class LikeServiceImpl implements LikeService{
     }
 
     @Override
-    public Long countLike(LikeDTO likeDTO) {
-        Long count = likeRepository.countByReportId(likeDTO.getReportId());
+    public Long countLike(String reportId) {
+        Long count = likeRepository.countByReportId(reportId);
         return count;
     }
 
