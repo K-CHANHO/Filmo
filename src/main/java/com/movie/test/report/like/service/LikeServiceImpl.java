@@ -38,4 +38,9 @@ public class LikeServiceImpl implements LikeService{
         Long count = likeRepository.countByReportId(likeDTO.getReportId());
         return count;
     }
+
+    @Override
+    public void deleteLike(String reportId) {
+        likeRepository.deleteByReportId(reportId);
+    }
 }

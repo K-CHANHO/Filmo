@@ -10,4 +10,6 @@ public interface LikeRepository extends JpaRepository<LikeEntity, Long>, LikeRep
     LikeEntity findByReportIdAndUserId(String reportId, String userId);
 
     Long countByReportId(String reportId);
+
+    void deleteByReportId(String reportId);
 }

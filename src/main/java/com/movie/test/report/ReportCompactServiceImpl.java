@@ -2,6 +2,7 @@ package com.movie.test.report;
 
 import com.movie.test.report.complaint.service.ComplaintService;
 import com.movie.test.report.hashtag.service.TagService;
+import com.movie.test.report.like.service.LikeService;
 import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.reply.service.ReplyService;
 import com.movie.test.report.report.dto.ReportDTO;
@@ -24,6 +25,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
     private final ReplyService replyService;
     private final TagService tagService;
     private final ComplaintService complaintService;
+    private final LikeService likeService;
 
 
     /**
@@ -111,6 +113,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 2. 댓글 삭제
      * 3. 태그 삭제
      * 4. 신고 삭제
+     * 5. 좋아요 삭제
      */
     @Override
     public void deleteReport(String reportId) {
@@ -119,6 +122,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         replyService.deleteRepliesByReportId(reportId);
         tagService.deleteTagInReport(reportId);
         complaintService.deleteComplaintByReportId(reportId);
+        likeService.deleteLike(reportId);
 
     }
 

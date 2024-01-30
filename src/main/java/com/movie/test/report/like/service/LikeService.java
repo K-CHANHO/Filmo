@@ -8,4 +8,6 @@ public interface LikeService {
     LikeDTO checkLike(LikeDTO likeDTO);
 
     Long countLike(LikeDTO likeDTO);
+
+    void deleteLike(String reportId);
 }
