@@ -57,7 +57,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         // reportId를 구한 뒤 getSingleReport로 각각 구해오기?
         Slice<String> searchReportId = reportService.getSearchReportId(reportListSearchDTO, pageable);
 
-        // 구현해놓은 getSingleReport(단건 조회) 이용
+        // 구현해놓은 getSingleReport(단건 조회) 이용 TODO: 조회수 처리는 어떻게 할 것인지 고민 필요. 리스트를 데이터를 위한 로직 추가 고려.
         Slice<ReportDTO> searchReportDTO = searchReportId.map(this::getSingleReport);
 
         return searchReportDTO;
@@ -70,30 +70,40 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 3. 댓글 조회
      * 4. 태그 조회
      * 5. 좋아요수 조회
-     * 6. 조회수 조회
+     * 6. 조회수 증가 TODO: 조회수 업데이트 조건 고려 후 추가. 추후 redis로 구현하기.
+     * 7. 조회수 조회
      */
     @Override
     public ReportDTO getSingleReport(String reportId) {
 
+        // 1. 감상문 조회
         ReportDTO report = reportService.getReport(reportId);
         if(report == null){
             return null;
         }
 
+        // 2. 신고횟수 조회
         report.setComplaintCount(complaintService.getComplaintCount(reportId));
 
+        // 3. 댓글 조회
         List<ReplyDTO> replies = replyService.getReplies(reportId);
         report.setReplyCount((long) replies.size());
 
+        // 4. 태그 조회
         List<String> tagsInReport = tagService.getTagsInReport(reportId);
         if(!tagsInReport.isEmpty()) {
             String tagString = String.join("#", tagsInReport);
             report.setTagString("#" + tagString);
         }
 
+        // 5. 좋아요수 조회
         Long countLike = likeService.countLike(reportId);
         report.setLikeCount(countLike);
 
+        // 6. 조회수 증가
+        viewService.addViewCount(reportId);
+
+        // 7. 조회수 조회
         Long viewCount = viewService.getViewCount(reportId);
         report.setViewCount(viewCount);
 
