@@ -26,6 +26,8 @@ public class QReportEntity extends EntityPathBase<ReportEntity> {
     //inherited
     public final DateTimePath<java.sql.Timestamp> createDate = _super.createDate;
 
+    public final StringPath imageUrl = createString("imageUrl");
+
     //inherited
     public final DateTimePath<java.sql.Timestamp> lastModifiedDate = _super.lastModifiedDate;
 

@@ -46,6 +46,19 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
         return reportId;
     }
 
+    @Override
+    public Long getReportSearchCount(ReportListSearchDTO reportListSearchDTO) {
+
+        Long reportCount = jpaQueryFactory.select(report.count())
+                .from(report)
+                .where(
+                        searchCondition(reportListSearchDTO.getKeyword())
+                )
+                .fetchFirst();
+
+        return reportCount;
+    }
+
     public BooleanBuilder searchCondition(String keyword) {
         return keywordTitle(keyword).or(keywordContent(keyword));
     }

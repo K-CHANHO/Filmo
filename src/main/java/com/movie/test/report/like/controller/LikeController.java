@@ -59,7 +59,7 @@ public class LikeController {
     @GetMapping("/count")
     public ResponseEntity countLike(LikeDTO likeDTO){
 
-        Long countLike = likeService.countLike(likeDTO);
+        Long countLike = likeService.countLike(likeDTO.getReportId());
 
         return new ResponseEntity(countLike, HttpStatus.OK);
     }

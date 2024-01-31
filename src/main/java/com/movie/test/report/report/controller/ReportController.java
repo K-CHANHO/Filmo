@@ -7,6 +7,7 @@ import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.reply.service.ReplyService;
 import com.movie.test.report.report.dto.ReportDTO;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSimpleDTO;
 import com.movie.test.report.report.service.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -113,9 +114,12 @@ public class ReportController {
     @GetMapping("/searchReport")
     public ResponseEntity getSearchReport(ReportListSearchDTO reportListSearchDTO, Pageable pageable){
 
-        Slice<ReportDTO> searchReport = reportCompactService.getReportList(reportListSearchDTO, pageable);
+        Slice<ReportSimpleDTO> searchReport = reportCompactService.getReportList(reportListSearchDTO, pageable);
+        Long searchReportCount = reportService.getSearchReportCount(reportListSearchDTO);
 
         Map<String, Object> resultData = new HashMap<>();
+
+        resultData.put("searchReportCount", searchReportCount);
         resultData.put("reportList", searchReport.getContent());
         resultData.put("hasNext", searchReport.hasNext());
 

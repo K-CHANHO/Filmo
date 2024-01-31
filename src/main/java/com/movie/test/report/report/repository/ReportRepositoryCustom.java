@@ -7,4 +7,6 @@ import org.springframework.data.domain.Slice;
 public interface ReportRepositoryCustom {
 
     Slice<String> getReportListId(ReportListSearchDTO reportListSearchDTO, Pageable pageable);
+
+    Long getReportSearchCount(ReportListSearchDTO reportListSearchDTO);
 }

@@ -31,4 +31,7 @@ public class ReportEntity extends BaseTimeEntity {
     @Column
     private String movieId; // 영화ID (TMDB)
 
+    @Column
+    private String imageUrl; // 이미지 url
+
 }

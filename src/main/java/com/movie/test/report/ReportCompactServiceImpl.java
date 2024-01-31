@@ -7,14 +7,17 @@ import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.reply.service.ReplyService;
 import com.movie.test.report.report.dto.ReportDTO;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSimpleDTO;
 import com.movie.test.report.report.service.ReportService;
 import com.movie.test.report.view.service.ViewService;
+import com.movie.test.user.userinfo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -28,6 +31,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
     private final ComplaintService complaintService;
     private final LikeService likeService;
     private final ViewService viewService;
+    private final UserService userService;
 
 
     /**
@@ -52,15 +56,55 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 2. 감상문 Id 리스트를 통해 각각의 감상문 정보 조회
      */
     @Override
-    public Slice<ReportDTO> getReportList(ReportListSearchDTO reportListSearchDTO, Pageable pageable) {
+    public Slice<ReportSimpleDTO> getReportList(ReportListSearchDTO reportListSearchDTO, Pageable pageable) {
 
         // reportId를 구한 뒤 getSingleReport로 각각 구해오기?
         Slice<String> searchReportId = reportService.getSearchReportId(reportListSearchDTO, pageable);
 
         // 구현해놓은 getSingleReport(단건 조회) 이용 TODO: 조회수 처리는 어떻게 할 것인지 고민 필요. 리스트를 데이터를 위한 로직 추가 고려.
-        Slice<ReportDTO> searchReportDTO = searchReportId.map(this::getSingleReport);
+        Slice<ReportSimpleDTO> searchReportDTO = searchReportId.map(this::getSimpleReport);
 
         return searchReportDTO;
+    }
+
+    /**
+     * 리스트에서 보여줄 간단한 내용 조회
+     * 1. 제목, 내용, 작성시간, 이미지
+     * 2. 닉네임
+     * 3. 좋아요 수
+     * 4. 댓글 수
+     */
+    @Override
+    public ReportSimpleDTO getSimpleReport(String reportId) {
+
+        // 제목, 내용, 작성시간, 이미지
+        ReportDTO reportDTO = reportService.getReport(reportId);
+        String title = reportDTO.getTitle();
+        String content = reportDTO.getContent();
+        Timestamp createDate = reportDTO.getCreateDate();
+        String imageUrl = reportDTO.getImageUrl();
+
+        // 닉네임
+        String nickname = userService.getUserInfo(reportDTO.getUserId()).getNickname();
+
+        // 좋아요수
+        Long likeCount = likeService.countLike(reportId);
+
+        // 댓글 수
+        Long replyCount =  Long.valueOf(replyService.getReplies(reportId).size());
+
+        ReportSimpleDTO reportSimpleDTO = ReportSimpleDTO.builder()
+                .reportId(reportId)
+                .title(title)
+                .content(content)
+                .createDate(createDate)
+                .imageUrl(imageUrl)
+                .nickname(nickname)
+                .likeCount(likeCount)
+                .reportCount(replyCount)
+                .build();
+
+        return reportSimpleDTO;
     }
 
     /**
@@ -77,37 +121,37 @@ public class ReportCompactServiceImpl implements ReportCompactService{
     public ReportDTO getSingleReport(String reportId) {
 
         // 1. 감상문 조회
-        ReportDTO report = reportService.getReport(reportId);
-        if(report == null){
+        ReportDTO reportDTO = reportService.getReport(reportId);
+        if(reportDTO == null){
             return null;
         }
 
         // 2. 신고횟수 조회
-        report.setComplaintCount(complaintService.getComplaintCount(reportId));
+        reportDTO.setComplaintCount(complaintService.getComplaintCount(reportId));
 
         // 3. 댓글 조회
         List<ReplyDTO> replies = replyService.getReplies(reportId);
-        report.setReplyCount((long) replies.size());
+        reportDTO.setReplyCount((long) replies.size());
 
         // 4. 태그 조회
         List<String> tagsInReport = tagService.getTagsInReport(reportId);
         if(!tagsInReport.isEmpty()) {
             String tagString = String.join("#", tagsInReport);
-            report.setTagString("#" + tagString);
+            reportDTO.setTagString("#" + tagString);
         }
 
         // 5. 좋아요수 조회
         Long countLike = likeService.countLike(reportId);
-        report.setLikeCount(countLike);
+        reportDTO.setLikeCount(countLike);
 
         // 6. 조회수 증가
         viewService.addViewCount(reportId);
 
         // 7. 조회수 조회
         Long viewCount = viewService.getViewCount(reportId);
-        report.setViewCount(viewCount);
+        reportDTO.setViewCount(viewCount);
 
-        return report;
+        return reportDTO;
     }
 
     /**

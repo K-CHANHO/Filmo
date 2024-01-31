@@ -69,4 +69,9 @@ public class ReportServiceImpl implements ReportService {
 
         return reportRepository.getReportListId(reportListSearchDTO, pageable);
     }
+
+    @Override
+    public Long getSearchReportCount(ReportListSearchDTO reportListSearchDTO) {
+        return reportRepository.getReportSearchCount(reportListSearchDTO);
+    }
 }

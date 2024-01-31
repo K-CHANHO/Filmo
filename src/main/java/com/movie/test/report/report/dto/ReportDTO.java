@@ -39,6 +39,8 @@ public class ReportDTO extends BaseTimeDTO {
 
     private Long viewCount; // 조회수
 
+    private String imageUrl; // 이미지 url
+
     public static ReportDTO toDTO(ReportEntity entity) {
         ReportDTO dto = ReportDTO.builder()
                 .userId(entity.getUserId())
@@ -48,6 +50,7 @@ public class ReportDTO extends BaseTimeDTO {
                 .movieId(entity.getMovieId())
                 .createDate(entity.getCreateDate())
                 .lastModifiedDate(entity.getLastModifiedDate())
+                .imageUrl(entity.getImageUrl())
                 .build();
 
         return dto;
@@ -60,6 +63,7 @@ public class ReportDTO extends BaseTimeDTO {
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .movieId(dto.getMovieId())
+                .imageUrl(dto.getImageUrl())
                 .build();
 
         return entity;
