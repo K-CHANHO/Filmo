@@ -9,6 +9,7 @@ import com.movie.test.report.report.dto.ReportDTO;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.dto.ReportSimpleDTO;
 import com.movie.test.report.report.service.ReportService;
+import com.movie.test.report.view.service.ViewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -36,6 +37,8 @@ import java.util.Map;
 public class ReportController {
 
     private final ReportService reportService;
+    private final ViewService viewService;
+
     private final ReportCompactService reportCompactService;
 
     @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")
@@ -75,6 +78,9 @@ public class ReportController {
         }
 
         // 댓글 페이지 따로 있는 경우 따로 호출.
+
+        // 조회수 증가 TODO: 추후 REDIS로 구현해보기
+        viewService.addViewCount(reportId);
 
         return new ResponseEntity(singleReport, HttpStatus.OK);
     }
@@ -124,6 +130,17 @@ public class ReportController {
         resultData.put("hasNext", searchReport.hasNext());
 
         return new ResponseEntity(resultData, HttpStatus.OK);
+    }
+
+    @GetMapping("/otherReportOfUser")
+    public ResponseEntity getOtherReport(String userId) {
+
+        List<String> reportIdByUserId = reportService.getReportIdByUserId(userId);
+
+        List<ReportSimpleDTO> reportSimpleDTOS = reportIdByUserId.stream().map(reportCompactService::getSimpleReport).toList();
+
+
+        return new ResponseEntity(reportSimpleDTOS, HttpStatus.OK);
     }
 
 }

@@ -59,6 +59,18 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
         return reportCount;
     }
 
+    @Override
+    public List<String> getReportIdByUserId(String userId) {
+        List<String> reportIdList = jpaQueryFactory.select(report.reportId)
+                .from(report)
+                .where(report.userId.eq(userId))
+                .limit(5)
+                .orderBy(report.createDate.desc())
+                .fetch();
+
+        return reportIdList;
+    }
+
     public BooleanBuilder searchCondition(String keyword) {
         return keywordTitle(keyword).or(keywordContent(keyword));
     }

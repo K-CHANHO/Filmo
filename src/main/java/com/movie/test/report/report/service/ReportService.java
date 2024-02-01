@@ -27,4 +27,7 @@ public interface ReportService {
     // 감상문 검색 결과 갯수
     Long getSearchReportCount(ReportListSearchDTO reportListSearchDTO);
 
+    // 특정 사용자가 작성한 감상문 조회
+    List<String> getReportIdByUserId(String userId);
+
 }
