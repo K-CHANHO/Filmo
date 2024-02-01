@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -73,5 +74,10 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Long getSearchReportCount(ReportListSearchDTO reportListSearchDTO) {
         return reportRepository.getReportSearchCount(reportListSearchDTO);
+    }
+
+    @Override
+    public List<String> getReportIdByUserId(String userId) {
+        return reportRepository.getReportIdByUserId(userId);
     }
 }
