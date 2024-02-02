@@ -1,4 +1,4 @@
-package com.movie.test.notification;
+package com.movie.test.notification.controller;
 
 import com.movie.test.notification.dto.NotificationDTO;
 import com.movie.test.notification.service.NotificationService;
@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
