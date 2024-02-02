@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @NoArgsConstructor
 public class FollowListSearchDTO {
     private String userId;
+
+    @Builder.Default
     private String lastUserId="";
+
     private String keyword;
     private String type;
 }
