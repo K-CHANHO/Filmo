@@ -2,7 +2,6 @@ package com.movie.test.report.like.controller;
 
 import com.movie.test.report.like.dto.LikeDTO;
 import com.movie.test.report.like.service.LikeService;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;

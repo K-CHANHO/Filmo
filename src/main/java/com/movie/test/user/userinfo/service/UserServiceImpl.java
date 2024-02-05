@@ -7,7 +7,7 @@ import com.movie.test.user.userinfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor

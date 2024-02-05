@@ -1,6 +1,5 @@
 package com.movie.test.notification.repository;
 
-import com.movie.test.notification.dto.NotificationDTO;
 import com.movie.test.notification.entity.NotificationEntity;
 import com.movie.test.notification.entity.QNotificationEntity;
 import com.querydsl.core.types.dsl.BooleanExpression;

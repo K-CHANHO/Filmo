@@ -1,10 +1,6 @@
 package com.movie.test.report.report.controller;
 
 import com.movie.test.report.ReportCompactService;
-import com.movie.test.report.complaint.service.ComplaintService;
-import com.movie.test.report.hashtag.service.TagService;
-import com.movie.test.report.reply.dto.ReplyDTO;
-import com.movie.test.report.reply.service.ReplyService;
 import com.movie.test.report.report.dto.ReportDTO;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.dto.ReportSimpleDTO;
@@ -20,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
