@@ -9,6 +9,8 @@ import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Service
@@ -17,8 +19,11 @@ public class TokenServiceImpl implements TokenService {
     @Value("${jwt.secretKey}")
     String secretKey;
 
-    @Value("${jwt.expiredMs}")
-    Long expiredMs;
+    @Value("${jwt.expired.accessToken}")
+    Long accessExpiredHours;
+
+    @Value("${jwt.expired.refreshToken}")
+    Long refreshExpiredDays;
 
     @Value("${jwt.issuer}")
     String issuer;
@@ -28,14 +33,26 @@ public class TokenServiceImpl implements TokenService {
     public String makeJwtToken(String userId) {
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
-        return Jwts.builder()
+        String refreshToken = Jwts.builder()
                 .header().add("typ", "jwt").and()
                 .issuer(issuer)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expiredMs))
+                .expiration(Date.from(Instant.now().plus(refreshExpiredDays, ChronoUnit.DAYS))) // 7일
                 .claim("userId", userId)
                 .signWith(key)
                 .compact();
+
+
+        String accessToken = Jwts.builder()
+                .header().add("typ", "jwt").and()
+                .issuer(issuer)
+                .issuedAt(new Date())
+                .expiration(Date.from(Instant.now().plus(accessExpiredHours, ChronoUnit.HOURS))) // 1시간
+                .claim("userId", userId)
+                .signWith(key)
+                .compact();
+
+        return accessToken;
     }
 
     @Override
