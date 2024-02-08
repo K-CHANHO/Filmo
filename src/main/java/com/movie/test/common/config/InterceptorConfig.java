@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
 
-    private String[] excludePath = {"/login", "/signup", "/error"};
+    private String[] excludePath = {"/login", "/signup", "/error", "/token/**"};
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -21,12 +21,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .order(2)
         ;
 
-        // 토큰 인터셉터 -> 개발 편의를 위해 주석.
-//        registry.addInterceptor(tokenInterceptor())
-//                .addPathPatterns("/**")
-//                .excludePathPatterns(excludePath)
-//                .order(1)
-//        ;
+//         토큰 인터셉터 -> 개발 편의를 위해 주석.
+        registry.addInterceptor(tokenInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns(excludePath)
+                .order(1)
+        ;
     }
 
     @Bean

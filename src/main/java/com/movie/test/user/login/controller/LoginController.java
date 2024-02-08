@@ -1,5 +1,6 @@
 package com.movie.test.user.login.controller;
 
+import com.movie.test.user.token.dto.TokenDTO;
 import com.movie.test.user.token.service.TokenService;
 import com.movie.test.user.userinfo.dto.UserDTO;
 import com.movie.test.user.userinfo.service.UserService;
@@ -37,7 +38,7 @@ public class LoginController {
             @ApiResponse(responseCode = "401", description = "비회원일 경우 401 에러 리턴")
     })
     @PostMapping("/login")
-    public ResponseEntity login(UserDTO logingUser, HttpServletResponse response){
+    public ResponseEntity login(UserDTO logingUser){
 
         log.info("login 요청 : {}", logingUser.toString());
 
@@ -45,10 +46,11 @@ public class LoginController {
 
         // 회원정보가 있는 경우
         if(getUserinfo != null){
-            String jwtToken = tokenService.makeJwtToken(getUserinfo.getUserId());
+            String accessToken = tokenService.makeAccessToken(getUserinfo.getUserId());
+            String refreshToken = tokenService.makeRefreshToken();
 
-            response.setHeader("Authorization", "Bearer " + jwtToken);
-            return new ResponseEntity<>(HttpStatus.OK);
+            TokenDTO token = TokenDTO.builder().accessToken(accessToken).refreshToken(refreshToken).build();
+            return new ResponseEntity<>(token, HttpStatus.OK);
         }
         // 회원정보가 없는 경우
         else {

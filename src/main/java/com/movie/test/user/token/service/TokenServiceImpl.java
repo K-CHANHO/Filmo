@@ -1,8 +1,13 @@
 package com.movie.test.user.token.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.movie.test.user.token.dto.TokenDTO;
+import com.movie.test.user.token.repository.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -11,10 +16,15 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Base64;
 import java.util.Date;
+import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class TokenServiceImpl implements TokenService {
+
+    private final TokenRepository tokenRepository;
 
     @Value("${jwt.secretKey}")
     String secretKey;
@@ -28,31 +38,37 @@ public class TokenServiceImpl implements TokenService {
     @Value("${jwt.issuer}")
     String issuer;
 
+    private ObjectMapper objectMapper = new ObjectMapper();	// JWT를 역직렬화하기 위한 ObjectMapper
+
 
     @Override
-    public String makeJwtToken(String userId) {
+    public String makeAccessToken(String userId) {
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
-        String refreshToken = Jwts.builder()
+        return Jwts.builder()
                 .header().add("typ", "jwt").and()
                 .issuer(issuer)
                 .issuedAt(new Date())
-                .expiration(Date.from(Instant.now().plus(refreshExpiredDays, ChronoUnit.DAYS))) // 7일
+                .expiration(Date.from(Instant.now().plus(accessExpiredHours, ChronoUnit.MINUTES))) // 30분
                 .claim("userId", userId)
+                .claim("type", "access")
                 .signWith(key)
                 .compact();
 
+    }
 
-        String accessToken = Jwts.builder()
+    @Override
+    public String makeRefreshToken() {
+        SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+
+        return Jwts.builder()
                 .header().add("typ", "jwt").and()
                 .issuer(issuer)
                 .issuedAt(new Date())
-                .expiration(Date.from(Instant.now().plus(accessExpiredHours, ChronoUnit.HOURS))) // 1시간
-                .claim("userId", userId)
+                .expiration(Date.from(Instant.now().plus(refreshExpiredDays, ChronoUnit.DAYS))) // 1일
+                .claim("type", "refresh")
                 .signWith(key)
                 .compact();
-
-        return accessToken;
     }
 
     @Override
@@ -74,5 +90,17 @@ public class TokenServiceImpl implements TokenService {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean checkUser(TokenDTO tokenDTO) throws JsonProcessingException {
+
+        String userId = decodeJwtPayloadSubject(tokenDTO.getAccessToken());
+        return false;
+    }
+
+    private String decodeJwtPayloadSubject(String oldAccessToken) throws JsonProcessingException {
+        return objectMapper.readValue(
+                new String(Base64.getDecoder().decode(oldAccessToken.split("\\.")[1]), StandardCharsets.UTF_8), Map.class).get("userId").toString();
     }
 }

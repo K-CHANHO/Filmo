@@ -3,6 +3,7 @@ package com.movie.test.Interceptor;
 import com.movie.test.user.token.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -34,15 +35,21 @@ public class TokenInterceptor implements HandlerInterceptor {
         try{
             Claims claims = tokenService.readJwtToken(token);
 
-            String newToken = tokenService.makeJwtToken((String) claims.get("userId"));
+            if(claims.get("type") == null || "refresh".equals(claims.get("type"))){
+                response.sendError(403, "잘못퇸 토큰입니다");
+                return false;
+            }
+
+            String newToken = tokenService.makeAccessToken((String) claims.get("userId"));
             request.setAttribute("userId", (String) claims.get("userId"));
             response.setHeader("Authorization", "Bearer " + newToken);
 
             log.info("--- End Token Interceptor ---");
             return true;
         } catch (ExpiredJwtException e){
-            log.error("--- Expired Token! : {} ---", e);
-            response.sendError(403, "Token is EXPIRED! Please Login Again");
+            log.error("--- Expired Accesss Token! : {} ---", e);
+
+            response.sendError(403, "액세스 토큰이 만료되었습니다. 리프레시 토큰을 보내주세요.");
             return false;
         } catch (Exception e) {
             log.error("--- Invalid Token! : {} ---", e);
