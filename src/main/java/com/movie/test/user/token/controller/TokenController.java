@@ -20,7 +20,11 @@ public class TokenController {
     @PostMapping("/refresh")
     public ResponseEntity refreshToken(TokenDTO tokenDTO) throws JsonProcessingException {
 
-        tokenService.checkUser(tokenDTO);
+        boolean validCheck = tokenService.checkUser(tokenDTO);
+
+        if(validCheck){
+
+        }
 
         return new ResponseEntity(HttpStatus.OK);
     }

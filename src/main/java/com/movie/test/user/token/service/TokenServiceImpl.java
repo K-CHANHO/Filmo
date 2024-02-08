@@ -3,6 +3,7 @@ package com.movie.test.user.token.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.movie.test.user.token.dto.TokenDTO;
+import com.movie.test.user.token.entity.TokenEntity;
 import com.movie.test.user.token.repository.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -95,8 +96,19 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public boolean checkUser(TokenDTO tokenDTO) throws JsonProcessingException {
 
+        // 액세스 토큰, 리프레시 토큰 둘 다 필요
+        if(tokenDTO.getAccessToken() == null || tokenDTO.getRefreshToken() == null){
+            return false;
+        }
+
         String userId = decodeJwtPayloadSubject(tokenDTO.getAccessToken());
-        return false;
+        TokenEntity tokenEntity = tokenRepository.findByRefreshToken(tokenDTO.getRefreshToken()).orElseGet(null);
+
+        if(tokenEntity == null || !tokenEntity.getUserId().equals(userId)){
+            return false;
+        }
+
+        return true;
     }
 
     private String decodeJwtPayloadSubject(String oldAccessToken) throws JsonProcessingException {
