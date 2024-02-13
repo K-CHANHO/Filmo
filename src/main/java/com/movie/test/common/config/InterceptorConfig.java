@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
 
-    private String[] excludePath = {"/login", "/signup", "/error", "/token/**", "/swagger-ui/**"};
+    private String[] excludePath = {"/login", "/signup", "/error", "/token/**", "/swagger-ui/**", "/v3/api-docs/**"};
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
