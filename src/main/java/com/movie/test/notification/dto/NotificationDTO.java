@@ -2,6 +2,7 @@ package com.movie.test.notification.dto;
 
 import com.movie.test.common.dto.BaseTimeDTO;
 import com.movie.test.notification.entity.NotificationEntity;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper=false)
 @AllArgsConstructor
 @NoArgsConstructor
+@Hidden
 public class NotificationDTO extends BaseTimeDTO {
 
     private Long notificationId;
