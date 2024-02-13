@@ -1,7 +1,6 @@
 package com.movie.test.report.report.dto;
 
 import com.movie.test.common.dto.BaseTimeDTO;
-import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.report.entity.ReportEntity;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
@@ -9,9 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 @Hidden
 @SuperBuilder

@@ -4,7 +4,6 @@ import com.movie.test.inquiry.dto.InquiryDTO;
 import com.movie.test.inquiry.entity.InquiryEntity;
 import com.movie.test.inquiry.repository.InquiryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;

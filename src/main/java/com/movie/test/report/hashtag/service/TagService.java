@@ -1,6 +1,5 @@
 package com.movie.test.report.hashtag.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface TagService {
