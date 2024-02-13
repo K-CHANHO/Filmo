@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class SignupController {
 
     private final UserService userService;
-    private final LoginController loginController;
 
     /**
      * 회원가입 로직
