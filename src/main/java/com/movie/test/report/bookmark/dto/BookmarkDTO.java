@@ -1,6 +1,7 @@
 package com.movie.test.report.bookmark.dto;
 
 import com.movie.test.report.bookmark.entity.BookmarkEntity;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Hidden
 public class BookmarkDTO {
 
     private Long bookmarkId;

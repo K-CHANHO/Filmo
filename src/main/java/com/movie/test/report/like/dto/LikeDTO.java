@@ -1,6 +1,7 @@
 package com.movie.test.report.like.dto;
 
 import com.movie.test.report.like.entity.LikeEntity;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
+@Hidden
 public class LikeDTO {
 
     private Long likeId;
