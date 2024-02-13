@@ -9,6 +9,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.h2.command.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -20,6 +21,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -101,14 +103,32 @@ public class TokenServiceImpl implements TokenService {
             return false;
         }
 
+        // userId 비교
         String userId = decodeJwtPayloadSubject(tokenDTO.getAccessToken());
-        TokenEntity tokenEntity = tokenRepository.findByRefreshToken(tokenDTO.getRefreshToken()).orElseGet(null);
-
+        TokenEntity tokenEntity = tokenRepository.findByRefreshToken(tokenDTO.getRefreshToken()).orElse(null);
         if(tokenEntity == null || !tokenEntity.getUserId().equals(userId)){
             return false;
         }
 
+        // refreshToken 읽기
+        try {
+            readJwtToken(tokenDTO.getRefreshToken());
+        } catch (Exception e){
+            return false;
+        }
+
         return true;
+    }
+
+    @Override
+    public String resolveUserId(String accessToken) throws JsonProcessingException {
+        return decodeJwtPayloadSubject(accessToken);
+    }
+
+    @Override
+    public TokenEntity saveRefreshToken(TokenDTO tokenDTO) {
+        TokenEntity saved = tokenRepository.save(TokenDTO.toEntity(tokenDTO));
+        return saved;
     }
 
     private String decodeJwtPayloadSubject(String oldAccessToken) throws JsonProcessingException {

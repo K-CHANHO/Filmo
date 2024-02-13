@@ -2,7 +2,10 @@ package com.movie.test.user.token.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.movie.test.user.token.dto.TokenDTO;
+import com.movie.test.user.token.entity.TokenEntity;
 import io.jsonwebtoken.Claims;
+
+import java.util.StringTokenizer;
 
 public interface TokenService {
 
@@ -12,4 +15,7 @@ public interface TokenService {
     String resolveToken(String token);
 
     boolean checkUser(TokenDTO tokenDTO) throws JsonProcessingException;
+    String resolveUserId(String accessToken) throws JsonProcessingException;
+
+    TokenEntity saveRefreshToken(TokenDTO tokenDTO);
 }

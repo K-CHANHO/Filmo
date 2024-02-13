@@ -49,7 +49,14 @@ public class LoginController {
             String accessToken = tokenService.makeAccessToken(getUserinfo.getUserId());
             String refreshToken = tokenService.makeRefreshToken();
 
-            TokenDTO token = TokenDTO.builder().accessToken(accessToken).refreshToken(refreshToken).build();
+            TokenDTO token = TokenDTO.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .userId(getUserinfo.getUserId())
+                    .build();
+
+            tokenService.saveRefreshToken(token);
+
             return new ResponseEntity<>(token, HttpStatus.OK);
         }
         // 회원정보가 없는 경우
