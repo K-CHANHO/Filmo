@@ -73,7 +73,7 @@ public class FollowController {
     })
     @ApiResponse(responseCode = "200", description = "팔로잉/차단 목록 리턴")
     @GetMapping("/followingList")
-    public ResponseEntity getFollowingList(FollowListSearchDTO followListSearchDTO, Pageable pageable){
+    public ResponseEntity getFollowingList(FollowListSearchDTO followListSearchDTO, @Parameter(hidden = true) Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
         Slice<UserDTO> followingUserInfo = followService.getFollowingUserInfo(followListSearchDTO, pageable);
@@ -94,7 +94,7 @@ public class FollowController {
     })
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
     @GetMapping("/followerList")
-    public ResponseEntity getFollowerList(FollowListSearchDTO followListSearchDTO,  Pageable pageable){
+    public ResponseEntity getFollowerList(FollowListSearchDTO followListSearchDTO,  @Parameter(hidden = true) Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
         Slice<UserDTO> followerUserInfo = followService.getFollowerUserInfo(followListSearchDTO, pageable);

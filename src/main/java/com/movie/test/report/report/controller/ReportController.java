@@ -113,7 +113,7 @@ public class ReportController {
     })
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
     @GetMapping("/searchReport")
-    public ResponseEntity getSearchReport(ReportListSearchDTO reportListSearchDTO, Pageable pageable){
+    public ResponseEntity getSearchReport(ReportListSearchDTO reportListSearchDTO, @Parameter(hidden = true) Pageable pageable){
 
         Slice<ReportSimpleDTO> searchReport = reportCompactService.getReportList(reportListSearchDTO, pageable);
         Long searchReportCount = reportService.getSearchReportCount(reportListSearchDTO);
@@ -127,13 +127,16 @@ public class ReportController {
         return new ResponseEntity(resultData, HttpStatus.OK);
     }
 
+    @Operation(summary = "다른 유저의 감상문 검색", description = "다른 유저가 작성한 감상문을 검색합니다.")
+    @Parameters({
+            @Parameter(name = "userId", description = "다른 유저 id"),
+    })
     @GetMapping("/otherReportOfUser")
     public ResponseEntity getOtherReport(String userId) {
 
         List<String> reportIdByUserId = reportService.getReportIdByUserId(userId);
 
         List<ReportSimpleDTO> reportSimpleDTOS = reportIdByUserId.stream().map(reportCompactService::getSimpleReport).toList();
-
 
         return new ResponseEntity(reportSimpleDTOS, HttpStatus.OK);
     }

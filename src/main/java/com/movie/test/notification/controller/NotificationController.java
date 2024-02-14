@@ -46,7 +46,7 @@ public class NotificationController {
             @Parameter(name = "notificationId", description = "마지막에 조회된 공지사항 Id, 빈 값일 경우 전체조회"),
     })
     @ApiResponse(responseCode = "200", description = "공지사항 리스트 및 다음페이지 존재 유무 리턴")
-    public ResponseEntity getNotiList(Long notificationId, @PageableDefault(size = 3) Pageable pageable) {
+    public ResponseEntity getNotiList(Long notificationId, @PageableDefault(size = 3) @Parameter(hidden = true) Pageable pageable) {
         Slice<NotificationDTO> notiList = notificationService.getNotiList(notificationId, pageable);
         boolean hasNext = notiList.hasNext();
 
