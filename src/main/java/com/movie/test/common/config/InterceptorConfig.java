@@ -22,11 +22,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
         ;
 
 //         토큰 인터셉터 -> 개발 편의를 위해 주석.
-        registry.addInterceptor(tokenInterceptor())
-                .addPathPatterns("/**")
-                .excludePathPatterns(excludePath)
-                .order(1)
-        ;
+//        registry.addInterceptor(tokenInterceptor())
+//                .addPathPatterns("/**")
+//                .excludePathPatterns(excludePath)
+//                .order(1)
+//        ;
     }
 
     @Bean
