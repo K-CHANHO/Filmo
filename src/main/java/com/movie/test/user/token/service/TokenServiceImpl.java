@@ -9,7 +9,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import org.h2.command.Token;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,7 +20,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
-import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -52,7 +50,7 @@ public class TokenServiceImpl implements TokenService {
                 .header().add("typ", "jwt").and()
                 .issuer(issuer)
                 .issuedAt(new Date())
-                .expiration(Date.from(Instant.now().plus(accessExpiredHours, ChronoUnit.MINUTES))) // 30분
+                .expiration(Date.from(Instant.now().plus(accessExpiredHours, ChronoUnit.YEARS))) // 30분 -> 개발기간에는 1년
                 .claim("userId", userId)
                 .claim("type", "access")
                 .signWith(key)
@@ -68,7 +66,7 @@ public class TokenServiceImpl implements TokenService {
                 .header().add("typ", "jwt").and()
                 .issuer(issuer)
                 .issuedAt(new Date())
-                .expiration(Date.from(Instant.now().plus(refreshExpiredDays, ChronoUnit.DAYS))) // 1일
+                .expiration(Date.from(Instant.now().plus(refreshExpiredDays, ChronoUnit.YEARS))) // 1일 -> 개발기간에는 1년
                 .claim("type", "refresh")
                 .signWith(key)
                 .compact();
