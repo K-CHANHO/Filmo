@@ -1032,3 +1032,218 @@ org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-22
 org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
 2024-02-16 10:44:15.824563+09:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 12:18:48.385948+09:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 12:18:48.397907+09:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 12:18:48.409868+09:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 12:18:48.412860+09:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:05:33.005913+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:05:33.011891+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:05:33.017873+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:05:42.787174+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:05:42.792187+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:05:42.798167+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:05:42.803150+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:05:42.806134+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:06:25.842391+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:06:25.843388+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:06:35.000032+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:06:35.001175+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:06:48.605708+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:06:48.606798+09:00 jdbc[74]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:06:56.012067+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:01.113946+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:02.153495+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:02.627764+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:03.144627+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:03.633700+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:04.053556+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:04.480008+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:04.939728+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:05.356978+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:05.802136+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:06.241575+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:07:06.690320+09:00 jdbc[76]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:36.781215+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:37.315468+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:37.943953+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:38.411537+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:38.884664+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:39.391663+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:39.927643+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:40.382512+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:40.952342+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:41.692049+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:42.152637+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:42.902423+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:43.424422+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:43.892720+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:50.086150+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:50.616782+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:51.213016+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:51.861049+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:52.408312+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:53.112078+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:53.623818+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:54.219130+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:54.681444+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:55.200207+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:55.684506+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:18:56.116107+09:00 jdbc[85]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 15:36:31.732565+09:00 jdbc[95]: null
+org.h2.message.DbException: The connection was not closed by the application and is garbage collected [90018-224]
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.jdbc.JdbcConnection.closeOld(JdbcConnection.java:218)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:135)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:733)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection was not closed by the application and is garbage collected [90018-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 16 more
+2024-02-16 15:38:44.952292+09:00 jdbc[95]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:07:01.575976+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MV_FOLLOW follow left join mv_user [*]user on follow.userid = user.userid"; SQL statement:
+SELECT * FROM MV_FOLLOW follow left join mv_user user on follow.userid = user.userid [42000-224]
+2024-02-16 16:07:57.963185+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT *\000d\000aFROM MV_FOLLOW follow join mv_user [*]user on follow.userid = user.userid"; SQL statement:
+SELECT *
+FROM MV_FOLLOW follow join mv_user user on follow.userid = user.userid [42000-224]
+2024-02-16 16:08:15.996246+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT *\000d\000aFROM MV_FOLLOW follow \000d\000aLEFT JOIN MV_USER [*]user"; SQL statement:
+SELECT *
+FROM MV_FOLLOW follow 
+LEFT JOIN MV_USER user [42000-224]
+2024-02-16 16:08:55.720021+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT *\000d\000aFROM MV_FOLLOW follow \000d\000aLEFT JOIN MV_USER [*]user ON follow.userId = user.userId"; SQL statement:
+SELECT *
+FROM MV_FOLLOW follow 
+LEFT JOIN MV_USER user ON follow.userId = user.userId [42000-224]
+2024-02-16 16:16:03.065610+09:00 jdbc[105]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:16:12.442523+09:00 jdbc[105]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:16:16.909217+09:00 jdbc[105]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:16:21.378371+09:00 jdbc[105]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:16:33.021383+09:00 jdbc[105]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:16:38.164708+09:00 jdbc[105]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:16:41.811094+09:00 jdbc[105]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:16:47.089787+09:00 jdbc[105]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:16:50.316743+09:00 jdbc[105]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:16:54.200832+09:00 jdbc[105]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 16:55:42.910690+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'\000d\000a[*]START WITH replyid = '9d37a8cb-21dd-4d0a-a9c3-40be3b66fa6f'\000d\000aCONNECT BY PRIOR replyId = upreplyid"; SQL statement:
+SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'
+START WITH replyid = '9d37a8cb-21dd-4d0a-a9c3-40be3b66fa6f'
+CONNECT BY PRIOR replyId = upreplyid [42000-224]
+2024-02-16 16:57:19.374598+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'\000d\000a[*]START WITH upreplyid is null\000d\000aCONNECT BY PRIOR replyId = upreplyid"; SQL statement:
+SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'
+START WITH upreplyid is null
+CONNECT BY PRIOR replyId = upreplyid [42000-224]
+2024-02-16 16:57:47.118422+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'\000d\000a[*]START WITH upreplyid is null\000d\000aCONNECT BY PRIOR replyId = upreplyid"; SQL statement:
+SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'
+START WITH upreplyid is null
+CONNECT BY PRIOR replyId = upreplyid [42000-224]
+2024-02-16 16:57:48.847327+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'\000d\000a[*]START WITH upreplyid is null\000d\000aCONNECT BY PRIOR replyId = upreplyid"; SQL statement:
+SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'
+START WITH upreplyid is null
+CONNECT BY PRIOR replyId = upreplyid [42000-224]
+2024-02-16 16:57:55.646332+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'\000d\000a[*]START WITH upreplyid is null"; SQL statement:
+SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'
+START WITH upreplyid is null [42000-224]
+2024-02-16 16:58:10.639951+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'\000d\000a[*]START WITH upreplyid is null\000d\000aCONNECT BY PRIOR replyId = upreplyid"; SQL statement:
+SELECT * FROM MV_REPLY where reportId = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'
+START WITH upreplyid is null
+CONNECT BY PRIOR replyId = upreplyid [42000-224]
+2024-02-16 16:59:11.631310+09:00 jdbc[84]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM MV_REPLY where reportid = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'\000d\000a[*]START WITH upreplyid = 1\000d\000aCONNECT BY PRIOR replyId = upreplyid"; SQL statement:
+SELECT * FROM MV_REPLY where reportid = 'aa3dd57e-b308-4676-90e3-d9867d8fc06e'
+START WITH upreplyid = 1
+CONNECT BY PRIOR replyId = upreplyid [42000-224]
+2024-02-16 17:04:58.824120+09:00 jdbc[115]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 17:05:05.350898+09:00 jdbc[115]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
+2024-02-16 17:05:11.099793+09:00 jdbc[115]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]

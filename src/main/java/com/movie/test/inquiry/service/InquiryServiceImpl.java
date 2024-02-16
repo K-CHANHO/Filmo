@@ -33,8 +33,10 @@ public class InquiryServiceImpl implements InquiryService {
         inquiryRepository.save(InquiryDTO.toEntity(inquiry));
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("gamsangmoon1@naver.com");
-        message.setTo(inquiry.getUserEmail());
+//        message.setFrom("gamsangmoon1@naver.com");
+//        message.setTo(inquiry.getUserEmail());
+        message.setFrom(inquiry.getUserEmail());
+        message.setTo("gamsangmoon1@naver.com");
         message.setSubject(inquiry.getTitle());
         message.setText(inquiry.getContent());
         message.setSentDate(new Date());

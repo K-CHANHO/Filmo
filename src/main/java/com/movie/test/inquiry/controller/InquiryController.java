@@ -26,7 +26,7 @@ public class InquiryController {
         @Parameter(name = "userId", description = "문의 등록 유저아이디", required = true),
         @Parameter(name = "title", description = "문의 제목", required = true),
         @Parameter(name = "content", description = "문의 내용", required = true),
-        @Parameter(name = "type", description = "문의 유형", required = true),
+        @Parameter(name = "category", description = "문의 유형", required = true),
         @Parameter(name = "userEmail", description = "답변받을 이메일", required = true)
     })
     @PostMapping("/regist")
