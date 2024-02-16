@@ -26,9 +26,9 @@ public class ReportServiceImpl implements ReportService {
     public String registReport(ReportDTO reportDTO) {
 
         reportDTO.setReportId(UUID.randomUUID().toString());
-        reportRepository.save(ReportDTO.toEntity(reportDTO));
+        ReportEntity saved = reportRepository.save(ReportDTO.toEntity(reportDTO));
 
-        return reportDTO.getReportId();
+        return saved.getReportId();
     }
 
     @Override

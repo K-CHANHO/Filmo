@@ -50,7 +50,7 @@ public class TokenServiceImpl implements TokenService {
                 .header().add("typ", "jwt").and()
                 .issuer(issuer)
                 .issuedAt(new Date())
-                .expiration(Date.from(Instant.now().plus(accessExpiredHours, ChronoUnit.YEARS))) // 30분 -> 개발기간에는 1년
+                .expiration(Date.from(Instant.now().plus(accessExpiredHours, ChronoUnit.DAYS))) // 30분 -> 개발기간에는 1년
                 .claim("userId", userId)
                 .claim("type", "access")
                 .signWith(key)
@@ -66,7 +66,7 @@ public class TokenServiceImpl implements TokenService {
                 .header().add("typ", "jwt").and()
                 .issuer(issuer)
                 .issuedAt(new Date())
-                .expiration(Date.from(Instant.now().plus(refreshExpiredDays, ChronoUnit.YEARS))) // 1일 -> 개발기간에는 1년
+                .expiration(Date.from(Instant.now().plus(refreshExpiredDays, ChronoUnit.DAYS))) // 1일 -> 개발기간에는 1년
                 .claim("type", "refresh")
                 .signWith(key)
                 .compact();

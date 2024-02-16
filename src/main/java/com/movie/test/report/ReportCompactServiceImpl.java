@@ -45,7 +45,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
 
         String reportId = reportService.registReport(reportDTO);
         tagService.saveTags(reportId, reportDTO.getTagString());
-        viewService.addViewCount(reportId);
+        viewService.registViewCount(reportId);
 
         return reportId;
     }
