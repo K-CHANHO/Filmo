@@ -43,11 +43,11 @@ public class NotificationController {
     @GetMapping("/getList")
     @Operation(summary = "공지사항 리스트", description = "공지사항 리스트를 조회합니다.")
     @Parameters(value = {
-            @Parameter(name = "notificationId", description = "마지막에 조회된 공지사항 Id, 빈 값일 경우 전체조회", required = false),
+            @Parameter(name = "notificationId", description = "마지막에 조회된 공지사항 Id, 빈 값일 경우 전체조회"),
     })
     @ApiResponse(responseCode = "200", description = "공지사항 리스트 및 다음페이지 존재 유무 리턴")
-    public ResponseEntity getNotiList(Long notificationId, @PageableDefault(size = 3) @Parameter(hidden = true) Pageable pageable) {
-        Slice<NotificationDTO> notiList = notificationService.getNotiList(notificationId, pageable);
+    public ResponseEntity getNotiList(NotificationDTO notificationDTO, @PageableDefault(size = 3) @Parameter(hidden = true) Pageable pageable) {
+        Slice<NotificationDTO> notiList = notificationService.getNotiList(notificationDTO.getNotificationId(), pageable);
         boolean hasNext = notiList.hasNext();
 
         Map<String, Object> returnData = new HashMap<>();
