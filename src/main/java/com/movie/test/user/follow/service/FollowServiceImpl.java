@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class FollowServiceImpl implements FollowService{
@@ -38,6 +40,10 @@ public class FollowServiceImpl implements FollowService{
         }
         // 팔로우/차단 없는 경우 바로 저장
         else {
+            StringBuilder stringBuilder = new StringBuilder(UUID.randomUUID().toString());
+            stringBuilder.append(System.currentTimeMillis());
+
+            followDTO.setFollowId(stringBuilder.toString());
             FollowEntity savedFollow = followRepository.save(FollowDTO.toEntity(followDTO));
             returnDTO = FollowDTO.toDTO(savedFollow);
         }

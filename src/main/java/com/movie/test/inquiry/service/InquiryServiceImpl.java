@@ -8,6 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -29,7 +30,10 @@ public class InquiryServiceImpl implements InquiryService {
     @Override
     public void registInquiry(InquiryDTO inquiry) {
 
-        inquiry.setInquiryId(UUID.randomUUID().toString());
+        StringBuilder stringBuilder = new StringBuilder(UUID.randomUUID().toString());
+        stringBuilder.append(System.currentTimeMillis());
+
+        inquiry.setInquiryId(stringBuilder.toString());
         inquiryRepository.save(InquiryDTO.toEntity(inquiry));
 
         SimpleMailMessage message = new SimpleMailMessage();

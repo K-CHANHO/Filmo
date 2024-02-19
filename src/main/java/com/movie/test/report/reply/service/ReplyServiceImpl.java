@@ -20,7 +20,10 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public ReplyDTO registReply(ReplyDTO replyDTO) {
 
-        replyDTO.setReplyId(UUID.randomUUID().toString());
+        StringBuilder stringBuilder = new StringBuilder(UUID.randomUUID().toString());
+        stringBuilder.append(System.currentTimeMillis());
+
+        replyDTO.setReplyId(stringBuilder.toString());
         ReplyEntity reply = ReplyDTO.toEntity(replyDTO);
 
         ReplyDTO savedReply = ReplyDTO.toDTO(replyRepository.save(reply));

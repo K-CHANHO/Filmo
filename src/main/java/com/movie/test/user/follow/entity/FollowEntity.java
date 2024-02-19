@@ -20,7 +20,7 @@ import org.hibernate.annotations.UuidGenerator;
 public class FollowEntity extends BaseTimeEntity {
 
     @Id
-    @UuidGenerator
+//    @UuidGenerator
     private String followId;
 
     @Column

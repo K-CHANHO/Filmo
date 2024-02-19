@@ -23,7 +23,10 @@ public class ComplaintServiceImpl implements ComplaintService {
         ComplaintEntity complaint = complaintRepository.findByUserIdAndReportId(complaintDTO.getUserId(), complaintDTO.getReportId());
 
         if(complaint == null){
-            complaintDTO.setComplaintId(UUID.randomUUID().toString());
+            StringBuilder stringBuilder = new StringBuilder(UUID.randomUUID().toString());
+            stringBuilder.append(System.currentTimeMillis());
+
+            complaintDTO.setComplaintId(stringBuilder.toString());
             complaint = complaintRepository.save(ComplaintDTO.toEntity(complaintDTO));
         }
 
