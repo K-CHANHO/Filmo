@@ -24,8 +24,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public String registReport(ReportDTO reportDTO) {
-        StringBuilder stringBuilder = new StringBuilder(UUID.randomUUID().toString());
-        stringBuilder.append(System.currentTimeMillis());
+        StringBuilder stringBuilder = new StringBuilder(String.valueOf(System.currentTimeMillis()));
+        stringBuilder.append(UUID.randomUUID().toString());
 
         reportDTO.setReportId(stringBuilder.toString());
         ReportEntity saved = reportRepository.save(ReportDTO.toEntity(reportDTO));

@@ -30,8 +30,8 @@ public class InquiryServiceImpl implements InquiryService {
     @Override
     public void registInquiry(InquiryDTO inquiry) {
 
-        StringBuilder stringBuilder = new StringBuilder(UUID.randomUUID().toString());
-        stringBuilder.append(System.currentTimeMillis());
+        StringBuilder stringBuilder = new StringBuilder(String.valueOf(System.currentTimeMillis()));
+        stringBuilder.append(UUID.randomUUID().toString());
 
         inquiry.setInquiryId(stringBuilder.toString());
         inquiryRepository.save(InquiryDTO.toEntity(inquiry));

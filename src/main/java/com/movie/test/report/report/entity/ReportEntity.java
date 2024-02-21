@@ -16,6 +16,7 @@ import org.hibernate.annotations.DynamicUpdate;
 public class ReportEntity extends BaseTimeEntity {
 
     @Id
+    @Column
     private String reportId; // 감상문 id
 
     @Column
