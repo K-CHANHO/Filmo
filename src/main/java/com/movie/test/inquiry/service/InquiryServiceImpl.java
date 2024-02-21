@@ -37,12 +37,10 @@ public class InquiryServiceImpl implements InquiryService {
         inquiryRepository.save(InquiryDTO.toEntity(inquiry));
 
         SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom("gamsangmoon1@naver.com");
-//        message.setTo(inquiry.getUserEmail());
-        message.setFrom(inquiry.getUserEmail());
+        message.setFrom("gamsangmoon1@naver.com");
         message.setTo("gamsangmoon1@naver.com");
-        message.setSubject(inquiry.getTitle());
-        message.setText(inquiry.getContent());
+        message.setSubject("[문의]" + inquiry.getTitle());
+        message.setText(inquiry.getUserEmail() + "님으로부터의 문의 : " + inquiry.getContent());
         message.setSentDate(new Date());
         sender.send(message);
     }
