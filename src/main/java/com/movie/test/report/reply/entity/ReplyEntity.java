@@ -1,15 +1,12 @@
 package com.movie.test.report.reply.entity;
 
 import com.movie.test.common.entity.BaseTimeEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name = "mv_reply")
+@Table(name = "mv_reply", indexes = {@Index(name = "index_upReplyId",columnList = "upReplyId")})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

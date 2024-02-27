@@ -52,7 +52,19 @@ public class ReplyServiceImpl implements ReplyService {
     public List<ReplyDTO> getReplies(String reportId) {
         List<ReplyDTO> replyDTOS = new ArrayList<>();
 
-        List<ReplyEntity> replies = replyRepository.findByReportIdOrderByCreateDate(reportId);
+        List<ReplyEntity> replies = replyRepository.findByReportIdAndUpReplyIdIsNullOrderByCreateDate(reportId);
+        replies.forEach((reply)->{
+            replyDTOS.add(ReplyDTO.toDTO(reply));
+        });
+
+        return replyDTOS;
+    }
+
+    @Override
+    public List<ReplyDTO> getSubReplies(String replyId) {
+        List<ReplyDTO> replyDTOS = new ArrayList<>();
+
+        List<ReplyEntity> replies = replyRepository.findByUpReplyIdOrderByCreateDate(replyId);
         replies.forEach((reply)->{
             replyDTOS.add(ReplyDTO.toDTO(reply));
         });

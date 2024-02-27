@@ -47,7 +47,6 @@ public class JwtTokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        long now = new Date().getTime();
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)

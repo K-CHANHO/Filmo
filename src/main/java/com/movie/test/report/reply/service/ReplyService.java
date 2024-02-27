@@ -10,8 +10,9 @@ public interface ReplyService {
     ReplyDTO modifyReply(ReplyDTO replyDTO);
 
     List<ReplyDTO> getReplies(String reportId);
+    List<ReplyDTO> getSubReplies(String replyId);
+
     void deleteReply(String replyId);
 
     void deleteRepliesByReportId(String reportId);
-
 }

@@ -10,9 +10,10 @@ import java.util.List;
 public interface ReplyRepository extends JpaRepository<ReplyEntity, String> {
 
     List<ReplyEntity> findByReportIdOrderByCreateDate(String reportId);
+    List<ReplyEntity> findByReportIdAndUpReplyIdIsNullOrderByCreateDate(String reportId);
+    List<ReplyEntity> findByUpReplyIdOrderByCreateDate(String replyId);
 
     void deleteByReportId(String reportId);
 
     void deleteByUpReplyId(String upReplyId);
-
 }
