@@ -4,6 +4,8 @@ import com.movie.test.user.userinfo.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
 
@@ -12,4 +14,6 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
     boolean existsByNickname(String nickname);
 
     boolean existsByUid(String uid);
+
+    Optional<UserEntity> findByUid(String uid);
 }

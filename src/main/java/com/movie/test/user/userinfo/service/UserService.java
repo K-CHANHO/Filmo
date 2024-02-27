@@ -1,5 +1,6 @@
 package com.movie.test.user.userinfo.service;
 
+import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.userinfo.dto.UserDTO;
 
 public interface UserService {
@@ -10,5 +11,7 @@ public interface UserService {
 
     UserDTO getUserInfo(String userid);
     UserDTO getUserInfoByUidAndType(String uid, String type);
+
+    JwtTokenDTO login(UserDTO userDTO);
 
 }

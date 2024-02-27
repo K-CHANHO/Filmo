@@ -2,9 +2,11 @@ package com.movie.test.user.token.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.dto.TokenDTO;
 import com.movie.test.user.token.entity.TokenEntity;
 import com.movie.test.user.token.repository.TokenRepository;
+import com.movie.test.user.userinfo.dto.UserDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -124,10 +126,11 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public TokenEntity saveRefreshToken(TokenDTO tokenDTO) {
+    public TokenEntity saveRefreshToken(JwtTokenDTO tokenDTO) {
         TokenEntity saved = tokenRepository.save(TokenDTO.toEntity(tokenDTO));
         return saved;
     }
+
 
     private String decodeJwtPayloadSubject(String oldAccessToken) throws JsonProcessingException {
         return objectMapper.readValue(

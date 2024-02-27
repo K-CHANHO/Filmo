@@ -1,6 +1,8 @@
 package com.movie.test.user.login.controller;
 
+import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.dto.TokenDTO;
+import com.movie.test.user.token.service.JwtTokenProvider;
 import com.movie.test.user.token.service.TokenService;
 import com.movie.test.user.userinfo.dto.UserDTO;
 import com.movie.test.user.userinfo.service.UserService;
@@ -27,6 +29,7 @@ public class LoginController {
 
     private final UserService userService;
     private final TokenService tokenService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Operation(summary = "로그인 요청", description = "소셜로그인으로 부터 받은 정보로 로그인 처리 후 토큰을 발급합니다.")
     @Parameters({
@@ -46,16 +49,17 @@ public class LoginController {
 
         // 회원정보가 있는 경우
         if(getUserinfo != null){
-            String accessToken = tokenService.makeAccessToken(getUserinfo.getUserId());
-            String refreshToken = tokenService.makeRefreshToken();
 
-            TokenDTO token = TokenDTO.builder()
-                    .accessToken(accessToken)
-                    .refreshToken(refreshToken)
-                    .userId(getUserinfo.getUserId())
-                    .build();
-
+            JwtTokenDTO token = userService.login(getUserinfo);
             tokenService.saveRefreshToken(token);
+//            String accessToken = tokenService.makeAccessToken(getUserinfo.getUserId());
+//            String refreshToken = tokenService.makeRefreshToken();
+//            TokenDTO token = TokenDTO.builder()
+//                    .accessToken(accessToken)
+//                    .refreshToken(refreshToken)
+//                    .userId(getUserinfo.getUserId())
+//                    .build();
+//            tokenService.saveRefreshToken(token);
 
             return new ResponseEntity<>(token, HttpStatus.OK);
         }

@@ -21,7 +21,7 @@ public class TokenDTO {
     private String accessToken;
     private String refreshToken;
 
-    static public TokenEntity toEntity(TokenDTO dto){
+    static public TokenEntity toEntity(JwtTokenDTO dto){
         TokenEntity entity = TokenEntity.builder()
                 .userId(dto.getUserId())
                 .refreshToken(dto.getRefreshToken())

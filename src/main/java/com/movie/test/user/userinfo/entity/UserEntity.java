@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "mv_user", indexes = @Index(name = "idx_nickname", columnList = "nickname", unique = true))
@@ -38,5 +39,8 @@ public class UserEntity extends BaseTimeEntity {
 
     @Column
     private String introduction; // 소개글
+
+    @Column
+    private List<String> roles;
 
 }

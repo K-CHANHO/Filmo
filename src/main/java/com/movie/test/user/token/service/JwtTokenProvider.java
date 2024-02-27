@@ -1,11 +1,11 @@
-package com.example.playWorld.token;
+package com.movie.test.user.token.service;
 
-import com.example.playWorld.token.dto.JwtTokenDTO;
+import com.movie.test.user.token.dto.JwtTokenDTO;
+import com.movie.test.user.userinfo.dto.UserDTO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -34,11 +36,12 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // ms * s * min * hour
-    private long accessTokenExpiration = 1000 * 60 * 60; // 1 hour
-    private long refreshTokenExpiration = 1000 * 60 * 60 * 24; // 1 day
+    @Value("${jwt.expired.accessToken}")
+    private long accessTokenExpiration;
+    @Value("${jwt.expired.refreshToken}")
+    private long refreshTokenExpiration;
 
-    public JwtTokenDTO createToken(Authentication authentication){
+    public JwtTokenDTO createToken(UserDTO userDTO, Authentication authentication){
 
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -48,14 +51,12 @@ public class JwtTokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
-                .setExpiration(new Date(now + accessTokenExpiration))
+                .setExpiration(Date.from(Instant.now().plus(accessTokenExpiration, ChronoUnit.DAYS)))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         String refreshToken = Jwts.builder()
-                .setSubject(authentication.getName())
-                .claim("auth", authorities)
-                .setExpiration(new Date(now + refreshTokenExpiration))
+                .setExpiration(Date.from(Instant.now().plus(refreshTokenExpiration, ChronoUnit.DAYS)))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -63,13 +64,14 @@ public class JwtTokenProvider {
                 .grantType("Bearer ")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .userId(userDTO.getUserId())
                 .build();
 
     }
 
     public Authentication getAuthentication(String accessToken){
 
-        Claims claims = Jwts.parserBuilder()
+        Claims claims = Jwts.parser()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(accessToken)
@@ -90,7 +92,7 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token){
         try{
-            Jwts.parserBuilder()
+            Jwts.parser()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token);

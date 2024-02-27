@@ -1,4 +1,4 @@
-package com.movie.test.Interceptor;
+package com.movie.test.common.Interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

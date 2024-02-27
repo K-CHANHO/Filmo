@@ -1,4 +1,4 @@
-package com.movie.test.Interceptor;
+package com.movie.test.common.Interceptor;
 
 import com.movie.test.user.token.service.TokenService;
 import io.jsonwebtoken.Claims;

@@ -1,10 +1,16 @@
 package com.movie.test.user.userinfo.service;
 
 import com.movie.test.api.s3.service.S3Service;
+import com.movie.test.user.token.dto.JwtTokenDTO;
+import com.movie.test.user.token.repository.TokenRepository;
+import com.movie.test.user.token.service.JwtTokenProvider;
 import com.movie.test.user.userinfo.dto.UserDTO;
 import com.movie.test.user.userinfo.entity.UserEntity;
 import com.movie.test.user.userinfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -14,7 +20,11 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
     private final S3Service s3Service;
+
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public UserDTO newUserSave(UserDTO userDTO) {
@@ -79,5 +89,17 @@ public class UserServiceImpl implements UserService {
         }
 
         return null;
+    }
+
+    @Override
+    public JwtTokenDTO login(UserDTO userDTO) {
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDTO.getUid(), userDTO.getType());
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        // 토큰 생성
+        JwtTokenDTO jwtTokenDTO = jwtTokenProvider.createToken(userDTO, authentication);
+
+        return jwtTokenDTO;
     }
 }
