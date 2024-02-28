@@ -31,9 +31,13 @@ public class ViewServiceImpl implements ViewService {
 
     }
 
+    /**
+     * Redis에 추가되어야 하는 조회수 저장.
+     * 추가되어야 하는 조회수 return.
+     */
     @Override
     public Long addViewCountV2(String reportId) {
-//        String prefix = "view_";
+//        String prefix = "view_"; // 추후 다른 값도 redis 활용 시 구분자 추가하여야 할 듯.
         String viewCount = redisService.getData(reportId);
         if(null == viewCount){
             redisService.setData(reportId, String.valueOf(1));
