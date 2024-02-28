@@ -4,6 +4,7 @@ import com.movie.test.redis.service.RedisService;
 import com.movie.test.report.view.entity.ViewEntity;
 import com.movie.test.report.view.repository.ViewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,12 +32,15 @@ public class ViewServiceImpl implements ViewService {
     }
 
     @Override
-    public void addViewCountV2(String reportId) {
+    public Long addViewCountV2(String reportId) {
+//        String prefix = "view_";
         String viewCount = redisService.getData(reportId);
         if(null == viewCount){
             redisService.setData(reportId, String.valueOf(1));
+            return 1L;
         } else {
-            redisService.setData(reportId, String.valueOf(Integer.valueOf(viewCount)+1));
+            redisService.setData(reportId, String.valueOf(Long.valueOf(viewCount)+1));
+            return Long.valueOf(viewCount)+1;
         }
 
     }
@@ -51,4 +55,5 @@ public class ViewServiceImpl implements ViewService {
     public void deleteViewCount(String reportId) {
         viewRepository.deleteById(reportId);
     }
+
 }

@@ -145,11 +145,11 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         reportDTO.setLikeCount(countLike);
 
         // 6. 조회수 증가 (redis)
-        viewService.addViewCountV2(reportId);
+        Long redisCount = viewService.addViewCountV2(reportId);
 
         // 7. 조회수 조회
         Long viewCount = viewService.getViewCount(reportId);
-        reportDTO.setViewCount(viewCount);
+        reportDTO.setViewCount(viewCount + redisCount);
 
 
         return reportDTO;
