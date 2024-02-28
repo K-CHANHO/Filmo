@@ -4,6 +4,7 @@ public interface ViewService {
 
     Long getViewCount(String reportId);
     void addViewCount(String reportId);
+    void addViewCountV2(String reportId);
     void registViewCount(String reportId);
     void deleteViewCount(String reportId);
 }

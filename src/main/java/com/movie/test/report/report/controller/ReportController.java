@@ -18,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -59,7 +61,7 @@ public class ReportController {
             @ApiResponse(responseCode = "200", description = "감상문 정보 및 댓글 정보")
     })
     @GetMapping("/getReport/{reportId}")
-    public ResponseEntity getReport(@PathVariable String reportId){
+    public ResponseEntity getReport(@PathVariable String reportId, @AuthenticationPrincipal UserDetails userDetails){
 
         // 리턴값
         Map<String, Object> serverData = new HashMap<>();
@@ -75,7 +77,9 @@ public class ReportController {
         // 댓글 페이지 따로 있는 경우 따로 호출.
 
         // 조회수 증가 TODO: 추후 REDIS로 구현해보기
-        viewService.addViewCount(reportId);
+//        viewService.addViewCount(reportId);
+        log.error(userDetails.toString());
+
 
         return new ResponseEntity(singleReport, HttpStatus.OK);
     }

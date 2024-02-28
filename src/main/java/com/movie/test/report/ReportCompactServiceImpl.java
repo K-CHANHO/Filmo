@@ -1,5 +1,6 @@
 package com.movie.test.report;
 
+import com.movie.test.redis.service.RedisService;
 import com.movie.test.report.complaint.service.ComplaintService;
 import com.movie.test.report.hashtag.service.TagService;
 import com.movie.test.report.like.service.LikeService;
@@ -32,7 +33,6 @@ public class ReportCompactServiceImpl implements ReportCompactService{
     private final LikeService likeService;
     private final ViewService viewService;
     private final UserService userService;
-
 
     /**
      * 감상문 등록
@@ -114,7 +114,8 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 3. 댓글 조회
      * 4. 태그 조회
      * 5. 좋아요수 조회
-     * 6. 조회수 조회
+     * 6. (필요 시) 조회수 증가
+     * 7. 조회수 조회
      */
     @Override
     public ReportDTO getSingleReport(String reportId) {
@@ -143,9 +144,13 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         Long countLike = likeService.countLike(reportId);
         reportDTO.setLikeCount(countLike);
 
-        // 6. 조회수 조회
+        // 6. 조회수 증가 (redis)
+        viewService.addViewCountV2(reportId);
+
+        // 7. 조회수 조회
         Long viewCount = viewService.getViewCount(reportId);
         reportDTO.setViewCount(viewCount);
+
 
         return reportDTO;
     }

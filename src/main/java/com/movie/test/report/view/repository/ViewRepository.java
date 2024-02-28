@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ViewRepository extends JpaRepository<ViewEntity, String> {
-    Long countByReportId(String reportId);
 }
