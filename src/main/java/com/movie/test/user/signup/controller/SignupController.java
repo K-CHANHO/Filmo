@@ -39,23 +39,9 @@ public class SignupController {
     @PostMapping("/signup")
     public ResponseEntity userCreate(UserDTO userDTO) {
 
-
         UserDTO newUser = userService.newUserSave(userDTO);
 
-        JsonObject userinfo = new JsonObject();
-        userinfo.addProperty("uid", newUser.getUid());
-        userinfo.addProperty("userid", newUser.getUserId());
-        userinfo.addProperty("type", newUser.getType());
-        userinfo.addProperty("nickname", newUser.getNickname());
-        userinfo.addProperty("profileURL", newUser.getProfileURL());
-        userinfo.addProperty("last_login_date", String.valueOf(newUser.getLastLoginDate()));
-        userinfo.addProperty("create_date", String.valueOf(newUser.getCreateDate()));
-
-        JsonObject serverData = new JsonObject();
-        serverData.add("userinfo", userinfo);
-
-
-        return new ResponseEntity(serverData, HttpStatus.OK);
+        return new ResponseEntity(newUser, HttpStatus.OK);
 
     }
 }

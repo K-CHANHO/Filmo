@@ -8,11 +8,13 @@ import com.movie.test.user.userinfo.dto.UserDTO;
 import com.movie.test.user.userinfo.entity.UserEntity;
 import com.movie.test.user.userinfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -41,6 +43,7 @@ public class UserServiceImpl implements UserService {
         } else {
             // TODO : 기본 프로필사진 설정하기.
         }
+        userDTO.setRoles(List.of(new String[]{"USER"}));
 
         UserEntity user = UserDTO.toEntity(userDTO);
 
@@ -101,5 +104,11 @@ public class UserServiceImpl implements UserService {
         JwtTokenDTO jwtTokenDTO = jwtTokenProvider.createToken(userDTO, authentication);
 
         return jwtTokenDTO;
+    }
+
+    @Override
+    public List<String> checkUserRoles(String userId) {
+
+        return userRepository.findById(userId).orElse(new UserEntity()).getRoles();
     }
 }

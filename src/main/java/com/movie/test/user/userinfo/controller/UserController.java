@@ -15,12 +15,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Tag(name = "유저정보", description = "유저정보 API")
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class UserController {
 
@@ -30,7 +33,6 @@ public class UserController {
     @Parameter(name = "userId", description = "조회할 유저의 id")
     @ApiResponse(responseCode = "200", description = "조회한 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDTO.class)))
     @GetMapping("/userinfo")
-    @ResponseBody
     public ResponseEntity userinfo(UserDTO userDTO, HttpServletRequest request, HttpServletResponse response) {
 
         UserDTO userinfo = userService.getUserInfo(userDTO.getUserId());
@@ -40,5 +42,13 @@ public class UserController {
         userinfoMap.put("newToken", request.getAttribute("newToken"));
 
         return new ResponseEntity(userinfoMap, HttpStatus.OK);
+    }
+
+    @PostMapping("/userRoles")
+    public ResponseEntity userRoles(String userId){
+
+        List<String> roles = userService.checkUserRoles(userId);
+
+        return new ResponseEntity(roles, HttpStatus.OK);
     }
 }

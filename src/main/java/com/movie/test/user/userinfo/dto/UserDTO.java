@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Hidden
 @Data
@@ -26,6 +27,7 @@ public class UserDTO extends BaseTimeDTO {
     private String profileURL; // 프로필사진 url
     private Timestamp lastLoginDate; // 마지막 로그인 시간
     private String introduction; // 소개글
+    private List<String> roles;
 
     public static UserDTO toDTO(UserEntity entity) {
         UserDTO dto = UserDTO.builder()
@@ -38,6 +40,7 @@ public class UserDTO extends BaseTimeDTO {
                 .createDate(entity.getCreateDate())
                 .lastModifiedDate(entity.getLastModifiedDate())
                 .introduction(entity.getIntroduction())
+                .roles(entity.getRoles())
                 .build();
 
         return dto;
@@ -52,6 +55,7 @@ public class UserDTO extends BaseTimeDTO {
                 .profileURL(dto.profileURL)
                 .lastLoginDate(dto.lastLoginDate)
                 .introduction(dto.getIntroduction())
+                .roles(dto.getRoles())
                 .build();
 
         return entity;
