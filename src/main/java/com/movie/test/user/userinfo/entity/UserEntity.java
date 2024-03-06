@@ -41,6 +41,6 @@ public class UserEntity extends BaseTimeEntity {
     private String introduction; // 소개글
 
     @Column
-    private List<String> roles;
+    private String roles;
 
 }

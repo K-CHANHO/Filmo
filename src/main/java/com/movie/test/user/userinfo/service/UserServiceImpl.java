@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -109,6 +110,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<String> checkUserRoles(String userId) {
 
-        return userRepository.findById(userId).orElse(new UserEntity()).getRoles();
+        return Arrays.stream(userRepository.findById(userId).orElse(new UserEntity()).getRoles().split(",")).toList();
     }
 }
