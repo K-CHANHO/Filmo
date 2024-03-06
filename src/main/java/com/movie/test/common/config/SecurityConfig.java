@@ -24,7 +24,7 @@ public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private String[] excludePath = {"/login", "/signup", "/error", "/h2-console/**"};
+    private String[] excludePath = {"/login/**", "/signup", "/error", "/h2-console/**"};
     private String[] swagger = {"/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/api-docs/**"};
 
     @Bean
@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 Stream.of(swagger).map(AntPathRequestMatcher::antMatcher).toArray(AntPathRequestMatcher[]::new)
                         ).permitAll()
-                        .requestMatchers(PathRequest.toH2Console()).permitAll()
+//                        .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated() // 그 외 요청은 인증 필요
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
