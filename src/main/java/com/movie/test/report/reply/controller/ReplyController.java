@@ -40,7 +40,7 @@ public class ReplyController {
     @Operation(summary = "댓글 등록", description = "감상문에 댓글 등록합니다.")
     @Parameters({
         @Parameter(name = "reportId", description = "감상문 id", required = true),
-        @Parameter(name = "userId", description = "유저 id", required = true),
+//        @Parameter(name = "userId", description = "유저 id", required = true),
         @Parameter(name = "content", description = "댓글 내용", required = true),
         @Parameter(name = "upReplyId", description = "대댓글일 경우 원댓글 id"),
     })

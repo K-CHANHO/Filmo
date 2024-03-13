@@ -30,7 +30,7 @@ public class UserController {
     private final UserService userService;
 
     @Operation(summary = "유저정보 요청", description = "회원 정보를 조회합니다.")
-    @Parameter(name = "userId", description = "조회할 유저의 id")
+//    @Parameter(name = "userId", description = "조회할 유저의 id")
     @ApiResponse(responseCode = "200", description = "조회한 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDTO.class)))
     @GetMapping("/userinfo")
     public ResponseEntity userinfo(UserDTO userDTO, HttpServletRequest request, HttpServletResponse response) {

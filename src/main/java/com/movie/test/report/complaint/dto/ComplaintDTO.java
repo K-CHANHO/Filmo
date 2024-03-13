@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper=false)
-@Hidden
+//@Hidden
 @NoArgsConstructor
 @AllArgsConstructor
 public class ComplaintDTO extends BaseTimeDTO {

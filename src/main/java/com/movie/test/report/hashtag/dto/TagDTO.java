@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Hidden
+//@Hidden
 public class TagDTO extends BaseTimeDTO {
 
     private Long tagId;

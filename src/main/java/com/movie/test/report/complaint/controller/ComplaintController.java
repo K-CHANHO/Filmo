@@ -25,7 +25,7 @@ public class ComplaintController {
 
     @Operation(summary = "감상문 신고", description = "신고 내용을 DB에 저장합니다.")
     @Parameters(value = {
-            @Parameter(name = "userId", description = "신고자 id"),
+//            @Parameter(name = "userId", description = "신고자 id"),
             @Parameter(name = "reportId", description = "신고당한 감상문 id"),
             @Parameter(name = "content", description = "신고내용")
     })
@@ -40,7 +40,7 @@ public class ComplaintController {
 
     @Operation(summary = "감상문 신고 취소", description = "감상문 신고를 취소합니다.")
     @Parameters(value = {
-            @Parameter(name = "userId", description = "신고자 id"),
+//            @Parameter(name = "userId", description = "신고자 id"),
             @Parameter(name = "reportId", description = "신고당한 감상문 id"),
     })
     @PostMapping("/deleteComplaint/{complaintId}")

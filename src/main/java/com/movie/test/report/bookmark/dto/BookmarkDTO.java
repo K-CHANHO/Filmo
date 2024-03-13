@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Hidden
+//@Hidden
 public class BookmarkDTO {
 
     private Long bookmarkId;

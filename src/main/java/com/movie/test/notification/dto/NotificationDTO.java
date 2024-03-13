@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper=false)
 @AllArgsConstructor
 @NoArgsConstructor
-@Hidden
+//@Hidden
 public class NotificationDTO extends BaseTimeDTO {
 
     private Long notificationId;

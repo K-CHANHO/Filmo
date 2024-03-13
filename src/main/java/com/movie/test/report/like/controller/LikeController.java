@@ -25,7 +25,7 @@ public class LikeController {
     @Operation(summary = "좋아요 등록/취소", description = "좋아요를 등록 또는 취소합니다.")
     @Parameters(value = {
             @Parameter(name = "reportId", description = "감상문의 id", required = true),
-            @Parameter(name = "userId", description = "유저의 id", required = true),
+//            @Parameter(name = "userId", description = "유저의 id", required = true),
     })
     @PostMapping("/regist")
     public ResponseEntity registOrDeleteLike(LikeDTO likeDTO) {
@@ -38,7 +38,7 @@ public class LikeController {
     @Operation(summary = "좋아요 확인", description = "감상문을 좋아요 했는지 확인합니다.")
     @Parameters(value = {
             @Parameter(name = "reportId", description = "감상문의 id", required = true),
-            @Parameter(name = "userId", description = "유저의 id", required = true),
+//            @Parameter(name = "userId", description = "유저의 id", required = true),
     })
     @GetMapping("/check")
     public ResponseEntity checkLikst(LikeDTO likeDTO){

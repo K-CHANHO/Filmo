@@ -23,7 +23,7 @@ public class InquiryController {
 
     @Operation(summary = "문의사항 등록", description = "파라미터로 받은 내용을 DB에 저장하고 관리자에게 메일을 보냅니다.")
     @Parameters({
-        @Parameter(name = "userId", description = "문의 등록 유저아이디", required = true),
+//        @Parameter(name = "userId", description = "문의 등록 유저아이디", required = true),
         @Parameter(name = "title", description = "문의 제목", required = true),
         @Parameter(name = "content", description = "문의 내용", required = true),
         @Parameter(name = "category", description = "문의 유형", required = true),

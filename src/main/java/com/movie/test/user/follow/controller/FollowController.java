@@ -36,7 +36,7 @@ public class FollowController {
 
     @Operation(summary = "팔로잉/차단 등록", description = "팔로잉 또는 차단을 등록합니다.")
     @Parameters({
-            @Parameter(name = "userId", description = "현재 사용자 id", required = true),
+//            @Parameter(name = "userId", description = "현재 사용자 id", required = true),
             @Parameter(name = "followTarget", description = "대상 id", required = true),
             @Parameter(name = "type", description = "follow(팔로우) 또는 block(차단)", required = true)
     })
@@ -66,7 +66,7 @@ public class FollowController {
 
     @Operation(summary = "팔로잉/차단 목록", description = "팔로잉/차단 목록을 조회합니다.")
     @Parameters({
-        @Parameter(name = "userId", description = "유저 id", required = true),
+//        @Parameter(name = "userId", description = "유저 id", required = true),
         @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id"),
         @Parameter(name = "keyword", description = "검색어"),
         @Parameter(name = "type", description = "follow 또는 block", required = true)
@@ -88,7 +88,7 @@ public class FollowController {
 
     @Operation(summary = "팔로워 목록", description = "팔로워(나를 팔로잉 하는 사람) 목록을 조회합니다.")
     @Parameters({
-            @Parameter(name = "userId", description = "유저 id", required = true),
+//            @Parameter(name = "userId", description = "유저 id", required = true),
             @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id", required = false),
             @Parameter(name = "keyword", description = "검색어")
     })
@@ -109,7 +109,7 @@ public class FollowController {
 
     @Operation(summary = "팔로잉/차단 확인", description = "상대를 팔로잉하고 있는 지 확인")
     @Parameters({
-            @Parameter(name = "userId", description = "유저 id", required = true),
+//            @Parameter(name = "userId", description = "유저 id", required = true),
             @Parameter(name = "followTarget", description = "상대 id", required = true)
     })
     @ApiResponse(responseCode = "200", description = "팔로잉하고 있는 경우 type(follow/block), 아닌 경우 no-follow 리턴")
@@ -122,13 +122,13 @@ public class FollowController {
     }
 
     @Operation(summary = "팔로잉/팔로워/차단 수 확인", description = "유저의 팔로잉/팔로워 수를 확인")
-    @Parameter(name = "userId", description = "확인할 유저의 id", required = true)
+    @Parameter(name = "otherUserId", description = "확인할 유저의 id", required = true)
     @GetMapping("/countFollow")
-    public ResponseEntity countFollow(String userId) {
+    public ResponseEntity countFollow(String otherUserId) {
 
-        Long countFollowing = followService.countFollowing(userId);
-        Long countFollower = followService.countFollower(userId);
-        Long countBlock = followService.countBlock(userId);
+        Long countFollowing = followService.countFollowing(otherUserId);
+        Long countFollower = followService.countFollower(otherUserId);
+        Long countBlock = followService.countBlock(otherUserId);
 
         Map<String, Object> resultData = new HashMap<>();
         resultData.put("countFollowing", countFollowing);
