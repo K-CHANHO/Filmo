@@ -1,5 +1,6 @@
 package com.movie.test.common.filter;
 
+import com.movie.test.common.cef.ModifiableHttpServletRequest;
 import com.movie.test.user.token.service.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,26 +21,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         log.info("요청 URI : {}", request.getRequestURI());
         log.info("시큐리티 필터 진입");
         String token = jwtTokenProvider.resolveToken(request);
 
         if(token != null && jwtTokenProvider.validateToken(token)){
+            log.info("시큐리티 필터 토큰 검증 성공");
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // token에서 userId 추출하여 request에 parameter로 추가.
+            ModifiableHttpServletRequest tempRequest = new ModifiableHttpServletRequest(request);
+            tempRequest.setParameter("userId", jwtTokenProvider.getUserId(token));
+            request = (HttpServletRequest) tempRequest;
         }
 
-        log.info("시큐리티 필터 토큰 검증 성공");
-        try {
-            filterChain.doFilter(request, response);
-        } catch (IOException e) {
-            log.error("시큐리티 에러 : {}", e);
-            throw new RuntimeException(e);
-        } catch (ServletException e) {
-            log.error("시큐리티 에러 : {}", e);
-            throw new RuntimeException(e);
-        }
+        filterChain.doFilter(request, response);
+
     }
 }

@@ -49,6 +49,7 @@ public class JwtTokenProvider {
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
+                .claim("userId", userDTO.getUserId())
                 .claim("auth", authorities)
                 .setExpiration(Date.from(Instant.now().plus(accessTokenExpiration, ChronoUnit.DAYS)))
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -76,9 +77,11 @@ public class JwtTokenProvider {
                 .parseClaimsJws(accessToken)
                 .getBody();
 
+/*
         if(claims.get("auth") == null){
             throw new RuntimeException("권한 정보가 없습니다");
         }
+*/
 
         List<SimpleGrantedAuthority> authorities = Arrays.stream(claims.get("auth").toString().split(","))
                 .map(SimpleGrantedAuthority::new)
@@ -86,6 +89,19 @@ public class JwtTokenProvider {
 
         UserDetails user = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(user, "", authorities);
+
+    }
+
+    public String getUserId(String accessToken){
+
+        Claims claims = Jwts.parser()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(accessToken)
+                .getBody();
+
+
+        return claims.get("userId").toString();
 
     }
 
@@ -98,19 +114,22 @@ public class JwtTokenProvider {
             return true;
         } catch (SecurityException | MalformedJwtException e){
             log.error("Invalid JWT Token", e);
+            return false;
         } catch (ExpiredJwtException e){
             log.error("Expired JWT Token", e);
+            return false;
         } catch (UnsupportedJwtException e){
             log.error("Unsupported JWT Token", e);
+            return false;
         } catch (IllegalArgumentException e){
             log.error("JWT Claims Is Null", e);
+            return false;
         }
-        return false;
     }
 
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")){
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
             return bearerToken.substring(7);
         }
 

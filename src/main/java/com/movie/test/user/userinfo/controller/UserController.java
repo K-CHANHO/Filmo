@@ -47,9 +47,9 @@ public class UserController {
     @Operation(summary = "유저권한 확인", description = "유저의 권한을 확인합니다.")
     @Parameter(name = "userId", description = "조회할 유저의 id", required = true)
     @PostMapping("/userRoles")
-    public ResponseEntity userRoles(String userId) {
+    public ResponseEntity userRoles(UserDTO userDTO) {
 
-        List<String> roles = userService.checkUserRoles(userId);
+        List<String> roles = userService.checkUserRoles(userDTO.getUserId());
 
         return new ResponseEntity(roles, HttpStatus.OK);
     }

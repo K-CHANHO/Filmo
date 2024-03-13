@@ -1,4 +1,4 @@
-package com.movie.test.common;
+package com.movie.test.common.cef;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 

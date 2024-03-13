@@ -1,10 +1,9 @@
 package com.movie.test.common.config;
 
-import com.movie.test.common.SimplePasswordEncoder;
+import com.movie.test.common.cef.SimplePasswordEncoder;
 import com.movie.test.common.filter.JwtAuthenticationFilter;
 import com.movie.test.user.token.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,7 +23,7 @@ public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private String[] excludePath = {"/login/**", "/signup", "/error", "/h2-console/**"};
+    private String[] excludePath = {"/login", "/signup", "/error", "/h2-console/**"};
     private String[] swagger = {"/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/api-docs/**"};
 
     @Bean
