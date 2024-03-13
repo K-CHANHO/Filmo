@@ -4,11 +4,12 @@ import com.movie.test.inquiry.dto.InquiryDTO;
 import com.movie.test.inquiry.entity.InquiryEntity;
 import com.movie.test.inquiry.repository.InquiryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -43,5 +44,13 @@ public class InquiryServiceImpl implements InquiryService {
         message.setText(inquiry.getUserEmail() + "님으로부터의 문의 : " + inquiry.getContent());
         message.setSentDate(new Date());
         sender.send(message);
+    }
+
+    @Override
+    public Slice<InquiryDTO> getInquiryList(String userId, String lastInquiryId, Pageable pageable) {
+
+        if (lastInquiryId == null) lastInquiryId = "";
+        Slice<InquiryEntity> inquiryList = inquiryRepository.getInquiryList(userId, lastInquiryId, pageable);
+        return inquiryList.map(InquiryDTO::toDTO);
     }
 }
