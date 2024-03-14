@@ -136,8 +136,8 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         // 4. 태그 조회
         List<String> tagsInReport = tagService.getTagsInReport(reportId);
         if(!tagsInReport.isEmpty()) {
-            String tagString = String.join("#", tagsInReport);
-            reportDTO.setTagString("#" + tagString);
+            String tagString = String.join(",", tagsInReport);
+            reportDTO.setTagString(tagString);
         }
 
         // 5. 좋아요수 조회
