@@ -22,33 +22,22 @@ public class FollowServiceImpl implements FollowService{
     @Override
     public FollowDTO registFollowing(FollowDTO followDTO) {
 
-        FollowDTO returnDTO = null;
-
-        // 이미 팔로우/차단한 경우 type 비교
+        // 이미 팔로우한 경우
         FollowEntity checkValid = followRepository.findByUserIdAndFollowTarget(followDTO.getUserId(), followDTO.getFollowTarget());
         if(checkValid != null){
-            // type 같을 경우 기존 데이터 리턴
-            if(checkValid.getType().equals(followDTO.getType())){
-                returnDTO = FollowDTO.toDTO(checkValid);
-            }
-            // type 다른 경우 update
-            else {
-                FollowEntity changeTypeEntity = checkValid.toBuilder().type(followDTO.getType()).build();
-                FollowEntity savedFollow = followRepository.save(changeTypeEntity);
-                returnDTO = FollowDTO.toDTO(savedFollow);
-            }
+                return FollowDTO.toDTO(checkValid);
         }
-        // 팔로우/차단 없는 경우 바로 저장
+
+        // 팔로잉 없는 경우 바로 저장
         else {
-            StringBuilder stringBuilder = new StringBuilder(UUID.randomUUID().toString());
-            stringBuilder.append(System.currentTimeMillis());
+            StringBuilder stringBuilder = new StringBuilder(String.valueOf(System.currentTimeMillis()));
+            stringBuilder.append(UUID.randomUUID().toString());
 
             followDTO.setFollowId(stringBuilder.toString());
             FollowEntity savedFollow = followRepository.save(FollowDTO.toEntity(followDTO));
-            returnDTO = FollowDTO.toDTO(savedFollow);
+            return FollowDTO.toDTO(savedFollow);
         }
 
-        return returnDTO;
     }
 
     @Override
@@ -71,20 +60,16 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public String isFollowing(String userId, String followTarget) {
-        FollowEntity isFollowing = followRepository.findByUserIdAndFollowTarget(userId, followTarget);
+    public boolean isFollowing(String userId, String followTarget) {
+//        FollowEntity isFollowing = followRepository.findByUserIdAndFollowTarget(userId, followTarget);
+        Boolean isFollowing = followRepository.existsByUserIdAndFollowTarget(userId, followTarget);
 
-        String followType = "no-follow";
-        if(isFollowing != null){
-            followType = isFollowing.getType();
-        }
-
-        return followType;
+        return isFollowing;
     }
 
     @Override
     public Long countFollowing(String userId) {
-        return followRepository.countByUserIdAndType(userId, "follow");
+        return followRepository.countByUserId(userId);
     }
 
     @Override
@@ -94,6 +79,6 @@ public class FollowServiceImpl implements FollowService{
 
     @Override
     public Long countBlock(String userId) {
-        return followRepository.countByUserIdAndType(userId, "block");
+        return followRepository.countByUserId(userId);
     }
 }

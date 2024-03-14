@@ -33,8 +33,7 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
                 .where(
                         follow.userId.eq(followListSearchDTO.getUserId()),
                         follow.followTarget.gt(followListSearchDTO.getLastUserId()),
-                        nicknameCheck(followListSearchDTO.getKeyword()),
-                        follow.type.eq(followListSearchDTO.getType())
+                        nicknameCheck(followListSearchDTO.getKeyword())
                 )
                 .orderBy(follow.createDate.desc())
                 .fetch();
@@ -65,8 +64,7 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
                 .where(
                         follow.followTarget.eq(followListSearchDTO.getUserId()),
                         follow.userId.gt(followListSearchDTO.getLastUserId()),
-                        nicknameCheck(followListSearchDTO.getKeyword()),
-                        follow.type.eq("follow")
+                        nicknameCheck(followListSearchDTO.getKeyword())
                 )
                 .orderBy(follow.createDate.desc())
                 .fetch();

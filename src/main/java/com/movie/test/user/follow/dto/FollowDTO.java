@@ -23,8 +23,6 @@ public class FollowDTO extends BaseTimeDTO {
 
     private String followTarget; // 팔로우 대상
 
-    private String type; // 팔로우 또는 차단
-
     public static FollowDTO toDTO(FollowEntity entity) {
         FollowDTO dto = FollowDTO.builder()
                 .followId(entity.getFollowId())
@@ -32,7 +30,6 @@ public class FollowDTO extends BaseTimeDTO {
                 .followTarget(entity.getFollowTarget())
                 .createDate(entity.getCreateDate())
                 .lastModifiedDate(entity.getLastModifiedDate())
-                .type(entity.getType())
                 .build();
 
         return dto;
@@ -43,7 +40,6 @@ public class FollowDTO extends BaseTimeDTO {
                 .followId(dto.getFollowId())
                 .userId(dto.getUserId())
                 .followTarget(dto.getFollowTarget())
-                .type(dto.getType())
                 .build();
 
         return entity;

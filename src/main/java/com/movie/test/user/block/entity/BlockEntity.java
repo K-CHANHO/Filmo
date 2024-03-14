@@ -1,4 +1,4 @@
-package com.movie.test.user.follow.entity;
+package com.movie.test.user.block.entity;
 
 import com.movie.test.common.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
@@ -7,26 +7,24 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.UuidGenerator;
 
 @Entity
-@Table(name = "mv_follow")
+@Table(name = "mv_block")
 @ToString
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @DynamicUpdate
-public class FollowEntity extends BaseTimeEntity {
+public class BlockEntity extends BaseTimeEntity {
 
     @Id
-//    @UuidGenerator
-    private String followId;
+    private String blockId;
 
     @Column
-    private String userId; // 팔로우 당사자
+    private String userId; // 사용자 id
 
     @Column
-    private String followTarget; // 팔로우 대상
+    private String targetId; // 차단 대상
 
 }

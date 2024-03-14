@@ -5,6 +5,7 @@ import com.movie.test.user.follow.dto.FollowListSearchDTO;
 import com.movie.test.user.userinfo.dto.UserDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.stereotype.Service;
 
 public interface FollowService {
     FollowDTO registFollowing(FollowDTO followDTO);
@@ -15,7 +16,7 @@ public interface FollowService {
 
     Slice<UserDTO> getFollowerUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable);
 
-    String isFollowing(String userId, String followTarget);
+    boolean isFollowing(String userId, String followTarget);
 
     Long countFollowing(String userId);
 

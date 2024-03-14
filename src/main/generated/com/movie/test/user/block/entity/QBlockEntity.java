@@ -1,4 +1,4 @@
-package com.movie.test.user.follow.entity;
+package com.movie.test.user.block.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -10,39 +10,39 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QFollowEntity is a Querydsl query type for FollowEntity
+ * QBlockEntity is a Querydsl query type for BlockEntity
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QFollowEntity extends EntityPathBase<FollowEntity> {
+public class QBlockEntity extends EntityPathBase<BlockEntity> {
 
-    private static final long serialVersionUID = 1608280756L;
+    private static final long serialVersionUID = 285484504L;
 
-    public static final QFollowEntity followEntity = new QFollowEntity("followEntity");
+    public static final QBlockEntity blockEntity = new QBlockEntity("blockEntity");
 
     public final com.movie.test.common.entity.QBaseTimeEntity _super = new com.movie.test.common.entity.QBaseTimeEntity(this);
+
+    public final StringPath blockId = createString("blockId");
 
     //inherited
     public final DateTimePath<java.sql.Timestamp> createDate = _super.createDate;
 
-    public final StringPath followId = createString("followId");
-
-    public final StringPath followTarget = createString("followTarget");
-
     //inherited
     public final DateTimePath<java.sql.Timestamp> lastModifiedDate = _super.lastModifiedDate;
 
+    public final StringPath targetId = createString("targetId");
+
     public final StringPath userId = createString("userId");
 
-    public QFollowEntity(String variable) {
-        super(FollowEntity.class, forVariable(variable));
+    public QBlockEntity(String variable) {
+        super(BlockEntity.class, forVariable(variable));
     }
 
-    public QFollowEntity(Path<? extends FollowEntity> path) {
+    public QBlockEntity(Path<? extends BlockEntity> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QFollowEntity(PathMetadata metadata) {
-        super(FollowEntity.class, metadata);
+    public QBlockEntity(PathMetadata metadata) {
+        super(BlockEntity.class, metadata);
     }
 
 }
