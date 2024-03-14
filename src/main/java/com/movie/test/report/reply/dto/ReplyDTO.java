@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 //@Hidden
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -22,6 +24,9 @@ public class ReplyDTO extends BaseTimeDTO {
     private String reportId; // 감상문 id
     private String userId; // 댓글 작성자 id
     private String content; // 댓글내용
+
+    private String nickname; // 댓글 작성자 닉네임
+    private List<ReplyDTO> subReply;
 
     public static ReplyDTO toDTO(ReplyEntity entity) {
         ReplyDTO dto = ReplyDTO.builder()

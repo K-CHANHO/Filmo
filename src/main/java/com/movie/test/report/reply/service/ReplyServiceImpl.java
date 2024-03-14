@@ -3,6 +3,7 @@ package com.movie.test.report.reply.service;
 import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.reply.entity.ReplyEntity;
 import com.movie.test.report.reply.repository.ReplyRepository;
+import com.movie.test.user.userinfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyRepository replyRepository;
+    private final UserRepository userRepository;
 
     @Override
     public ReplyDTO registReply(ReplyDTO replyDTO) {
@@ -54,7 +56,11 @@ public class ReplyServiceImpl implements ReplyService {
 
         List<ReplyEntity> replies = replyRepository.findByReportIdAndUpReplyIdIsNullOrderByCreateDate(reportId);
         replies.forEach((reply)->{
-            replyDTOS.add(ReplyDTO.toDTO(reply));
+            ReplyDTO dto = ReplyDTO.toDTO(reply);
+            dto.setSubReply(getSubReplies(dto.getReplyId()));
+            dto.setNickname(userRepository.findById(dto.getUserId()).get().getNickname());
+
+            replyDTOS.add(dto);
         });
 
         return replyDTOS;
@@ -66,7 +72,9 @@ public class ReplyServiceImpl implements ReplyService {
 
         List<ReplyEntity> replies = replyRepository.findByUpReplyIdOrderByCreateDate(replyId);
         replies.forEach((reply)->{
-            replyDTOS.add(ReplyDTO.toDTO(reply));
+            ReplyDTO dto = ReplyDTO.toDTO(reply);
+            replyDTOS.add(dto);
+            dto.setNickname(userRepository.findById(dto.getUserId()).get().getNickname());
         });
 
         return replyDTOS;

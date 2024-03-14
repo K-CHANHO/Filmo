@@ -19,7 +19,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-    @Operation(summary = "원댓글 전체 가져오기", description = "해당 감상문의 원댓글을 전부 가져옵니다")
+    @Operation(summary = "댓글 가져오기", description = "해당 감상문의 댓글을 조회합니다")
     @Parameter(name = "reportId", description = "감상문 id", required = true)
     @GetMapping("/getReplies/{reportId}")
     public List<ReplyDTO> getReplies(@PathVariable String reportId) {
@@ -28,7 +28,7 @@ public class ReplyController {
         return replies;
     }
 
-    @Operation(summary = "서브댓글 가져오기", description = "원댓글의 서브댓글을 가져옵니다")
+    @Operation(summary = "서브댓글 가져오기", description = "원댓글의 서브댓글을 조회합니다", deprecated = true)
     @Parameter(name = "replyId", description = "원댓글 id", required = true)
     @GetMapping("/getSubReplies/{replyId}")
     public List<ReplyDTO> getSubReplies(@PathVariable String replyId) {
