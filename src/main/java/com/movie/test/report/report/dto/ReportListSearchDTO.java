@@ -16,5 +16,7 @@ public class ReportListSearchDTO {
     @Builder.Default
     private String lastReportId="";
     private String keyword;
+    private String otherUserId;
+    private String userId;
 
 }

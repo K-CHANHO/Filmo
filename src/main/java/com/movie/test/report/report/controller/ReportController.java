@@ -110,10 +110,11 @@ public class ReportController {
         return new ResponseEntity("Success Delete Report", HttpStatus.OK);
     }
 
-    @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다.")
+    @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다. 다른 사용자가 작성한 감상문을 조회하려면 otherUserId 값을 추가해주세요.")
     @Parameters({
             @Parameter(name = "lastReportId", description = "마지막으로 조회된 감상문 id"),
             @Parameter(name = "keyword", description = "검색어"),
+            @Parameter(name = "otherUserId", description = "타 사용자 id"),
     })
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
     @GetMapping("/searchReport")
@@ -131,7 +132,8 @@ public class ReportController {
         return new ResponseEntity(resultData, HttpStatus.OK);
     }
 
-    @Operation(summary = "다른 유저의 감상문 검색", description = "다른 유저가 작성한 감상문을 검색합니다.")
+
+    @Operation(summary = "다른 유저의 감상문 검색", description = "다른 유저가 작성한 감상문을 검색합니다.", deprecated = true)
     @Parameters({
             @Parameter(name = "otherUserId", description = "다른 유저 id"),
     })

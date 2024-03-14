@@ -29,7 +29,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
                 .from(report)
                 .where(
                         report.reportId.gt(reportListSearchDTO.getLastReportId()),
-                        searchCondition(reportListSearchDTO.getKeyword())
+                        searchCondition(reportListSearchDTO)
                 )
                 .limit(pageable.getPageSize() + 1)
                 .orderBy(report.createDate.desc())
@@ -52,7 +52,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
         Long reportCount = jpaQueryFactory.select(report.count())
                 .from(report)
                 .where(
-                        searchCondition(reportListSearchDTO.getKeyword())
+                        searchCondition(reportListSearchDTO)
                 )
                 .fetchFirst();
 
@@ -71,8 +71,8 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
         return reportIdList;
     }
 
-    public BooleanBuilder searchCondition(String keyword) {
-        return keywordTitle(keyword).or(keywordContent(keyword));
+    public BooleanBuilder searchCondition(ReportListSearchDTO searchDTO) {
+        return keywordTitle(searchDTO.getKeyword()).or(keywordContent(searchDTO.getKeyword())).or(otherUserId(searchDTO.getOtherUserId()));
     }
 
     private BooleanBuilder keywordTitle(String keyword) {
@@ -81,6 +81,10 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
 
     private BooleanBuilder keywordContent(String keyword) {
         return nullSafeBooleanBuilder(() -> report.content.contains(keyword));
+    }
+
+    private BooleanBuilder otherUserId(String otherUserId){
+        return nullSafeBooleanBuilder(() -> report.userId.eq(otherUserId));
     }
 
     private BooleanBuilder nullSafeBooleanBuilder(Supplier<BooleanExpression> supplier) {
