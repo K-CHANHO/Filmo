@@ -3,7 +3,8 @@ package com.movie.test.report.like.service;
 import com.movie.test.report.like.dto.LikeDTO;
 
 public interface LikeService {
-    void registOrDelete(LikeDTO likeDTO);
+    void regist(LikeDTO likeDTO);
+    void delete(LikeDTO likeDTO);
 
     LikeDTO checkLike(LikeDTO likeDTO);
 

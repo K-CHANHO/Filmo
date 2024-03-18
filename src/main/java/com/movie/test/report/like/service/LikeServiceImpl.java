@@ -13,12 +13,20 @@ public class LikeServiceImpl implements LikeService{
     private final LikeRepository likeRepository;
 
     @Override
-    public void registOrDelete(LikeDTO likeDTO) {
+    public void regist(LikeDTO likeDTO) {
 
         LikeDTO isLikeExist = checkLike(likeDTO);
         if(isLikeExist == null){
             likeRepository.save(LikeDTO.toEntity(likeDTO));
-        } else {
+        }
+
+    }
+
+    @Override
+    public void delete(LikeDTO likeDTO) {
+
+        LikeDTO isLikeExist = checkLike(likeDTO);
+        if(isLikeExist != null){
             likeRepository.deleteById(isLikeExist.getLikeId());
         }
     }

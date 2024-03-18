@@ -22,15 +22,26 @@ public class LikeController {
 
     private final LikeService likeService;
 
-    @Operation(summary = "좋아요 등록/취소", description = "좋아요를 등록 또는 취소합니다.")
+    @Operation(summary = "좋아요 등록", description = "좋아요를 등록합니다.")
     @Parameters(value = {
             @Parameter(name = "reportId", description = "감상문의 id", required = true),
-//            @Parameter(name = "userId", description = "유저의 id", required = true),
     })
     @PostMapping("/regist")
-    public ResponseEntity registOrDeleteLike(LikeDTO likeDTO) {
+    public ResponseEntity registLike(LikeDTO likeDTO) {
 
-        likeService.registOrDelete(likeDTO);
+        likeService.regist(likeDTO);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Operation(summary = "좋아요 취소", description = "좋아요를 취소합니다.")
+    @Parameters(value = {
+            @Parameter(name = "reportId", description = "감상문의 id", required = true),
+    })
+    @PostMapping("/cancel")
+    public ResponseEntity cancelLike(LikeDTO likeDTO) {
+
+        likeService.delete(likeDTO);
 
         return new ResponseEntity(HttpStatus.OK);
     }
