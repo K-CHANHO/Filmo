@@ -18,4 +18,5 @@ public interface UserService {
 
     List<String> checkUserRoles(String userId);
 
+    UserDTO updateUserinfo(UserDTO userDTO);
 }

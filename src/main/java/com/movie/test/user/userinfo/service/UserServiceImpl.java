@@ -112,4 +112,18 @@ public class UserServiceImpl implements UserService {
 
         return Arrays.stream(userRepository.findById(userId).orElse(new UserEntity()).getRoles().split(",")).toList();
     }
+
+    @Override
+    public UserDTO updateUserinfo(UserDTO userDTO) {
+
+        UserEntity userEntity = userRepository.findById(userDTO.getUserId()).get();
+        UserEntity modifiedEntity = userEntity.toBuilder()
+                .introduction(userDTO.getIntroduction())
+                .nickname(userDTO.getNickname())
+                .build();
+        UserEntity saved = userRepository.save(modifiedEntity);
+
+
+        return UserDTO.toDTO(saved);
+    }
 }

@@ -3,6 +3,7 @@ package com.movie.test.user.userinfo.entity;
 import com.movie.test.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
@@ -10,7 +11,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "mv_user", indexes = @Index(name = "idx_nickname", columnList = "nickname", unique = true))
-@Builder
+//@Builder(toBuilder = true)
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -33,7 +35,6 @@ public class UserEntity extends BaseTimeEntity {
     @Column
     private String profileURL; // 프로필사진 url
 
-    @LastModifiedDate
     @Column
     private Timestamp lastLoginDate; // 마지막 로그인 시간
 
