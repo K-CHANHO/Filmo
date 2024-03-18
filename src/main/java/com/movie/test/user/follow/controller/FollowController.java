@@ -67,7 +67,7 @@ public class FollowController {
         @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id"),
         @Parameter(name = "keyword", description = "검색어"),
     })
-    @ApiResponse(responseCode = "200", description = "팔로잉/차단 목록 리턴")
+    @ApiResponse(responseCode = "200", description = "팔로잉 목록 리턴")
     @GetMapping("/followingList")
     public ResponseEntity getFollowingList(FollowListSearchDTO followListSearchDTO, @Parameter(hidden = true) Pageable pageable){
 
@@ -124,12 +124,12 @@ public class FollowController {
 
         Long countFollowing = followService.countFollowing(otherUserId);
         Long countFollower = followService.countFollower(otherUserId);
-        Long countBlock = followService.countBlock(otherUserId);
+//        Long countBlock = followService.countBlock(otherUserId);
 
         Map<String, Object> resultData = new HashMap<>();
         resultData.put("countFollowing", countFollowing);
         resultData.put("countFollower", countFollower);
-        resultData.put("countBlock", countBlock);
+//        resultData.put("countBlock", countBlock);
 
         return new ResponseEntity(resultData, HttpStatus.OK);
     }

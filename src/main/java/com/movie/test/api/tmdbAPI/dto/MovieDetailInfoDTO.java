@@ -13,7 +13,7 @@ public class MovieDetailInfoDTO {
 
     private boolean adult;
     private String backdrop_path;
-    private String belongs_to_collection;
+    private Object belongs_to_collection;
     private Integer budget;
     private Object[] genres;
     private Integer id;
