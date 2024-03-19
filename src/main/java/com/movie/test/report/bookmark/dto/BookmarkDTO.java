@@ -13,9 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookmarkDTO {
 
-    @Hidden
     private Long bookmarkId;
-    @Hidden
     private String userId;
     private String reportId;
 
