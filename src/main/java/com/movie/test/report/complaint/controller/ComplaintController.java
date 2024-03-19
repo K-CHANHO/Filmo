@@ -25,12 +25,11 @@ public class ComplaintController {
 
     @Operation(summary = "감상문 신고", description = "신고 내용을 DB에 저장합니다.")
     @Parameters(value = {
-//            @Parameter(name = "userId", description = "신고자 id"),
             @Parameter(name = "reportId", description = "신고당한 감상문 id"),
             @Parameter(name = "content", description = "신고내용")
     })
     @PostMapping("/registComplaint")
-    public ResponseEntity registComplaint(ComplaintDTO complaintDTO) {
+    public ResponseEntity registComplaint(@Parameter(hidden = true)ComplaintDTO complaintDTO) {
 
         ComplaintDTO registedComplaint = complaintService.registComplaint(complaintDTO);
         log.info("[{}] 님이 [{}] 감상문을 신고하였습니다.", complaintDTO.getUserId(), complaintDTO.getReportId());
@@ -40,11 +39,10 @@ public class ComplaintController {
 
     @Operation(summary = "감상문 신고 취소", description = "감상문 신고를 취소합니다.")
     @Parameters(value = {
-//            @Parameter(name = "userId", description = "신고자 id"),
             @Parameter(name = "reportId", description = "신고당한 감상문 id"),
     })
     @PostMapping("/deleteComplaint/{complaintId}")
-    public ResponseEntity deleteComplaint(String userId, String reportId){
+    public ResponseEntity deleteComplaint(@Parameter(hidden = true)String userId, String reportId){
 
         complaintService.deleteById(userId, reportId);
 
