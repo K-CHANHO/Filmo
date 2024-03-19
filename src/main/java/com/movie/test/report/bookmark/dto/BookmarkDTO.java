@@ -11,10 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@Hidden
 public class BookmarkDTO {
 
+    @Hidden
     private Long bookmarkId;
+    @Hidden
     private String userId;
     private String reportId;
 
