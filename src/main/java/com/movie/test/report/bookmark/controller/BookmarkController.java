@@ -2,11 +2,13 @@ package com.movie.test.report.bookmark.controller;
 
 import com.movie.test.report.bookmark.dto.BookmarkDTO;
 import com.movie.test.report.bookmark.service.BookmarkService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
@@ -47,7 +49,7 @@ public class BookmarkController {
             @Parameter(name = "reportId", description = "북마크하려는 감상문 아이디", required = true),
     })
     @PostMapping("/regist")
-    public ResponseEntity registBookmark(BookmarkDTO bookmarkDTO) {
+    public ResponseEntity registBookmark(@ParameterObject BookmarkDTO bookmarkDTO) {
 
         BookmarkDTO savedBookmark = bookmarkService.registBookmark(bookmarkDTO);
 
