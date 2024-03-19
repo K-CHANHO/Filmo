@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@Hidden
+@Hidden
 public class TagInReportDTO {
 
     private String reportId;

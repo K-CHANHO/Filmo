@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-//@Hidden
+@Hidden
 public class LikeDTO {
 
     private Long likeId;

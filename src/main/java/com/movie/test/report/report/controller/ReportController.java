@@ -40,7 +40,6 @@ public class ReportController {
 
     @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")
     @Parameters({
-//            @Parameter(name = "userId", description = "작성자 id", required = true),
             @Parameter(name = "title", description = "감상문 제목", required = true),
             @Parameter(name = "content", description = "감상문 내용", required = true),
             @Parameter(name = "movieId", description = "선택한 영화 id (TMDB)", required = true),

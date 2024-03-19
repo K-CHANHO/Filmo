@@ -88,7 +88,7 @@ public class BlockController {
     })
     @ApiResponse(responseCode = "200", description = "차단하고 있는 경우 true, 아닌 경우 false 리턴")
     @GetMapping("/isBlock")
-    public ResponseEntity isFollowing(String userId, String targetId){
+    public ResponseEntity isFollowing(@Parameter(hidden = true)String userId, String targetId){
 
         boolean isBlocking = blockService.isBlocking(userId, targetId);
 
@@ -98,7 +98,7 @@ public class BlockController {
     @Operation(summary = "차단 수 확인", description = "내가 차단하고 있는 유저의 수를 확인")
     @Parameter(hidden = true)
     @GetMapping("/count")
-    public ResponseEntity countFollow(String userId) {
+    public ResponseEntity countFollow(@Parameter(hidden = true)String userId) {
 
         Long blockCount = blockService.countBlock(userId);
 

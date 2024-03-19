@@ -2,13 +2,14 @@ package com.movie.test.user.block.dto;
 
 import com.movie.test.common.dto.BaseTimeDTO;
 import com.movie.test.user.block.entity.BlockEntity;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-//@Hidden
+@Hidden
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@Hidden
+@Hidden
 public class ViewDTO {
 
     private String reportId;

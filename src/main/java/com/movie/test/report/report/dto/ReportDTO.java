@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-//@Hidden
+@Hidden
 @SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper = true)

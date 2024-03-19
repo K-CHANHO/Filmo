@@ -110,7 +110,7 @@ public class FollowController {
     })
     @ApiResponse(responseCode = "200", description = "팔로잉하고 있는 경우 true, 아닌 경우 false 리턴")
     @GetMapping("/isFollow")
-    public ResponseEntity isFollowing(String userId, String followTarget){
+    public ResponseEntity isFollowing(@Parameter(hidden = true)String userId, String followTarget){
 
         boolean isFollowing = followService.isFollowing(userId, followTarget);
 
@@ -120,7 +120,9 @@ public class FollowController {
     @Operation(summary = "팔로잉/팔로워 수 확인", description = "유저의 팔로잉/팔로워 수를 확인")
     @Parameter(name = "otherUserId", description = "확인할 유저의 id", required = true)
     @GetMapping("/countFollow")
-    public ResponseEntity countFollow(String otherUserId) {
+    public ResponseEntity countFollow(@Parameter(hidden = true)String userId, String otherUserId) {
+
+        if(otherUserId == null) otherUserId = userId;
 
         Long countFollowing = followService.countFollowing(otherUserId);
         Long countFollower = followService.countFollower(otherUserId);

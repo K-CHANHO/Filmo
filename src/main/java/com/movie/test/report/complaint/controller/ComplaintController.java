@@ -29,7 +29,7 @@ public class ComplaintController {
             @Parameter(name = "content", description = "신고내용")
     })
     @PostMapping("/registComplaint")
-    public ResponseEntity registComplaint(@Parameter(hidden = true)ComplaintDTO complaintDTO) {
+    public ResponseEntity registComplaint(ComplaintDTO complaintDTO) {
 
         ComplaintDTO registedComplaint = complaintService.registComplaint(complaintDTO);
         log.info("[{}] 님이 [{}] 감상문을 신고하였습니다.", complaintDTO.getUserId(), complaintDTO.getReportId());

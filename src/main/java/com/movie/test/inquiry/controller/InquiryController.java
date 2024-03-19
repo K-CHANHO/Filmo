@@ -29,7 +29,6 @@ public class InquiryController {
 
     @Operation(summary = "문의사항 등록", description = "파라미터로 받은 내용을 DB에 저장하고 관리자에게 메일을 보냅니다.")
     @Parameters({
-//        @Parameter(name = "userId", description = "문의 등록 유저아이디", required = true),
         @Parameter(name = "title", description = "문의 제목", required = true),
         @Parameter(name = "content", description = "문의 내용", required = true),
         @Parameter(name = "category", description = "문의 유형", required = true),
@@ -57,8 +56,11 @@ public class InquiryController {
     }
 
     @Operation(summary = "문의사항 리스트 조회", description = "문의사항의 리스트를 조회합니다.")
+    @Parameters({
+            @Parameter(name = "lastInquiryId", description = "마지막에 조회된 문의사항 ID", required = true),
+    })
     @GetMapping("/getInquiryList")
-    public ResponseEntity getInquiryList(String userId, String lastInquiryId, @PageableDefault(size = 5) Pageable pageable){
+    public ResponseEntity getInquiryList(@Parameter(hidden = true) String userId, String lastInquiryId, @Parameter(hidden = true) @PageableDefault(size = 5) Pageable pageable){
 
         Map<String, Object> resultData = new HashMap<>();
 

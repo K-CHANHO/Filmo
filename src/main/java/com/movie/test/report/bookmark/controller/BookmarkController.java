@@ -31,7 +31,7 @@ public class BookmarkController {
             @Parameter(name = "bookmarkId", description = "마지막으로 조회된 북마크 아이디, 최초는 빈값"),
     })
     @GetMapping("/list")
-    public ResponseEntity getBookmarkList(@Parameter(hidden = true) BookmarkDTO bookmarkDTO, @Parameter(hidden = true) Pageable pageable) {
+    public ResponseEntity getBookmarkList(BookmarkDTO bookmarkDTO, @Parameter(hidden = true) Pageable pageable) {
 
         Slice<BookmarkDTO> bookmarkList = bookmarkService.getBookmarkList(bookmarkDTO, pageable);
 
@@ -47,7 +47,7 @@ public class BookmarkController {
             @Parameter(name = "reportId", description = "북마크하려는 감상문 아이디", required = true),
     })
     @PostMapping("/regist")
-    public ResponseEntity registBookmark(@Parameter(hidden = true) BookmarkDTO bookmarkDTO) {
+    public ResponseEntity registBookmark(BookmarkDTO bookmarkDTO) {
 
         BookmarkDTO savedBookmark = bookmarkService.registBookmark(bookmarkDTO);
 
