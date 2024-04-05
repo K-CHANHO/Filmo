@@ -68,6 +68,9 @@ public class BookmarkController {
     @DeleteMapping("/delete")
     public ResponseEntity deleteBookmark(Long bookmarkId){
 
+        if (!bookmarkService.validationBookmarkId(bookmarkId)) {
+            return new ResponseEntity("잘못된 시도입니다. 다시 시도해주세요.", HttpStatus.BAD_REQUEST);
+        }
         bookmarkService.deleteBookmark(bookmarkId);
 
         return new ResponseEntity(HttpStatus.OK);

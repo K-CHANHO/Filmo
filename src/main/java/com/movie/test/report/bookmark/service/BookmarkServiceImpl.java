@@ -35,4 +35,10 @@ public class BookmarkServiceImpl implements BookmarkService{
 
         return bookmarkList;
     }
+
+    @Override
+    public boolean validationBookmarkId(Long bookmarkId) {
+        if(bookmarkId == null || bookmarkRepository.findById(bookmarkId).isEmpty()) return false;
+        return true;
+    }
 }

@@ -11,4 +11,6 @@ public interface BookmarkService {
 
     Slice<BookmarkDTO> getBookmarkList(BookmarkDTO bookmarkDTO, Pageable pageable);
 
+    boolean validationBookmarkId(Long bookmarkId);
+
 }
