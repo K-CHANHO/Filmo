@@ -81,4 +81,12 @@ public class ReportServiceImpl implements ReportService {
     public List<String> getReportIdByUserId(String userId) {
         return reportRepository.getReportIdByUserId(userId);
     }
+
+    @Override
+    public boolean validationReportId(String reportId) {
+
+        if(reportId == null || "".equals(reportId) || reportRepository.findById(reportId) == null) return false;
+
+        return true;
+    }
 }

@@ -30,4 +30,7 @@ public interface ReportService {
     // 특정 사용자가 작성한 감상문 조회
     List<String> getReportIdByUserId(String userId);
 
+    // reportId 값이 존재하는 지 확인
+    boolean validationReportId(String reportId);
+
 }

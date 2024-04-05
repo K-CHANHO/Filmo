@@ -2,6 +2,7 @@ package com.movie.test.report.bookmark.controller;
 
 import com.movie.test.report.bookmark.dto.BookmarkDTO;
 import com.movie.test.report.bookmark.service.BookmarkService;
+import com.movie.test.report.report.service.ReportService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;
+    private final ReportService reportService;
 
     @Operation(summary = "북마크 리스트 조회", description = "북마크한 감상문을 조회합니다.")
     @Parameters(value = {
@@ -48,6 +50,11 @@ public class BookmarkController {
     })
     @PostMapping("/regist")
     public ResponseEntity registBookmark(BookmarkDTO bookmarkDTO) {
+
+        boolean validationReportId = reportService.validationReportId(bookmarkDTO.getReportId());
+        if(!validationReportId) {
+            return new ResponseEntity("북마크하려는 게시물이 없습니다. 다시 시도해주세요.", HttpStatus.BAD_REQUEST);
+        }
 
         BookmarkDTO savedBookmark = bookmarkService.registBookmark(bookmarkDTO);
 
