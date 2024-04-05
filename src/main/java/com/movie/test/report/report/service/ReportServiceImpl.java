@@ -85,7 +85,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public boolean validationReportId(String reportId) {
 
-        if(reportId == null || "".equals(reportId) || reportRepository.findById(reportId) == null) return false;
+        if(reportId == null || "".equals(reportId) || reportRepository.findById(reportId).isEmpty()) return false;
 
         return true;
     }
