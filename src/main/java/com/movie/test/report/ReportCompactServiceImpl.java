@@ -1,6 +1,7 @@
 package com.movie.test.report;
 
 import com.movie.test.redis.service.RedisService;
+import com.movie.test.report.bookmark.service.BookmarkService;
 import com.movie.test.report.complaint.service.ComplaintService;
 import com.movie.test.report.hashtag.service.TagService;
 import com.movie.test.report.like.service.LikeService;
@@ -33,6 +34,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
     private final LikeService likeService;
     private final ViewService viewService;
     private final UserService userService;
+    private final BookmarkService bookmarkService;
 
     /**
      * 감상문 등록
@@ -93,6 +95,9 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         // 댓글 수
         Long replyCount =  Long.valueOf(replyService.getReplies(reportId).size());
 
+        // 북마크 수
+        Long bookmarkCount = bookmarkService.getBookmarkCount(reportId);
+
         ReportSimpleDTO reportSimpleDTO = ReportSimpleDTO.builder()
                 .reportId(reportId)
                 .title(title)
@@ -102,6 +107,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
                 .nickname(nickname)
                 .likeCount(likeCount)
                 .replyCount(replyCount)
+                .bookmarkCount(bookmarkCount)
                 .build();
 
         return reportSimpleDTO;

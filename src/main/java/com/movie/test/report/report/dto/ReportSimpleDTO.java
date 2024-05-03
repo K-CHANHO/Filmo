@@ -24,6 +24,7 @@ public class ReportSimpleDTO {
     private String nickname; // 닉네임
     private Long likeCount; // 좋아요 수
     private Long replyCount; // 댓글 수
+    private Long bookmarkCount; // 북마크 수
 
 //    private Long reportCount; // 검색 감상문 수
 

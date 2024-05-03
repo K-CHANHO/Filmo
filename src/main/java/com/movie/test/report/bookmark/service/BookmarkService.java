@@ -13,4 +13,6 @@ public interface BookmarkService {
 
     boolean validationBookmarkId(Long bookmarkId);
 
+    Long getBookmarkCount(String reportId);
+
 }

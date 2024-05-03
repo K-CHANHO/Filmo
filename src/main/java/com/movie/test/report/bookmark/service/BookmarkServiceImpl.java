@@ -41,4 +41,10 @@ public class BookmarkServiceImpl implements BookmarkService{
         if(bookmarkId == null || bookmarkRepository.findById(bookmarkId).isEmpty()) return false;
         return true;
     }
+
+    @Override
+    public Long getBookmarkCount(String reportId) {
+        bookmarkRepository.countByReportId(reportId);
+        return null;
+    }
 }

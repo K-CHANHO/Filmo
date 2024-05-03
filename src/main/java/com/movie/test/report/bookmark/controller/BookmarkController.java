@@ -76,4 +76,19 @@ public class BookmarkController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @Operation(summary = "북마크 수 조회", description = "해당 게시물이 북마크된 수를 조회합니다.")
+    @Parameters(value = {
+            @Parameter(name = "reportId", description = "조회하려는 감상문 아이디"),
+    })
+    @GetMapping("/list")
+    public ResponseEntity getBookmarkCount(String reportId) {
+
+        Long bookmarkCount = bookmarkService.getBookmarkCount(reportId);
+
+        Map<String, Object> returnData = new HashMap<>();
+        returnData.put("bookmarkCount", bookmarkCount);
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
+    }
+
 }
