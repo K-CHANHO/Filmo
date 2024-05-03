@@ -101,7 +101,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
                 .imageUrl(imageUrl)
                 .nickname(nickname)
                 .likeCount(likeCount)
-                .reportCount(replyCount)
+                .replyCount(replyCount)
                 .build();
 
         return reportSimpleDTO;
