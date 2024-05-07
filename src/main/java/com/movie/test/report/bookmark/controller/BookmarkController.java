@@ -80,7 +80,7 @@ public class BookmarkController {
     @Parameters(value = {
             @Parameter(name = "reportId", description = "조회하려는 감상문 아이디"),
     })
-    @GetMapping("/list")
+    @GetMapping("/count")
     public ResponseEntity getBookmarkCount(String reportId) {
 
         Long bookmarkCount = bookmarkService.getBookmarkCount(reportId);

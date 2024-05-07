@@ -44,7 +44,7 @@ public class BookmarkServiceImpl implements BookmarkService{
 
     @Override
     public Long getBookmarkCount(String reportId) {
-        bookmarkRepository.countByReportId(reportId);
-        return null;
+        Long count = bookmarkRepository.countByReportId(reportId);
+        return count;
     }
 }
