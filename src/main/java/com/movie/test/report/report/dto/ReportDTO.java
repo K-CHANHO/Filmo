@@ -31,7 +31,7 @@ public class ReportDTO extends BaseTimeDTO {
     private Long replyCount; // 댓글 수
 
     private Long likeCount; // 좋아요 수
-    private boolean isLike; // 좋아요 유무 상택
+//    private boolean isLike; // 좋아요 유무 상태
 
     private Long viewCount; // 조회수
 
