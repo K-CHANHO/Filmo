@@ -4,11 +4,10 @@ import com.movie.test.api.s3.service.S3Service;
 import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.repository.TokenRepository;
 import com.movie.test.user.token.service.JwtTokenProvider;
-import com.movie.test.user.userinfo.dto.UserDTO;
+import com.movie.test.user.userinfo.dto.UserDto;
 import com.movie.test.user.userinfo.entity.UserEntity;
 import com.movie.test.user.userinfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -30,11 +29,11 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public UserDTO newUserSave(UserDTO userDTO) {
+    public UserDto newUserSave(UserDto userDTO) {
 
         if(userRepository.existsByUid(userDTO.getUid())){
             UserEntity existUser = userRepository.findByUidAndType(userDTO.getUid(), userDTO.getType());
-            return UserDTO.toDTO(existUser);
+            return UserDto.toDTO(existUser);
         }
 
         userDTO.setUserId(UUID.randomUUID().toString());
@@ -46,11 +45,11 @@ public class UserServiceImpl implements UserService {
         }
         userDTO.setRoles(List.of(new String[]{"USER"}));
 
-        UserEntity user = UserDTO.toEntity(userDTO);
+        UserEntity user = UserDto.toEntity(userDTO);
 
         UserEntity savedUser = userRepository.save(user);
 
-        return UserDTO.toDTO(savedUser);
+        return UserDto.toDTO(savedUser);
 
     }
 
@@ -76,27 +75,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserInfo(String userid) {
+    public UserDto getUserInfo(String userid) {
 
-        UserDTO userDTO = UserDTO.toDTO(userRepository.findById(userid).get());
+        UserDto userDTO = UserDto.toDTO(userRepository.findById(userid).get());
 
         return userDTO;
     }
 
     @Override
-    public UserDTO getUserInfoByUidAndType(String uid, String type) {
+    public UserDto getUserInfoByUidAndType(String uid, String type) {
 
         UserEntity existUser = userRepository.findByUidAndType(uid, type);
 
         if(existUser != null) {
-            return UserDTO.toDTO(existUser);
+            return UserDto.toDTO(existUser);
         }
 
         return null;
     }
 
     @Override
-    public JwtTokenDTO login(UserDTO userDTO) {
+    public JwtTokenDTO login(UserDto userDTO) {
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDTO.getUid(), userDTO.getType());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -114,7 +113,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUserinfo(UserDTO userDTO) {
+    public UserDto updateUserinfo(UserDto userDTO) {
 
         UserEntity userEntity = userRepository.findById(userDTO.getUserId()).get();
         UserEntity modifiedEntity = userEntity.toBuilder()
@@ -124,6 +123,6 @@ public class UserServiceImpl implements UserService {
         UserEntity saved = userRepository.save(modifiedEntity);
 
 
-        return UserDTO.toDTO(saved);
+        return UserDto.toDTO(saved);
     }
 }

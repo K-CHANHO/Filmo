@@ -4,7 +4,7 @@ import com.movie.test.user.block.dto.BlockDTO;
 import com.movie.test.user.block.entity.BlockEntity;
 import com.movie.test.user.block.repository.BlockRepository;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
-import com.movie.test.user.userinfo.dto.UserDTO;
+import com.movie.test.user.userinfo.dto.UserDto;
 import com.movie.test.user.userinfo.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,9 +43,9 @@ public class BlockServiceImpl implements BlockService{
     }
 
     @Override
-    public Slice<UserDTO> getBlockList(FollowListSearchDTO blockListSearchDTO, Pageable pageable) {
+    public Slice<UserDto> getBlockList(FollowListSearchDTO blockListSearchDTO, Pageable pageable) {
         Slice<UserEntity> blockList = blockRepository.getBlockList(blockListSearchDTO, pageable);
-        Slice<UserDTO> blockListDTO = blockList.map(UserDTO::toDTO);
+        Slice<UserDto> blockListDTO = blockList.map(UserDto::toDTO);
         return blockListDTO;
     }
 

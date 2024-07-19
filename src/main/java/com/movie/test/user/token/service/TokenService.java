@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.dto.TokenDTO;
 import com.movie.test.user.token.entity.TokenEntity;
-import com.movie.test.user.userinfo.dto.UserDTO;
 import io.jsonwebtoken.Claims;
-
-import java.util.StringTokenizer;
 
 public interface TokenService {
 

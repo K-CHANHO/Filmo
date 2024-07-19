@@ -1,22 +1,22 @@
 package com.movie.test.user.userinfo.service;
 
 import com.movie.test.user.token.dto.JwtTokenDTO;
-import com.movie.test.user.userinfo.dto.UserDTO;
+import com.movie.test.user.userinfo.dto.UserDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    UserDTO newUserSave(UserDTO userDTO);
+    UserDto newUserSave(UserDto userDTO);
 
     String makeNickname();
 
-    UserDTO getUserInfo(String userid);
-    UserDTO getUserInfoByUidAndType(String uid, String type);
+    UserDto getUserInfo(String userid);
+    UserDto getUserInfoByUidAndType(String uid, String type);
 
-    JwtTokenDTO login(UserDTO userDTO);
+    JwtTokenDTO login(UserDto userDTO);
 
     List<String> checkUserRoles(String userId);
 
-    UserDTO updateUserinfo(UserDTO userDTO);
+    UserDto updateUserinfo(UserDto userDTO);
 }

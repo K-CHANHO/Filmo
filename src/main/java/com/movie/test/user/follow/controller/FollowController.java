@@ -3,7 +3,7 @@ package com.movie.test.user.follow.controller;
 import com.movie.test.user.follow.dto.FollowDTO;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
 import com.movie.test.user.follow.service.FollowService;
-import com.movie.test.user.userinfo.dto.UserDTO;
+import com.movie.test.user.userinfo.dto.UserDto;
 import com.movie.test.user.userinfo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -72,7 +72,7 @@ public class FollowController {
     public ResponseEntity getFollowingList(FollowListSearchDTO followListSearchDTO, @Parameter(hidden = true) Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
-        Slice<UserDTO> followingUserInfo = followService.getFollowingUserInfo(followListSearchDTO, pageable);
+        Slice<UserDto> followingUserInfo = followService.getFollowingUserInfo(followListSearchDTO, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
 //        resultData.put("followingUserInfoList", followingUserInfo); -> pageable 중복으로 JSON 변환 에러.. 해결법 찾는 중
@@ -94,7 +94,7 @@ public class FollowController {
 
         if(followListSearchDTO.getOtherUserId() != null) followListSearchDTO.setUserId(followListSearchDTO.getOtherUserId());
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
-        Slice<UserDTO> followerUserInfo = followService.getFollowerUserInfo(followListSearchDTO, pageable);
+        Slice<UserDto> followerUserInfo = followService.getFollowerUserInfo(followListSearchDTO, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
 //        resultData.put("followingUserInfoList", followingUserInfo); -> pageable 중복으로 JSON 변환 에러.. 해결법 찾는 중

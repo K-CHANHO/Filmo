@@ -4,7 +4,7 @@ import com.movie.test.user.follow.dto.FollowDTO;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
 import com.movie.test.user.follow.entity.FollowEntity;
 import com.movie.test.user.follow.repository.FollowRepository;
-import com.movie.test.user.userinfo.dto.UserDTO;
+import com.movie.test.user.userinfo.dto.UserDto;
 import com.movie.test.user.userinfo.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -46,16 +46,16 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public Slice<UserDTO> getFollowingUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable) {
+    public Slice<UserDto> getFollowingUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable) {
         Slice<UserEntity> followingUserInfoEntity = followRepository.getFollowingUserInfo(followListSearchDTO, pageable);
-        Slice<UserDTO> followingUserInfoDTO = followingUserInfoEntity.map(UserDTO::toDTO);
+        Slice<UserDto> followingUserInfoDTO = followingUserInfoEntity.map(UserDto::toDTO);
         return followingUserInfoDTO;
     }
 
     @Override
-    public Slice<UserDTO> getFollowerUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable) {
+    public Slice<UserDto> getFollowerUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable) {
         Slice<UserEntity> followerUserInfoEntity = followRepository.getFollowerUserInfo(followListSearchDTO, pageable);
-        Slice<UserDTO> followerUserInfoDTO = followerUserInfoEntity.map(UserDTO::toDTO);
+        Slice<UserDto> followerUserInfoDTO = followerUserInfoEntity.map(UserDto::toDTO);
         return followerUserInfoDTO;
     }
 

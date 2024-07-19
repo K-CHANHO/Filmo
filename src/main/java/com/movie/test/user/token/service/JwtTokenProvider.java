@@ -1,7 +1,7 @@
 package com.movie.test.user.token.service;
 
 import com.movie.test.user.token.dto.JwtTokenDTO;
-import com.movie.test.user.userinfo.dto.UserDTO;
+import com.movie.test.user.userinfo.dto.UserDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -41,7 +41,7 @@ public class JwtTokenProvider {
     @Value("${jwt.expired.refreshToken}")
     private long refreshTokenExpiration;
 
-    public JwtTokenDTO createToken(UserDTO userDTO, Authentication authentication){
+    public JwtTokenDTO createToken(UserDto userDTO, Authentication authentication){
 
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

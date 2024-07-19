@@ -1,4 +1,4 @@
-package com.movie.test.user.login.service;
+package com.movie.test.user.userinfo.service;
 
 import com.movie.test.user.userinfo.entity.UserEntity;
 import com.movie.test.user.userinfo.repository.UserRepository;

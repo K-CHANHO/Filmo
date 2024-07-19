@@ -2,19 +2,18 @@ package com.movie.test.user.follow.service;
 
 import com.movie.test.user.follow.dto.FollowDTO;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
-import com.movie.test.user.userinfo.dto.UserDTO;
+import com.movie.test.user.userinfo.dto.UserDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.stereotype.Service;
 
 public interface FollowService {
     FollowDTO registFollowing(FollowDTO followDTO);
 
     void cancleFollow(String followId);
 
-    Slice<UserDTO> getFollowingUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable);
+    Slice<UserDto> getFollowingUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable);
 
-    Slice<UserDTO> getFollowerUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable);
+    Slice<UserDto> getFollowerUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable);
 
     boolean isFollowing(String userId, String followTarget);
 

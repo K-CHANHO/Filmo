@@ -3,8 +3,7 @@ package com.movie.test.user.block.controller;
 import com.movie.test.user.block.dto.BlockDTO;
 import com.movie.test.user.block.service.BlockService;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
-import com.movie.test.user.follow.service.FollowService;
-import com.movie.test.user.userinfo.dto.UserDTO;
+import com.movie.test.user.userinfo.dto.UserDto;
 import com.movie.test.user.userinfo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -73,7 +72,7 @@ public class BlockController {
     public ResponseEntity getBlockList(FollowListSearchDTO blockListSearchDTO, @Parameter(hidden = true) Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
-        Slice<UserDTO> blockUserInfo = blockService.getBlockList(blockListSearchDTO, pageable);
+        Slice<UserDto> blockUserInfo = blockService.getBlockList(blockListSearchDTO, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
         resultData.put("blockList", blockUserInfo.getContent());

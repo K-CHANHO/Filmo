@@ -56,6 +56,8 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '3.2.2'
 	// spring security
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.2.2'
+	// mapstruct
+	implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.5.5.Final'
 
 
 }

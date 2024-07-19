@@ -6,7 +6,6 @@ import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.dto.TokenDTO;
 import com.movie.test.user.token.entity.TokenEntity;
 import com.movie.test.user.token.repository.TokenRepository;
-import com.movie.test.user.userinfo.dto.UserDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
