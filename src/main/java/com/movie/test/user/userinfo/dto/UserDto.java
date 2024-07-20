@@ -45,7 +45,7 @@ public class UserDto extends BaseTimeDTO {
     private String introduction;
 
     @Schema(description = "권한")
-    private List<String> roles;
+    private String roles;
 
     public static UserDto toDTO(UserEntity entity) {
         /*

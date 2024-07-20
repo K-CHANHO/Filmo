@@ -3,8 +3,8 @@ package com.movie.test.user.userinfo.controller;
 import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.service.TokenService;
 import com.movie.test.user.userinfo.dto.UserDto;
+import com.movie.test.user.userinfo.dto.UserSignupDto;
 import com.movie.test.user.userinfo.service.UserService;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -37,16 +37,11 @@ public class UserController {
      * 회원가입
      */
     @Operation(summary = "회원가입 요청", description = "회원가입을 요청합니다. 필요값 : uid, type, profileUrl")
-//    @Parameters(value = {
-//            @Parameter(name = "uid", description = "소셜로그인으로 부터 받은 uid", required = true),
-//            @Parameter(name = "type", description = "소셜로그인 타입(kakao, google, naver)", required = true),
-//            @Parameter(name = "profileURL", description = "프로필 사진 URL")
-//    })
-    @ApiResponse(responseCode = "200", description = "회원가입 완료 시 가입된 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
+    @ApiResponse(responseCode = "200", description = "회원가입 성공 시 가입된 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
     @PostMapping("/signup")
-    public ResponseEntity userCreate(@RequestBody UserDto userDTO) {
+    public ResponseEntity userCreate(@RequestBody UserSignupDto userSignupDto) {
 
-        UserDto newUser = userService.newUserSave(userDTO);
+        UserDto newUser = userService.userSignup(userSignupDto);
 
         return new ResponseEntity(newUser, HttpStatus.OK);
 

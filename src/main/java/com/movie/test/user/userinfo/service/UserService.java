@@ -2,12 +2,13 @@ package com.movie.test.user.userinfo.service;
 
 import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.userinfo.dto.UserDto;
+import com.movie.test.user.userinfo.dto.UserSignupDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    UserDto newUserSave(UserDto userDTO);
+    UserDto userSignup(UserSignupDto userSignupDto);
 
     String makeNickname();
 

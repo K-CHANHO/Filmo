@@ -5,9 +5,12 @@ import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.repository.TokenRepository;
 import com.movie.test.user.token.service.JwtTokenProvider;
 import com.movie.test.user.userinfo.dto.UserDto;
+import com.movie.test.user.userinfo.dto.UserSignupDto;
 import com.movie.test.user.userinfo.entity.UserEntity;
+import com.movie.test.user.userinfo.mapper.UserSignupMapper;
 import com.movie.test.user.userinfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -19,6 +22,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -29,23 +33,25 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public UserDto newUserSave(UserDto userDTO) {
+    public UserDto userSignup(UserSignupDto userSignupDto) {
 
-        if(userRepository.existsByUid(userDTO.getUid())){
-            UserEntity existUser = userRepository.findByUidAndType(userDTO.getUid(), userDTO.getType());
+        if(userRepository.existsByUid(userSignupDto.getUid())){
+            UserEntity existUser = userRepository.findByUidAndType(userSignupDto.getUid(), userSignupDto.getType());
             return UserDto.toDTO(existUser);
         }
 
-        userDTO.setUserId(UUID.randomUUID().toString());
-        userDTO.setNickname(makeNickname());
-        if(userDTO.getProfileURL() != null) {
-            userDTO.setProfileURL(s3Service.uploadImage(userDTO.getProfileURL()));
+        UserDto userDto = UserSignupDto.toUserDto(userSignupDto);
+
+        userDto.setUserId(UUID.randomUUID().toString());
+        userDto.setNickname(makeNickname());
+        if(userDto.getProfileURL() != null) {
+            userDto.setProfileURL(s3Service.uploadImage(userDto.getProfileURL()));
         } else {
             // TODO : 기본 프로필사진 설정하기.
         }
-        userDTO.setRoles(List.of(new String[]{"USER"}));
+        userDto.setRoles("USER;");
 
-        UserEntity user = UserDto.toEntity(userDTO);
+        UserEntity user = UserDto.toEntity(userDto);
 
         UserEntity savedUser = userRepository.save(user);
 

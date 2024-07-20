@@ -57,6 +57,7 @@ dependencies {
 	// spring security
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.2.2'
 	// mapstruct
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.5.5.Final'
 
 
