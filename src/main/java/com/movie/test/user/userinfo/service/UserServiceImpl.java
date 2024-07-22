@@ -4,6 +4,7 @@ import com.movie.test.api.s3.service.S3Service;
 import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.service.JwtTokenProvider;
 import com.movie.test.user.userinfo.dto.UserDto;
+import com.movie.test.user.userinfo.dto.UserInfoModifyDto;
 import com.movie.test.user.userinfo.dto.UserSignupDto;
 import com.movie.test.user.userinfo.entity.UserEntity;
 import com.movie.test.user.userinfo.repository.UserRepository;
@@ -112,15 +113,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUserinfo(UserDto userDTO) {
+    public UserDto updateUserinfo(UserInfoModifyDto userInfoModifyDto, String loginId) {
 
-        UserEntity userEntity = userRepository.findById(userDTO.getUserId()).get();
+        UserEntity userEntity = userRepository.findById(loginId).orElseThrow();
         UserEntity modifiedEntity = userEntity.toBuilder()
-                .introduction(userDTO.getIntroduction())
-                .nickname(userDTO.getNickname())
+                .introduction(userInfoModifyDto.getIntroduction())
+                .nickname(userInfoModifyDto.getNickname())
+                .profileUrl(userInfoModifyDto.getProfileUrl())
                 .build();
         UserEntity saved = userRepository.save(modifiedEntity);
-
 
         return UserDto.toDTO(saved);
     }
