@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             // token에서 userId 추출하여 request에 parameter로 추가.
             ModifiableHttpServletRequest tempRequest = new ModifiableHttpServletRequest(request);
-            tempRequest.setParameter("userId", jwtTokenProvider.getUserId(token));
+            tempRequest.setParameter("loginId", jwtTokenProvider.getUserId(token));
             request = (HttpServletRequest) tempRequest;
         }
 

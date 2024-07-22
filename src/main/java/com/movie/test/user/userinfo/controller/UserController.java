@@ -22,8 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "유저정보", description = "유저정보 API")
 @RestController
@@ -42,12 +42,16 @@ public class UserController {
     @Operation(summary = "회원가입 요청", description = "회원가입을 요청합니다. 필요값 : uid, type, profileUrl")
     @ApiResponse(responseCode = "200", description = "회원가입 성공 시 가입된 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
     @PostMapping("/signup")
-    public ResponseEntity userCreate(@RequestBody UserSignupDto userSignupDto) {
+    public ResponseEntity userSignup(@RequestBody UserSignupDto userSignupDto) {
 
-        UserDto newUser = userService.userSignup(userSignupDto);
+        UserDto signupUser = userService.userSignup(userSignupDto);
 
-        String jsonNewUser = gson.toJson(newUser);
-        return new ResponseEntity(jsonNewUser, HttpStatus.OK);
+        // json 변환 후 리턴
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("value", gson.toJson(signupUser));
+        returnData.addProperty("status", "200");
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
 
     }
 
@@ -57,7 +61,7 @@ public class UserController {
     @Operation(summary = "로그인 요청", description = "소셜로그인으로 부터 받은 정보로 로그인 처리 후 토큰을 발급합니다. 필요값 : uid, type")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "회원일 경우 토큰 발급", content = @Content(schema = @Schema(implementation = TokenDTO.class))),
-            @ApiResponse(responseCode = "401", description = "비회원일 경우 401 에러 리턴")
+            @ApiResponse(responseCode = "401", description = "비회원일 경우 401 리턴")
     })
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserLoginDto userLoginDto){
@@ -68,13 +72,17 @@ public class UserController {
             JwtTokenDTO token = userService.login(getUserinfo);
             tokenService.saveRefreshToken(token);
 
-            return new ResponseEntity<>(gson.toJson(token), HttpStatus.OK);
-        } else {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("message", "Need to Sign-Up first");
-            jsonObject.addProperty("errorCode", "401");
+            JsonObject returnData = new JsonObject();
+            returnData.addProperty("value", gson.toJson(token));
+            returnData.addProperty("status", "200");
 
-            return new ResponseEntity<>(gson.toJson(jsonObject), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(returnData, HttpStatus.OK);
+        } else {
+            JsonObject returnData = new JsonObject();
+            returnData.addProperty("message", "Need to Sign-Up first");
+            returnData.addProperty("status", "401");
+
+            return new ResponseEntity<>(returnData, HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -82,17 +90,22 @@ public class UserController {
      * 유저정보 조회
      */
     @Operation(summary = "유저정보 요청", description = "회원 정보를 조회합니다.")
-//    @Parameter(name = "userId", description = "조회할 유저의 id")
+    @Parameter(name = "userId", description = "조회할 유저의 id, 빈 값이면 현재 로그인한 사용자의 정보를 조회한다.")
     @ApiResponse(responseCode = "200", description = "조회한 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
     @GetMapping("/get")
-    public ResponseEntity userinfo(UserDto userDTO) {
+    public ResponseEntity userinfo(String userId, String loginId) {
 
-        UserDto userinfo = userService.getUserInfo(userDTO.getUserId());
+        if(userId == null || userId.equals("")) {
+            userId = loginId;
+        }
 
-        HashMap<String, Object> userinfoMap = new HashMap<>();
-        userinfoMap.put("userinfo", userinfo);
+        UserDto userinfo = userService.getUserInfo(userId);
 
-        return new ResponseEntity(userinfoMap, HttpStatus.OK);
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("value", gson.toJson(userinfo));
+        returnData.addProperty("status", "200");
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     /**
