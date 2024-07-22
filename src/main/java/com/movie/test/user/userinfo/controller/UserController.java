@@ -45,7 +45,6 @@ public class UserController {
 
         UserDto newUser = userService.userSignup(userSignupDto);
 
-        // TODO : JSON 변환 후 리턴
         String jsonNewUser = gson.toJson(newUser);
         return new ResponseEntity(jsonNewUser, HttpStatus.OK);
 

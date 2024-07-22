@@ -10,8 +10,6 @@ public interface UserService {
 
     UserDto userSignup(UserSignupDto userSignupDto);
 
-    String makeNickname();
-
     UserDto getUserInfo(String userid);
     UserDto getUserInfoByUidAndType(String uid, String type);
 

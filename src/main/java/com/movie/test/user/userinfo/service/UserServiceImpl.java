@@ -26,16 +26,14 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final TokenRepository tokenRepository;
     private final S3Service s3Service;
-
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public UserDto userSignup(UserSignupDto userSignupDto) {
 
-        if(userRepository.existsByUid(userSignupDto.getUid())){
+        if(userRepository.existsByUidAndType(userSignupDto.getUid(), userSignupDto.getType())){
             UserEntity existUser = userRepository.findByUidAndType(userSignupDto.getUid(), userSignupDto.getType());
             return UserDto.toDTO(existUser);
         }
@@ -52,14 +50,11 @@ public class UserServiceImpl implements UserService {
         userDto.setRoles("USER;");
 
         UserEntity user = UserDto.toEntity(userDto);
-
         UserEntity savedUser = userRepository.save(user);
 
         return UserDto.toDTO(savedUser);
-
     }
 
-    @Override
     public String makeNickname() {
 
         String[] firstWord = {"영화보는", "친절한", "상냥한", "팝콘먹는", "예매하는", "평화주의"};
