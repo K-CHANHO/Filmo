@@ -1,15 +1,16 @@
 package com.movie.test.user.userinfo.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.movie.test.user.token.dto.JwtTokenDTO;
+import com.movie.test.user.token.dto.TokenDTO;
 import com.movie.test.user.token.service.TokenService;
 import com.movie.test.user.userinfo.dto.UserDto;
+import com.movie.test.user.userinfo.dto.UserLoginDto;
 import com.movie.test.user.userinfo.dto.UserSignupDto;
 import com.movie.test.user.userinfo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -55,29 +56,26 @@ public class UserController {
      */
     @Operation(summary = "로그인 요청", description = "소셜로그인으로 부터 받은 정보로 로그인 처리 후 토큰을 발급합니다. 필요값 : uid, type")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회원일 경우 로그인 처리(토큰 발급)", headers = @Header(name = "Authorization", description = "토큰")),
+            @ApiResponse(responseCode = "200", description = "회원일 경우 토큰 발급", content = @Content(schema = @Schema(implementation = TokenDTO.class))),
             @ApiResponse(responseCode = "401", description = "비회원일 경우 401 에러 리턴")
     })
     @PostMapping("/login")
-    public ResponseEntity login(UserDto logingUser){
-        // TODO : 로그인 dto 추가 및 회원유무 서비스로 빼기.
-        log.info("login 요청 : {}", logingUser.toString());
+    public ResponseEntity login(@RequestBody UserLoginDto userLoginDto){
+        boolean isExistUser = userService.isExistUser(userLoginDto.getUid(), userLoginDto.getType());
 
-        UserDto getUserinfo = userService.getUserInfoByUidAndType(logingUser.getUid(), logingUser.getType());
-
-        // 회원정보가 있는 경우
-        if(getUserinfo != null){
-
+        if(isExistUser) {
+            UserDto getUserinfo = userService.getUserInfoByUidAndType(userLoginDto.getUid(), userLoginDto.getType());
             JwtTokenDTO token = userService.login(getUserinfo);
             tokenService.saveRefreshToken(token);
 
-            return new ResponseEntity<>(token, HttpStatus.OK);
-        }
-        // 회원정보가 없는 경우
-        else {
-            return new ResponseEntity<>("Need to Sign-Up first", HttpStatus.UNAUTHORIZED);
-        }
+            return new ResponseEntity<>(gson.toJson(token), HttpStatus.OK);
+        } else {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("message", "Need to Sign-Up first");
+            jsonObject.addProperty("errorCode", "401");
 
+            return new ResponseEntity<>(gson.toJson(jsonObject), HttpStatus.UNAUTHORIZED);
+        }
     }
 
     /**

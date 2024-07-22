@@ -2,12 +2,10 @@ package com.movie.test.user.userinfo.service;
 
 import com.movie.test.api.s3.service.S3Service;
 import com.movie.test.user.token.dto.JwtTokenDTO;
-import com.movie.test.user.token.repository.TokenRepository;
 import com.movie.test.user.token.service.JwtTokenProvider;
 import com.movie.test.user.userinfo.dto.UserDto;
 import com.movie.test.user.userinfo.dto.UserSignupDto;
 import com.movie.test.user.userinfo.entity.UserEntity;
-import com.movie.test.user.userinfo.mapper.UserSignupMapper;
 import com.movie.test.user.userinfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto userSignup(UserSignupDto userSignupDto) {
 
-        if(userRepository.existsByUidAndType(userSignupDto.getUid(), userSignupDto.getType())){
+        if(isExistUser(userSignupDto.getUid(), userSignupDto.getType())){
             UserEntity existUser = userRepository.findByUidAndType(userSignupDto.getUid(), userSignupDto.getType());
             return UserDto.toDTO(existUser);
         }
@@ -42,8 +40,8 @@ public class UserServiceImpl implements UserService {
 
         userDto.setUserId(UUID.randomUUID().toString());
         userDto.setNickname(makeNickname());
-        if(userDto.getProfileURL() != null) {
-            userDto.setProfileURL(s3Service.uploadImage(userDto.getProfileURL()));
+        if(userDto.getProfileUrl() != null) {
+            userDto.setProfileUrl(s3Service.uploadImage(userDto.getProfileUrl()));
         } else {
             // TODO : 기본 프로필사진 설정하기.
         }
@@ -125,5 +123,11 @@ public class UserServiceImpl implements UserService {
 
 
         return UserDto.toDTO(saved);
+    }
+
+    @Override
+    public boolean isExistUser(String uid, String type) {
+        boolean isExist = userRepository.existsByUidAndType(uid, type);
+        return isExist;
     }
 }

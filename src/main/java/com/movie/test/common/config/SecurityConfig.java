@@ -23,7 +23,7 @@ public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private String[] excludePath = {"/login", "/user/signup", "/error", "/h2-console/**"};
+    private String[] excludePath = {"/user/login", "/user/signup", "/error", "/h2-console/**"};
     private String[] swagger = {"/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/api-docs/**"};
 
     @Bean

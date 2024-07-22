@@ -18,4 +18,6 @@ public interface UserService {
     List<String> checkUserRoles(String userId);
 
     UserDto updateUserinfo(UserDto userDTO);
+
+    boolean isExistUser(String uid, String type);
 }
