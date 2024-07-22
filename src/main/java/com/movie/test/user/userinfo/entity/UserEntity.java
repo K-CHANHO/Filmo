@@ -33,7 +33,7 @@ public class UserEntity extends BaseTimeEntity {
     private String nickname; // 닉네임
 
     @Column
-    private String profileURL; // 프로필사진 url
+    private String profileUrl; // 프로필사진 url
 
     @Column
     private Timestamp lastLoginDate; // 마지막 로그인 시간

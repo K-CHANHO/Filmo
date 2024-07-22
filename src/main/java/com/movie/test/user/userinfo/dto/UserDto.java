@@ -36,7 +36,7 @@ public class UserDto extends BaseTimeDTO {
     private String nickname;
 
     @Schema(description = "프로필사진 URL")
-    private String profileURL;
+    private String profileUrl;
 
     @Schema(description = "마지막 로그인 시간")
     private Timestamp lastLoginDate;

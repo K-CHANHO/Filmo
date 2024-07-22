@@ -33,7 +33,7 @@ public class QUserEntity extends EntityPathBase<UserEntity> {
 
     public final StringPath nickname = createString("nickname");
 
-    public final StringPath profileURL = createString("profileURL");
+    public final StringPath profileUrl = createString("profileUrl");
 
     public final StringPath roles = createString("roles");
 
