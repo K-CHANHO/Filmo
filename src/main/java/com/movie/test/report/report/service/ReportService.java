@@ -2,6 +2,7 @@ package com.movie.test.report.report.service;
 
 import com.movie.test.report.report.dto.ReportDTO;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSaveDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public interface ReportService {
 
     // 감상문 등록
-    String registReport(ReportDTO reportDTO);
+    String saveReport(ReportSaveDto reportSaveDto);
 
     // 감상문 조회
     ReportDTO getReport(String reportId);

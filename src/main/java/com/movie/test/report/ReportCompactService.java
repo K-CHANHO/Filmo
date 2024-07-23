@@ -2,13 +2,14 @@ package com.movie.test.report;
 
 import com.movie.test.report.report.dto.ReportDTO;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSaveDto;
 import com.movie.test.report.report.dto.ReportSimpleDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 public interface ReportCompactService {
 
-    String registReport(ReportDTO reportDTO);
+    String saveReport(ReportSaveDto reportSaveDto);
 
     String modifyReport(ReportDTO reportDTO);
 

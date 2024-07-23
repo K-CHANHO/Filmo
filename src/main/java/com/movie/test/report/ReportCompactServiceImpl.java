@@ -8,6 +8,7 @@ import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.reply.service.ReplyService;
 import com.movie.test.report.report.dto.ReportDTO;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSaveDto;
 import com.movie.test.report.report.dto.ReportSimpleDTO;
 import com.movie.test.report.report.service.ReportService;
 import com.movie.test.report.view.service.ViewService;
@@ -42,10 +43,10 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 3. 조회수 데이터 생성
      */
     @Override
-    public String registReport(ReportDTO reportDTO) {
+    public String saveReport(ReportSaveDto reportSaveDto) {
 
-        String reportId = reportService.registReport(reportDTO);
-        tagService.saveTags(reportId, reportDTO.getTagString());
+        String reportId = reportService.saveReport(reportSaveDto);
+        tagService.saveTags(reportId, reportSaveDto.getTagString());
         viewService.registViewCount(reportId);
 
         return reportId;

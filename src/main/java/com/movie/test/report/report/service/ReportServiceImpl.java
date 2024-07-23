@@ -2,7 +2,9 @@ package com.movie.test.report.report.service;
 
 import com.movie.test.report.report.dto.ReportDTO;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSaveDto;
 import com.movie.test.report.report.entity.ReportEntity;
+import com.movie.test.report.report.mapper.ReportSaveMapper;
 import com.movie.test.report.report.repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +25,12 @@ public class ReportServiceImpl implements ReportService {
     private final ReportRepository reportRepository;
 
     @Override
-    public String registReport(ReportDTO reportDTO) {
+    public String saveReport(ReportSaveDto reportSaveDto) {
+
+        ReportDTO reportDTO = ReportSaveMapper.INSTANCE.toReportDto(reportSaveDto);
+
         StringBuilder stringBuilder = new StringBuilder(String.valueOf(System.currentTimeMillis()));
-        stringBuilder.append(UUID.randomUUID().toString());
+        stringBuilder.append(UUID.randomUUID());
 
         reportDTO.setReportId(stringBuilder.toString());
         ReportEntity saved = reportRepository.save(ReportDTO.toEntity(reportDTO));

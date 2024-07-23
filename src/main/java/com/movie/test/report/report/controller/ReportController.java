@@ -1,11 +1,12 @@
 package com.movie.test.report.report.controller;
 
+import com.google.gson.JsonObject;
 import com.movie.test.report.ReportCompactService;
 import com.movie.test.report.report.dto.ReportDTO;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSaveDto;
 import com.movie.test.report.report.dto.ReportSimpleDTO;
 import com.movie.test.report.report.service.ReportService;
-import com.movie.test.report.view.service.ViewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -26,30 +28,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Tag(name = "감상문", description = "감상문 관련 API")
 @RestController
-@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/report")
 public class ReportController {
 
     private final ReportService reportService;
-    private final ViewService viewService;
-
-    private final ReportCompactService reportCompactService;
+    private final ReportCompactService reportCompactService; // 하나의 트랜잭션으로 묶기 위해 하나의 서비스에 통합
 
     @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")
-    @Parameters({
-            @Parameter(name = "title", description = "감상문 제목", required = true),
-            @Parameter(name = "content", description = "감상문 내용", required = true),
-            @Parameter(name = "movieId", description = "선택한 영화 id (TMDB)", required = true),
-            @Parameter(name = "tagString", description = "해쉬태그", required = true, example = "#한국영화#액션#꿀잼")
-    })
     @ApiResponse(responseCode = "200", description = "등록된 감상문 id 리턴")
-    @PostMapping("/registReport")
-    public ResponseEntity registReport(ReportDTO reportDTO) {
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("/save")
+    public ResponseEntity saveReport(@RequestBody ReportSaveDto reportSaveDto) {
 
-        String reportId = reportCompactService.registReport(reportDTO);
+        String reportId = reportCompactService.saveReport(reportSaveDto);
+
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("value", reportId);
 
         return new ResponseEntity(reportId, HttpStatus.OK);
     }
