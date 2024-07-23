@@ -1,6 +1,6 @@
 package com.movie.test.user.userinfo.service;
 
-import com.movie.test.api.s3.service.S3Service;
+import com.movie.test.common.api.s3.service.S3Service;
 import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.service.JwtTokenProvider;
 import com.movie.test.user.userinfo.dto.UserDto;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
         } else {
             // TODO : 기본 프로필사진 설정하기.
         }
-        userDto.setRoles("USER;");
+        userDto.setRoles("USER");
 
         UserEntity user = UserDto.toEntity(userDto);
         UserEntity savedUser = userRepository.save(user);

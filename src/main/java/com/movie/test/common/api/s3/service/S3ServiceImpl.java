@@ -1,4 +1,4 @@
-package com.movie.test.api.s3.service;
+package com.movie.test.common.api.s3.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;

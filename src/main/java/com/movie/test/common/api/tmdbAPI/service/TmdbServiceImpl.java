@@ -1,6 +1,6 @@
-package com.movie.test.api.tmdbAPI.service;
+package com.movie.test.common.api.tmdbAPI.service;
 
-import com.movie.test.api.tmdbAPI.dto.*;
+import com.movie.test.common.api.tmdbAPI.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

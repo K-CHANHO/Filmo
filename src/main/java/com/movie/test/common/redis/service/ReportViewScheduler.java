@@ -1,4 +1,4 @@
-package com.movie.test.redis.service;
+package com.movie.test.common.redis.service;
 
 import com.movie.test.report.view.entity.ViewEntity;
 import com.movie.test.report.view.repository.ViewRepository;
@@ -8,7 +8,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Set;
 
 @Component

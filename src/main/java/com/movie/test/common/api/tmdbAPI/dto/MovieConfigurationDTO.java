@@ -1,4 +1,4 @@
-package com.movie.test.api.tmdbAPI.dto;
+package com.movie.test.common.api.tmdbAPI.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

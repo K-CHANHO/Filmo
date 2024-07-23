@@ -1,12 +1,10 @@
 package com.movie.test.report.view.service;
 
-import com.movie.test.redis.service.RedisService;
+import com.movie.test.common.redis.service.RedisService;
 import com.movie.test.report.view.entity.ViewEntity;
 import com.movie.test.report.view.repository.ViewRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

@@ -1,6 +1,6 @@
-package com.movie.test.api.tmdbAPI.service;
+package com.movie.test.common.api.tmdbAPI.service;
 
-import com.movie.test.api.tmdbAPI.dto.MovieSearchApiDTO;
+import com.movie.test.common.api.tmdbAPI.dto.MovieSearchApiDTO;
 
 public interface TmdbService {
 

@@ -1,6 +1,5 @@
 package com.movie.test.report;
 
-import com.movie.test.redis.service.RedisService;
 import com.movie.test.report.bookmark.service.BookmarkService;
 import com.movie.test.report.complaint.service.ComplaintService;
 import com.movie.test.report.hashtag.service.TagService;

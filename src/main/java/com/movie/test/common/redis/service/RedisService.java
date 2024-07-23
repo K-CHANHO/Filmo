@@ -1,4 +1,4 @@
-package com.movie.test.redis.service;
+package com.movie.test.common.redis.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;

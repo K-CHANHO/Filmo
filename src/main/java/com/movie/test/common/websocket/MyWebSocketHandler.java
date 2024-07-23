@@ -1,4 +1,4 @@
-package com.movie.test.websocket;
+package com.movie.test.common.websocket;
 
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;

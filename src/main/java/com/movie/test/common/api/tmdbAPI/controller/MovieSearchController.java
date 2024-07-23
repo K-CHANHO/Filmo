@@ -1,7 +1,7 @@
-package com.movie.test.api.tmdbAPI.controller;
+package com.movie.test.common.api.tmdbAPI.controller;
 
-import com.movie.test.api.tmdbAPI.dto.*;
-import com.movie.test.api.tmdbAPI.service.TmdbService;
+import com.movie.test.common.api.tmdbAPI.dto.*;
+import com.movie.test.common.api.tmdbAPI.service.TmdbService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;

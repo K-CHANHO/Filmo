@@ -1,4 +1,4 @@
-package com.movie.test.api.tmdbAPI.dto;
+package com.movie.test.common.api.tmdbAPI.dto;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;

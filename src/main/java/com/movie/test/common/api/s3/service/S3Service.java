@@ -1,4 +1,4 @@
-package com.movie.test.api.s3.service;
+package com.movie.test.common.api.s3.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
