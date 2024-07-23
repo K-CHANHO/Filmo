@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 import java.sql.Timestamp;
 
 @Data
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class BaseTimeDTO {

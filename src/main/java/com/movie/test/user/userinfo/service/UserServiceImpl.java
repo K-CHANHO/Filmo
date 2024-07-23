@@ -15,7 +15,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -103,13 +105,17 @@ public class UserServiceImpl implements UserService {
         // 토큰 생성
         JwtTokenDTO jwtTokenDTO = jwtTokenProvider.createToken(userDTO, authentication);
 
+        // 마지막 로그인 시간 저장
+        userDTO.setLastLoginDate(new Timestamp(System.currentTimeMillis()));
+        userRepository.save(UserDto.toEntity(userDTO));
+
         return jwtTokenDTO;
     }
 
     @Override
     public List<String> checkUserRoles(String userId) {
 
-        return Arrays.stream(userRepository.findById(userId).orElse(new UserEntity()).getRoles().split(",")).toList();
+        return Arrays.stream(userRepository.findById(userId).orElse(new UserEntity()).getRoles().split(";")).toList();
     }
 
     @Override

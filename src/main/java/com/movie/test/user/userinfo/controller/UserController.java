@@ -68,7 +68,8 @@ public class UserController {
     public ResponseEntity login(@RequestBody UserLoginDto userLoginDto){
         boolean isExistUser = userService.isExistUser(userLoginDto.getUid(), userLoginDto.getType());
 
-        if(isExistUser) {
+
+        if(isExistUser) { // 존재하는 유저인 경우 토큰 발급
             UserDto getUserinfo = userService.getUserInfoByUidAndType(userLoginDto.getUid(), userLoginDto.getType());
             JwtTokenDTO token = userService.login(getUserinfo);
             tokenService.saveRefreshToken(token);
@@ -78,7 +79,8 @@ public class UserController {
             returnData.addProperty("status", "200");
 
             return new ResponseEntity<>(returnData, HttpStatus.OK);
-        } else {
+
+        } else { // 존재하지 않는 유저일 경우 401 에러 리턴
             JsonObject returnData = new JsonObject();
             returnData.addProperty("message", "Need to Sign-Up first");
             returnData.addProperty("status", "401");
@@ -99,8 +101,9 @@ public class UserController {
     @GetMapping("/get")
     public ResponseEntity userinfo(String userId, String loginId) {
 
-        if(userId == null || userId.equals("")) {
-            userId = loginId;
+        // userId가 빈 값일 경우 현재 로그인한 사용자의 ID로 대체
+            if(userId == null || userId.equals("")) {
+                userId = loginId;
         }
 
         UserDto userinfo = userService.getUserInfo(userId);
@@ -116,13 +119,27 @@ public class UserController {
      * 유저 권한 확인
      */
     @Operation(summary = "유저권한 확인", description = "유저의 권한을 확인합니다.")
-    @Parameter(name = "userId", description = "조회할 유저의 id", required = true)
-    @PostMapping("/roles")
-    public ResponseEntity userRoles(UserDto userDTO) {
+    @Parameters({
+            @Parameter(name = "userId", description = "조회할 유저의 id, 빈 값일 경우 현재 로그인한 사용자의 권한을 확인합니다.", required = true),
+            @Parameter(name = "loginId", description = "현재 로그인한 사용자의 유저아이디", hidden = true)
+    })
+    @ApiResponse(responseCode = "200", description = "유저의 권한 리턴")
+    @GetMapping("/roles")
+    public ResponseEntity userRoles(String userId, String loginId) {
 
-        List<String> roles = userService.checkUserRoles(userDTO.getUserId());
+        // userId가 빈 값일 경우 현재 로그인한 사용자의 ID로 대체
+        if(userId == null || userId.equals("")) {
+            userId = loginId;
+        }
 
-        return new ResponseEntity(roles, HttpStatus.OK);
+        List<String> roles = userService.checkUserRoles(userId);
+        String jsonRoles = gson.toJson(roles);
+
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("value", jsonRoles);
+        returnData.addProperty("status", "200");
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     /**
