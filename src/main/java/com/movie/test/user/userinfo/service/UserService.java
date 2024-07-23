@@ -9,14 +9,14 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDto userSignup(UserSignupDto userSignupDto);
+    UserDto saveUser(UserSignupDto userSignupDto);
 
     UserDto getUserInfo(String userid);
     UserDto getUserInfoByUidAndType(String uid, String type);
 
-    JwtTokenDTO login(UserDto userDTO);
+    JwtTokenDTO loginUser(UserDto userDTO);
 
-    List<String> checkUserRoles(String userId);
+    List<String> getUserRoles(String userId);
 
     UserDto updateUserinfo(UserInfoModifyDto userInfoModifyDto, String loginId);
 

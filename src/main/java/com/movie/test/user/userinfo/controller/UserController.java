@@ -45,9 +45,9 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "회원가입 성공 시 가입된 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
     @PreAuthorize("isAnonymous()")
     @PostMapping("/signup")
-    public ResponseEntity userSignup(@RequestBody UserSignupDto userSignupDto) {
+    public ResponseEntity saveUser(@RequestBody UserSignupDto userSignupDto) {
 
-        UserDto signupUser = userService.userSignup(userSignupDto);
+        UserDto signupUser = userService.saveUser(userSignupDto);
 
         // json 변환 후 리턴
         JsonObject returnData = new JsonObject();
@@ -68,13 +68,13 @@ public class UserController {
     })
     @PreAuthorize("isAnonymous()")
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody UserLoginDto userLoginDto){
+    public ResponseEntity loginUser(@RequestBody UserLoginDto userLoginDto){
         boolean isExistUser = userService.isExistUser(userLoginDto.getUid(), userLoginDto.getType());
 
 
         if(isExistUser) { // 존재하는 유저인 경우 토큰 발급
             UserDto getUserinfo = userService.getUserInfoByUidAndType(userLoginDto.getUid(), userLoginDto.getType());
-            JwtTokenDTO token = userService.login(getUserinfo);
+            JwtTokenDTO token = userService.loginUser(getUserinfo);
             tokenService.saveRefreshToken(token);
 
             JsonObject returnData = new JsonObject();
@@ -103,7 +103,7 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "조회한 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/get")
-    public ResponseEntity userinfo(String userId, String loginId) {
+    public ResponseEntity getUserInfo(String userId, String loginId) {
 
         // userId가 빈 값일 경우 현재 로그인한 사용자의 ID로 대체
             if(userId == null || userId.equals("")) {
@@ -130,14 +130,14 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "유저의 권한 리턴")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/roles")
-    public ResponseEntity userRoles(String userId, String loginId) {
+    public ResponseEntity getUserRoles(String userId, String loginId) {
 
         // userId가 빈 값일 경우 현재 로그인한 사용자의 ID로 대체
         if(userId == null || userId.equals("")) {
             userId = loginId;
         }
 
-        List<String> roles = userService.checkUserRoles(userId);
+        List<String> roles = userService.getUserRoles(userId);
         String jsonRoles = gson.toJson(roles);
 
         JsonObject returnData = new JsonObject();

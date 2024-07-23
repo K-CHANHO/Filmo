@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public UserDto userSignup(UserSignupDto userSignupDto) {
+    public UserDto saveUser(UserSignupDto userSignupDto) {
 
         if(isExistUser(userSignupDto.getUid(), userSignupDto.getType())){
             UserEntity existUser = userRepository.findByUidAndType(userSignupDto.getUid(), userSignupDto.getType());
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public JwtTokenDTO login(UserDto userDTO) {
+    public JwtTokenDTO loginUser(UserDto userDTO) {
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDTO.getUid(), userDTO.getType());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<String> checkUserRoles(String userId) {
+    public List<String> getUserRoles(String userId) {
 
         return Arrays.stream(userRepository.findById(userId).orElse(new UserEntity()).getRoles().split(";")).toList();
     }
