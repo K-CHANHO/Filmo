@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,6 +43,7 @@ public class UserController {
      */
     @Operation(summary = "회원가입 요청", description = "회원가입을 요청합니다. 필요값 : uid, type, profileUrl")
     @ApiResponse(responseCode = "200", description = "회원가입 성공 시 가입된 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
+    @PreAuthorize("isAnonymous()")
     @PostMapping("/signup")
     public ResponseEntity userSignup(@RequestBody UserSignupDto userSignupDto) {
 
@@ -64,6 +66,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "회원일 경우 토큰 발급", content = @Content(schema = @Schema(implementation = TokenDTO.class))),
             @ApiResponse(responseCode = "401", description = "비회원일 경우 401 리턴")
     })
+    @PreAuthorize("isAnonymous()")
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserLoginDto userLoginDto){
         boolean isExistUser = userService.isExistUser(userLoginDto.getUid(), userLoginDto.getType());
@@ -98,6 +101,7 @@ public class UserController {
         @Parameter(name = "loginId", description = "현재 로그인한 유저의 아이디", hidden = true)
     })
     @ApiResponse(responseCode = "200", description = "조회한 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/get")
     public ResponseEntity userinfo(String userId, String loginId) {
 
@@ -124,6 +128,7 @@ public class UserController {
             @Parameter(name = "loginId", description = "현재 로그인한 사용자의 유저아이디", hidden = true)
     })
     @ApiResponse(responseCode = "200", description = "유저의 권한 리턴")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/roles")
     public ResponseEntity userRoles(String userId, String loginId) {
 
@@ -148,6 +153,7 @@ public class UserController {
     @Operation(summary = "유저정보 수정", description = "유저의 정보를 수정합니다.")
     @Parameter(name = "loginId", description = "현재 로그인한 유저의 아이디", hidden = true)
     @ApiResponse(responseCode = "200", description = "수정된 유저정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/update")
     public ResponseEntity updateUserInfo(@RequestBody UserInfoModifyDto userInfoModifyDto, String loginId){
 

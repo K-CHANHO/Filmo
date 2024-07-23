@@ -6,6 +6,7 @@ import com.movie.test.user.token.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,6 +20,7 @@ import java.util.stream.Stream;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -43,7 +45,8 @@ public class SecurityConfig {
                                 Stream.of(swagger).map(AntPathRequestMatcher::antMatcher).toArray(AntPathRequestMatcher[]::new)
                         ).permitAll()
 //                        .requestMatchers(PathRequest.toH2Console()).permitAll()
-                        .anyRequest().authenticated() // 그 외 요청은 인증 필요
+//                        .anyRequest().authenticated() // 그 외 요청은 인증 필요
+                        .anyRequest().permitAll() // 그 외 요청은 인증 필요
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
         ;
