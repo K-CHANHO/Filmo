@@ -6,11 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReportSaveDto {
+@Builder
+@Data
+public class ReportUpdateDto {
+
+    @Schema(description = "감상문 아이디", hidden = true)
+    String reportId;
 
     @Schema(description = "감상문 제목")
     String title;

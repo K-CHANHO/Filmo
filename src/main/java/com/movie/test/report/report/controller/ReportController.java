@@ -55,7 +55,8 @@ public class ReportController {
     @Operation(summary = "감상문 조회", description = "감상문을 조회합니다.")
     @Parameter(name = "reportId", description = "조회할 감상문의 id", required = true)
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "감상문 정보 및 댓글 정보")
+            @ApiResponse(responseCode = "200", description = "감상문 정보 및 댓글 정보"),
+            @ApiResponse(responseCode = "404", description = "감상문이 없을 경우 404 리턴")
     })
     @GetMapping("/getReport/{reportId}")
     public ResponseEntity getReport(@PathVariable String reportId, @AuthenticationPrincipal UserDetails userDetails){
@@ -89,8 +90,8 @@ public class ReportController {
             @Parameter(name = "movieId", description = "선택한 영화 id (TMDB)", required = true),
             @Parameter(name = "tagString", description = "해쉬태그", required = true, example = "#한국영화#액션#꿀잼")
     })
-    @PostMapping("/modifyReport")
-    public ResponseEntity modifyReport(ReportDto reportDTO){
+    @PostMapping("/updateReport")
+    public ResponseEntity updateReport(ReportDto reportDTO){
 
         String reportId = reportCompactService.modifyReport(reportDTO);
 

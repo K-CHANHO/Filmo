@@ -3,6 +3,7 @@ package com.movie.test.report.report.service;
 import com.movie.test.report.report.dto.ReportDto;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.dto.ReportSaveDto;
+import com.movie.test.report.report.dto.ReportUpdateDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
@@ -17,7 +18,7 @@ public interface ReportService {
     ReportDto getReport(String reportId);
 
     // 감상문 수정
-    String modifyReport(ReportDto reportDTO);
+    String updateReport(ReportUpdateDto reportUpdateDto);
 
     // 감상문 삭제
     void deleteReport(String reportId);

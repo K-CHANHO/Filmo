@@ -4,6 +4,7 @@ import com.movie.test.common.cef.UUIDCustom;
 import com.movie.test.report.report.dto.ReportDto;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.dto.ReportSaveDto;
+import com.movie.test.report.report.dto.ReportUpdateDto;
 import com.movie.test.report.report.entity.ReportEntity;
 import com.movie.test.report.report.mapper.ReportSaveMapper;
 import com.movie.test.report.report.repository.ReportRepository;
@@ -44,19 +45,20 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public String modifyReport(ReportDto reportDTO) {
-        ReportEntity originReport = reportRepository.findById(reportDTO.getReportId()).get();
+    public String updateReport(ReportUpdateDto reportUpdateDto) {
+        ReportEntity originReport = reportRepository.findById(reportUpdateDto.getReportId()).orElseThrow();
 
         // 감상문 수정
-        ReportEntity modifiedReport = originReport.toBuilder()
-                                .title(reportDTO.getTitle())
-                                .content(reportDTO.getContent())
-                                .movieId(reportDTO.getMovieId() == null ? originReport.getMovieId() : reportDTO.getMovieId())
+        ReportEntity updateReport = originReport.toBuilder()
+                                .title(reportUpdateDto.getTitle())
+                                .content(reportUpdateDto.getContent())
+                                .movieId(reportUpdateDto.getMovieId() == null ? originReport.getMovieId() : reportUpdateDto.getMovieId())
+                                .imageUrl(reportUpdateDto.getImageUrl())
                                 .build();
 
-        reportRepository.save(modifiedReport);
+        reportRepository.save(updateReport);
 
-        return modifiedReport.getReportId();
+        return updateReport.getReportId();
     }
 
     @Override

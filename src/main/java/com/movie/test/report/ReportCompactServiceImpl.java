@@ -167,14 +167,14 @@ public class ReportCompactServiceImpl implements ReportCompactService{
     public String modifyReport(ReportDto reportDTO) {
 
         // 감상문 수정
-        String reportId = reportService.modifyReport(reportDTO);
+        //String reportId = reportService.updateReport(reportDTO);
 
         // 태그 수정
         // 먼저 TagInReport 삭제 후 다시 저장
         tagService.deleteTagInReport(reportDTO.getReportId());
         tagService.saveTags(reportDTO.getReportId(), reportDTO.getTagString());
 
-        return reportId;
+        return null;
     }
 
     /**

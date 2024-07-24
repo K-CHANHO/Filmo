@@ -23,9 +23,9 @@ public class ReportDto extends BaseTimeDTO {
     private String content;
     private String userId;
     private String movieId;
-    private String imageUrl; // 이미지 url
-
+    private String imageUrl; // 메인포스터 url
     private String tagString; // 태그 내용
+
     private long complaintCount; // 신고 횟수
     private Long replyCount; // 댓글 수
     private Long likeCount; // 좋아요 수
