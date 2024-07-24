@@ -6,7 +6,7 @@ import com.movie.test.report.hashtag.service.TagService;
 import com.movie.test.report.like.service.LikeService;
 import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.reply.service.ReplyService;
-import com.movie.test.report.report.dto.ReportDTO;
+import com.movie.test.report.report.dto.ReportDto;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.dto.ReportSaveDto;
 import com.movie.test.report.report.dto.ReportSimpleDTO;
@@ -80,7 +80,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
     public ReportSimpleDTO getSimpleReport(String reportId) {
 
         // 제목, 내용, 작성시간, 이미지
-        ReportDTO reportDTO = reportService.getReport(reportId);
+        ReportDto reportDTO = reportService.getReport(reportId);
         String title = reportDTO.getTitle();
         String content = reportDTO.getContent();
         Timestamp createDate = reportDTO.getCreateDate();
@@ -124,10 +124,10 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 7. 조회수 조회
      */
     @Override
-    public ReportDTO getSingleReport(String reportId) {
+    public ReportDto getSingleReport(String reportId) {
 
         // 1. 감상문 조회
-        ReportDTO reportDTO = reportService.getReport(reportId);
+        ReportDto reportDTO = reportService.getReport(reportId);
         if(reportDTO == null){
             return null;
         }
@@ -167,7 +167,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 2. 태그 수정
      */
     @Override
-    public String modifyReport(ReportDTO reportDTO) {
+    public String modifyReport(ReportDto reportDTO) {
 
         // 감상문 수정
         String reportId = reportService.modifyReport(reportDTO);

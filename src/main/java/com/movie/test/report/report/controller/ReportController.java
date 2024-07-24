@@ -2,7 +2,7 @@ package com.movie.test.report.report.controller;
 
 import com.google.gson.JsonObject;
 import com.movie.test.report.ReportCompactService;
-import com.movie.test.report.report.dto.ReportDTO;
+import com.movie.test.report.report.dto.ReportDto;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.dto.ReportSaveDto;
 import com.movie.test.report.report.dto.ReportSimpleDTO;
@@ -65,7 +65,7 @@ public class ReportController {
 
         // 감상문
         // 해당 감상문 없을 경우 에러메시지 담아서 리턴
-        ReportDTO singleReport = reportCompactService.getSingleReport(reportId);
+        ReportDto singleReport = reportCompactService.getSingleReport(reportId);
         if(singleReport == null){
             serverData.put("error", "해당 게시물은 존재하지 않습니다");
             return new ResponseEntity(serverData, HttpStatus.valueOf(404));
@@ -90,7 +90,7 @@ public class ReportController {
             @Parameter(name = "tagString", description = "해쉬태그", required = true, example = "#한국영화#액션#꿀잼")
     })
     @PostMapping("/modifyReport")
-    public ResponseEntity modifyReport(ReportDTO reportDTO){
+    public ResponseEntity modifyReport(ReportDto reportDTO){
 
         String reportId = reportCompactService.modifyReport(reportDTO);
 

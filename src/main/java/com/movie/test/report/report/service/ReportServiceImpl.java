@@ -1,6 +1,7 @@
 package com.movie.test.report.report.service;
 
-import com.movie.test.report.report.dto.ReportDTO;
+import com.movie.test.common.cef.UUIDCustom;
+import com.movie.test.report.report.dto.ReportDto;
 import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.dto.ReportSaveDto;
 import com.movie.test.report.report.entity.ReportEntity;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -27,30 +27,27 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public String saveReport(ReportSaveDto reportSaveDto) {
 
-        ReportDTO reportDTO = ReportSaveMapper.INSTANCE.toReportDto(reportSaveDto);
+        ReportDto reportDTO = ReportSaveMapper.INSTANCE.toReportDto(reportSaveDto);
 
-        StringBuilder stringBuilder = new StringBuilder(String.valueOf(System.currentTimeMillis()));
-        stringBuilder.append(UUID.randomUUID());
-
-        reportDTO.setReportId(stringBuilder.toString());
-        ReportEntity saved = reportRepository.save(ReportDTO.toEntity(reportDTO));
+        reportDTO.setReportId(UUIDCustom.createUUID());
+        ReportEntity saved = reportRepository.save(ReportDto.toEntity(reportDTO));
 
         return saved.getReportId();
     }
 
     @Override
-    public ReportDTO getReport(String reportId) {
+    public ReportDto getReport(String reportId) {
 
         ReportEntity reportEntity = reportRepository.findById(reportId).orElseGet(() -> new ReportEntity());
         if(reportEntity.getReportId() == null) {
             return null;
         }
 
-        return ReportDTO.toDTO(reportEntity);
+        return ReportDto.toDTO(reportEntity);
     }
 
     @Override
-    public String modifyReport(ReportDTO reportDTO) {
+    public String modifyReport(ReportDto reportDTO) {
         ReportEntity originReport = reportRepository.findById(reportDTO.getReportId()).get();
 
         // 감상문 수정
