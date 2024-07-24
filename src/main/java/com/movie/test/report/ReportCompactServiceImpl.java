@@ -128,9 +128,6 @@ public class ReportCompactServiceImpl implements ReportCompactService{
 
         // 1. 감상문 조회
         ReportDto reportDTO = reportService.getReport(reportId);
-        if(reportDTO == null){
-            return null;
-        }
 
         // 2. 신고횟수 조회
         reportDTO.setComplaintCount(complaintService.getComplaintCount(reportId));

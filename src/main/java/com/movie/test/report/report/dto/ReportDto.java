@@ -33,7 +33,7 @@ public class ReportDto extends BaseTimeDTO {
     private Long viewCount; // 조회수
 
 
-    public static ReportDto toDTO(ReportEntity entity) {
+    public static ReportDto toDto(ReportEntity entity) {
         return ReportMapper.INSTANCE.toDto(entity);
     }
 

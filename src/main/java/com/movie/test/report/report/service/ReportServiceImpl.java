@@ -38,12 +38,9 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public ReportDto getReport(String reportId) {
 
-        ReportEntity reportEntity = reportRepository.findById(reportId).orElseGet(() -> new ReportEntity());
-        if(reportEntity.getReportId() == null) {
-            return null;
-        }
+        ReportEntity reportEntity = reportRepository.findById(reportId).orElseThrow();
 
-        return ReportDto.toDTO(reportEntity);
+        return ReportDto.toDto(reportEntity);
     }
 
     @Override
