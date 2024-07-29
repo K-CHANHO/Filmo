@@ -52,7 +52,7 @@ public class ReportServiceImpl implements ReportService {
         ReportEntity updateReport = originReport.toBuilder()
                                 .title(reportUpdateDto.getTitle())
                                 .content(reportUpdateDto.getContent())
-                                .movieId(reportUpdateDto.getMovieId() == null ? originReport.getMovieId() : reportUpdateDto.getMovieId())
+                                .movieId(reportUpdateDto.getMovieId())
                                 .imageUrl(reportUpdateDto.getImageUrl())
                                 .build();
 
