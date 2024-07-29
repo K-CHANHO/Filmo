@@ -1,5 +1,6 @@
 package com.movie.test.report.report.controller;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.movie.test.report.ReportCompactService;
 import com.movie.test.report.report.dto.ReportDto;
@@ -20,8 +21,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -32,15 +31,16 @@ import java.util.Map;
 @Tag(name = "감상문", description = "감상문 관련 API")
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_USER')")
 @RequestMapping("/report")
 public class ReportController {
 
+    private final Gson gson;
     private final ReportService reportService;
     private final ReportCompactService reportCompactService; // 하나의 트랜잭션으로 묶기 위해 하나의 서비스에 통합
 
     @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")
     @ApiResponse(responseCode = "200", description = "등록된 감상문 id 리턴")
-    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/save")
     public ResponseEntity saveReport(@RequestBody ReportSaveDto reportSaveDto) {
 
@@ -49,7 +49,7 @@ public class ReportController {
         JsonObject returnData = new JsonObject();
         returnData.addProperty("value", reportId);
 
-        return new ResponseEntity(reportId, HttpStatus.OK);
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 조회", description = "감상문을 조회합니다.")
@@ -59,27 +59,29 @@ public class ReportController {
             @ApiResponse(responseCode = "404", description = "감상문이 없을 경우 404 리턴")
     })
     @GetMapping("/getReport/{reportId}")
-    public ResponseEntity getReport(@PathVariable String reportId, @AuthenticationPrincipal UserDetails userDetails){
+    public ResponseEntity getReport(@PathVariable String reportId) {
 
         // 리턴값
-        Map<String, Object> serverData = new HashMap<>();
+        JsonObject returnData = new JsonObject();
 
-        // 감상문
-        // 해당 감상문 없을 경우 에러메시지 담아서 리턴
-        ReportDto singleReport = reportCompactService.getSingleReport(reportId);
-        if(singleReport == null){
-            serverData.put("error", "해당 게시물은 존재하지 않습니다");
-            return new ResponseEntity(serverData, HttpStatus.valueOf(404));
+        // 감상문이 없으면
+        if (!reportService.validationReportId(reportId)) {
+            returnData.addProperty("msg", "감상문이 존재하지 않습니다.");
+            returnData.addProperty("status", "404");
+            return new ResponseEntity(returnData, HttpStatus.NOT_FOUND);
+        } else {
+            ReportDto singleReport = reportCompactService.getSingleReport(reportId);
+
+            // 댓글 페이지 따로 있는 경우 따로 호출.
+
+            // 조회수 증가 TODO: 추후 REDIS로 구현해보기
+            // viewService.addViewCount(reportId);
+
+            String jsonReport = gson.toJson(singleReport);
+            returnData.addProperty("value", jsonReport);
+
+            return new ResponseEntity(returnData, HttpStatus.OK);
         }
-
-        // 댓글 페이지 따로 있는 경우 따로 호출.
-
-        // 조회수 증가 TODO: 추후 REDIS로 구현해보기
-//        viewService.addViewCount(reportId);
-        log.error(userDetails.toString());
-
-
-        return new ResponseEntity(singleReport, HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 수정", description = "감상문을 수정합니다.")
