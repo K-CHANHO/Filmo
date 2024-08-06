@@ -116,13 +116,6 @@ public class ReportController {
         Slice<ReportSimpleDTO> searchReport = reportCompactService.getReportList(reportSearchDTO, pageable);
         Long searchReportCount = reportService.getSearchReportCount(reportSearchDTO);
 
-        /*
-        Map<String, Object> resultData = new HashMap<>();
-        resultData.put("searchReportCount", searchReportCount);
-        resultData.put("reportList", searchReport.getContent());
-        resultData.put("hasNext", searchReport.hasNext());
-        */
-
         String searchReportJson = gson.toJson(searchReport.getContent());
 
         JsonObject returnData = new JsonObject();
