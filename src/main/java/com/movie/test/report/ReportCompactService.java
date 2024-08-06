@@ -1,7 +1,7 @@
 package com.movie.test.report;
 
 import com.movie.test.report.report.dto.ReportDto;
-import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSearchDTO;
 import com.movie.test.report.report.dto.ReportSaveDto;
 import com.movie.test.report.report.dto.ReportSimpleDTO;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +17,6 @@ public interface ReportCompactService {
 
     ReportDto getSingleReport(String reportId);
 
-    Slice<ReportSimpleDTO> getReportList(ReportListSearchDTO reportListSearchDTO, Pageable pageable);
+    Slice<ReportSimpleDTO> getReportList(ReportSearchDTO reportSearchDTO, Pageable pageable);
     ReportSimpleDTO getSimpleReport(String reportId);
 }

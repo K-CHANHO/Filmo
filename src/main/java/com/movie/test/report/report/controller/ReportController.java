@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.movie.test.report.ReportCompactService;
 import com.movie.test.report.report.dto.ReportDto;
-import com.movie.test.report.report.dto.ReportListSearchDTO;
 import com.movie.test.report.report.dto.ReportSaveDto;
+import com.movie.test.report.report.dto.ReportSearchDTO;
 import com.movie.test.report.report.dto.ReportSimpleDTO;
 import com.movie.test.report.report.service.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,9 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Tag(name = "감상문", description = "감상문 관련 API")
@@ -110,26 +108,29 @@ public class ReportController {
         return new ResponseEntity("Success Delete Report", HttpStatus.OK);
     }
 
-    @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다. 다른 사용자가 작성한 감상문을 조회하려면 otherUserId 값을 추가해주세요.")
-    @Parameters({
-            @Parameter(name = "lastReportId", description = "마지막으로 조회된 감상문 id"),
-            @Parameter(name = "keyword", description = "검색어"),
-            @Parameter(name = "otherUserId", description = "타 사용자 id"),
-    })
+    @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다. 다른 사용자가 작성한 감상문을 조회하려면 userId 값을 추가해주세요.")
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
-    @GetMapping("/searchReport")
-    public ResponseEntity getSearchReport(ReportListSearchDTO reportListSearchDTO, @Parameter(hidden = true) Pageable pageable){
+    @PostMapping("/searchReport")
+    public ResponseEntity getSearchReport(@RequestBody ReportSearchDTO reportSearchDTO, @Parameter(hidden = true) Pageable pageable){
 
-        Slice<ReportSimpleDTO> searchReport = reportCompactService.getReportList(reportListSearchDTO, pageable);
-        Long searchReportCount = reportService.getSearchReportCount(reportListSearchDTO);
+        Slice<ReportSimpleDTO> searchReport = reportCompactService.getReportList(reportSearchDTO, pageable);
+        Long searchReportCount = reportService.getSearchReportCount(reportSearchDTO);
 
+        /*
         Map<String, Object> resultData = new HashMap<>();
-
         resultData.put("searchReportCount", searchReportCount);
         resultData.put("reportList", searchReport.getContent());
         resultData.put("hasNext", searchReport.hasNext());
+        */
 
-        return new ResponseEntity(resultData, HttpStatus.OK);
+        String searchReportJson = gson.toJson(searchReport.getContent());
+
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("searchReportCount", searchReportCount);
+        returnData.addProperty("reportList", searchReportJson);
+        returnData.addProperty("hasNext", searchReport.hasNext());
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
 

@@ -1,6 +1,6 @@
 package com.movie.test.report.report.repository;
 
-import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSearchDTO;
 import com.movie.test.report.report.entity.QReportEntity;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -23,16 +23,16 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
     private QReportEntity report = QReportEntity.reportEntity;
 
     @Override
-    public Slice<String> getReportListId(ReportListSearchDTO reportListSearchDTO, Pageable pageable) {
+    public Slice<String> getReportListId(ReportSearchDTO reportSearchDTO, Pageable pageable) {
 
         List<String> reportIdList = jpaQueryFactory.select(report.reportId)
                 .from(report)
                 .where(
-                        report.reportId.gt(reportListSearchDTO.getLastReportId()),
-                        searchCondition(reportListSearchDTO)
+                        report.reportId.gt(reportSearchDTO.getLastReportId()),
+                        searchCondition(reportSearchDTO)
                 )
-                .limit(pageable.getPageSize() + 1)
                 .orderBy(report.createDate.desc())
+                .limit(pageable.getPageSize() + 1)
                 .fetch();
 
         boolean hasNext = false;
@@ -47,12 +47,12 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
     }
 
     @Override
-    public Long getReportSearchCount(ReportListSearchDTO reportListSearchDTO) {
+    public Long getReportSearchCount(ReportSearchDTO reportSearchDTO) {
 
         Long reportCount = jpaQueryFactory.select(report.count())
                 .from(report)
                 .where(
-                        searchCondition(reportListSearchDTO)
+                        searchCondition(reportSearchDTO)
                 )
                 .fetchFirst();
 
@@ -71,8 +71,8 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
         return reportIdList;
     }
 
-    public BooleanBuilder searchCondition(ReportListSearchDTO searchDTO) {
-        return keywordTitle(searchDTO.getKeyword()).or(keywordContent(searchDTO.getKeyword())).or(otherUserId(searchDTO.getOtherUserId()));
+    public BooleanBuilder searchCondition(ReportSearchDTO searchDTO) {
+        return keywordTitle(searchDTO.getKeyword()).and(keywordContent(searchDTO.getKeyword())).and(otherUserId(searchDTO.getUserId()));
     }
 
     private BooleanBuilder keywordTitle(String keyword) {

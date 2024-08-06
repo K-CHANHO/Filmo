@@ -2,7 +2,7 @@ package com.movie.test.report.report.service;
 
 import com.movie.test.common.cef.UUIDCustom;
 import com.movie.test.report.report.dto.ReportDto;
-import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSearchDTO;
 import com.movie.test.report.report.dto.ReportSaveDto;
 import com.movie.test.report.report.dto.ReportUpdateDto;
 import com.movie.test.report.report.entity.ReportEntity;
@@ -68,14 +68,14 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Slice<String> getSearchReportId(ReportListSearchDTO reportListSearchDTO, Pageable pageable) {
+    public Slice<String> getSearchReportId(ReportSearchDTO reportSearchDTO, Pageable pageable) {
 
-        return reportRepository.getReportListId(reportListSearchDTO, pageable);
+        return reportRepository.getReportListId(reportSearchDTO, pageable);
     }
 
     @Override
-    public Long getSearchReportCount(ReportListSearchDTO reportListSearchDTO) {
-        return reportRepository.getReportSearchCount(reportListSearchDTO);
+    public Long getSearchReportCount(ReportSearchDTO reportSearchDTO) {
+        return reportRepository.getReportSearchCount(reportSearchDTO);
     }
 
     @Override

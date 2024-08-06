@@ -7,7 +7,7 @@ import com.movie.test.report.like.service.LikeService;
 import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.reply.service.ReplyService;
 import com.movie.test.report.report.dto.ReportDto;
-import com.movie.test.report.report.dto.ReportListSearchDTO;
+import com.movie.test.report.report.dto.ReportSearchDTO;
 import com.movie.test.report.report.dto.ReportSaveDto;
 import com.movie.test.report.report.dto.ReportSimpleDTO;
 import com.movie.test.report.report.service.ReportService;
@@ -16,6 +16,7 @@ import com.movie.test.user.userinfo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,14 +59,13 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 2. 감상문 Id 리스트를 통해 각각의 감상문 정보 조회
      */
     @Override
-    public Slice<ReportSimpleDTO> getReportList(ReportListSearchDTO reportListSearchDTO, Pageable pageable) {
+    public Slice<ReportSimpleDTO> getReportList(ReportSearchDTO reportSearchDTO, Pageable pageable) {
 
-        // reportId를 구한 뒤 getSingleReport로 각각 구해오기?
-        Slice<String> searchReportId = reportService.getSearchReportId(reportListSearchDTO, pageable);
+        // reportId를 먼저 구한 뒤 활용.
+        Slice<String> searchReportId = reportService.getSearchReportId(reportSearchDTO, pageable);
 
         // 구현해놓은 getSimpleReport 이용
         Slice<ReportSimpleDTO> searchReportDTO = searchReportId.map(this::getSimpleReport);
-
         return searchReportDTO;
     }
 
