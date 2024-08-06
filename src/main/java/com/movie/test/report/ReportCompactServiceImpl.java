@@ -6,17 +6,13 @@ import com.movie.test.report.hashtag.service.TagService;
 import com.movie.test.report.like.service.LikeService;
 import com.movie.test.report.reply.dto.ReplyDTO;
 import com.movie.test.report.reply.service.ReplyService;
-import com.movie.test.report.report.dto.ReportDto;
-import com.movie.test.report.report.dto.ReportSearchDTO;
-import com.movie.test.report.report.dto.ReportSaveDto;
-import com.movie.test.report.report.dto.ReportSimpleDTO;
+import com.movie.test.report.report.dto.*;
 import com.movie.test.report.report.service.ReportService;
 import com.movie.test.report.view.service.ViewService;
 import com.movie.test.user.userinfo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -164,15 +160,15 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      * 2. 태그 수정
      */
     @Override
-    public String modifyReport(ReportDto reportDTO) {
+    public String updateReport(ReportUpdateDto reportUpdateDto) {
 
         // 감상문 수정
-        //String reportId = reportService.updateReport(reportDTO);
+        String reportId = reportService.updateReport(reportUpdateDto);
 
         // 태그 수정
         // 먼저 TagInReport 삭제 후 다시 저장
-        tagService.deleteTagInReport(reportDTO.getReportId());
-        tagService.saveTags(reportDTO.getReportId(), reportDTO.getTagString());
+        tagService.deleteTagInReport(reportUpdateDto.getReportId());
+        tagService.saveTags(reportUpdateDto.getReportId(), reportUpdateDto.getTagString());
 
         return null;
     }

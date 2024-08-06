@@ -3,10 +3,7 @@ package com.movie.test.report.report.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.movie.test.report.ReportCompactService;
-import com.movie.test.report.report.dto.ReportDto;
-import com.movie.test.report.report.dto.ReportSaveDto;
-import com.movie.test.report.report.dto.ReportSearchDTO;
-import com.movie.test.report.report.dto.ReportSimpleDTO;
+import com.movie.test.report.report.dto.*;
 import com.movie.test.report.report.service.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -83,19 +80,17 @@ public class ReportController {
     }
 
     @Operation(summary = "감상문 수정", description = "감상문을 수정합니다.")
-    @Parameters(value = {
-            @Parameter(name = "reportId", description = "수정할 감상문의 id", required = true),
-            @Parameter(name = "title", description = "수정할 감상문의 제목", required = true),
-            @Parameter(name = "content", description = "수정할 감상문의 내용", required = true),
-            @Parameter(name = "movieId", description = "선택한 영화 id (TMDB)", required = true),
-            @Parameter(name = "tagString", description = "해쉬태그", required = true, example = "#한국영화#액션#꿀잼")
-    })
+    @ApiResponse(responseCode = "200", description = "수정된 감상문 id 리턴")
     @PostMapping("/updateReport")
-    public ResponseEntity updateReport(ReportDto reportDTO){
+    public ResponseEntity updateReport(@RequestBody ReportUpdateDto reportUpdateDto){
 
-        String reportId = reportCompactService.modifyReport(reportDTO);
+        String reportId = reportCompactService.updateReport(reportUpdateDto);
 
-        return new ResponseEntity(reportId, HttpStatus.OK);
+        // 리턴 값을 위한 객체 value, msg, status로 구성
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("value", reportId);
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 삭제", description = "감상문을 삭제하고 관련 데이터(댓글, 태그, 신고내역)도 삭제합니다.")
