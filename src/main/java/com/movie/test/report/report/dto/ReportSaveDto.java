@@ -1,5 +1,6 @@
 package com.movie.test.report.report.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +27,8 @@ public class ReportSaveDto {
 
     @Schema(description = "해시태그")
     String tagString;
+
+    @Hidden
+    String userId;
 
 }

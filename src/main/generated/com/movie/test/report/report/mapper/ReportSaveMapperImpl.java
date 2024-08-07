@@ -2,12 +2,11 @@ package com.movie.test.report.report.mapper;
 
 import com.movie.test.report.report.dto.ReportDto;
 import com.movie.test.report.report.dto.ReportSaveDto;
-import com.movie.test.user.userinfo.dto.UserDto;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-06T15:12:57+0900",
+    date = "2024-08-07T12:18:30+0900",
     comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.3.jar, environment: Java 17.0.7 (Oracle Corporation)"
 )
 public class ReportSaveMapperImpl implements ReportSaveMapper {
@@ -22,6 +21,7 @@ public class ReportSaveMapperImpl implements ReportSaveMapper {
 
         reportDto.title( reportSaveDto.getTitle() );
         reportDto.content( reportSaveDto.getContent() );
+        reportDto.userId( reportSaveDto.getUserId() );
         reportDto.movieId( reportSaveDto.getMovieId() );
         reportDto.imageUrl( reportSaveDto.getImageUrl() );
         reportDto.tagString( reportSaveDto.getTagString() );
@@ -30,12 +30,19 @@ public class ReportSaveMapperImpl implements ReportSaveMapper {
     }
 
     @Override
-    public ReportSaveDto toReportSaveDto(UserDto userDto) {
-        if ( userDto == null ) {
+    public ReportSaveDto toReportSaveDto(ReportDto reportDto) {
+        if ( reportDto == null ) {
             return null;
         }
 
         ReportSaveDto.ReportSaveDtoBuilder reportSaveDto = ReportSaveDto.builder();
+
+        reportSaveDto.title( reportDto.getTitle() );
+        reportSaveDto.content( reportDto.getContent() );
+        reportSaveDto.movieId( reportDto.getMovieId() );
+        reportSaveDto.imageUrl( reportDto.getImageUrl() );
+        reportSaveDto.tagString( reportDto.getTagString() );
+        reportSaveDto.userId( reportDto.getUserId() );
 
         return reportSaveDto.build();
     }

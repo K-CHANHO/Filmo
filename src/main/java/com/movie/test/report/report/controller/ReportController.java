@@ -37,8 +37,9 @@ public class ReportController {
     @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")
     @ApiResponse(responseCode = "200", description = "등록된 감상문 id 리턴")
     @PostMapping("/save")
-    public ResponseEntity saveReport(@RequestBody ReportSaveDto reportSaveDto) {
+    public ResponseEntity saveReport(@RequestBody ReportSaveDto reportSaveDto, String loginId) {
 
+        reportSaveDto.setUserId(loginId);
         String reportId = reportCompactService.saveReport(reportSaveDto);
 
         JsonObject returnData = new JsonObject();
@@ -95,12 +96,17 @@ public class ReportController {
 
     @Operation(summary = "감상문 삭제", description = "감상문을 삭제하고 관련 데이터(댓글, 태그, 신고내역)도 삭제합니다.")
     @Parameter(name = "reportId", description = "삭제할 감상문의 id", required = true)
+    @PreAuthorize("@reportAccessHandler.getUid(#reportId) == principal.username")
     @GetMapping("/deleteReport/{reportId}")
     public ResponseEntity deleteReport(@PathVariable String reportId){
 
         reportCompactService.deleteReport(reportId);
 
-        return new ResponseEntity("Success Delete Report", HttpStatus.OK);
+        // 리턴 값을 위한 객체 value, msg, status로 구성
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("msg", "success");
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다. 다른 사용자가 작성한 감상문을 조회하려면 userId 값을 추가해주세요.")
