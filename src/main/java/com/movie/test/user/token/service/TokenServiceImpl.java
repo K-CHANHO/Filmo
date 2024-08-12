@@ -104,7 +104,7 @@ public class TokenServiceImpl implements TokenService {
 
         // userId 비교
         String userId = decodeJwtPayloadSubject(tokenDTO.getAccessToken());
-        TokenEntity tokenEntity = tokenRepository.findByRefreshToken(tokenDTO.getRefreshToken()).orElse(null);
+        TokenEntity tokenEntity = tokenRepository.findByRefreshToken(tokenDTO.getRefreshToken()).orElseThrow();
         if(tokenEntity == null || !tokenEntity.getUserId().equals(userId)){
             return false;
         }
