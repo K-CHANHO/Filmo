@@ -92,7 +92,7 @@ public class TmdbServiceImpl implements TmdbService {
         MovieImageDTO images = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/images")
-                        .queryParam("language", movieSearchApiDTO.getLanguage())
+//                        .queryParam("language", movieSearchApiDTO.getLanguage())
                         .build())
                 .retrieve()
                 .bodyToMono(MovieImageDTO.class)
