@@ -124,7 +124,7 @@ public class UserController {
      */
     @Operation(summary = "유저권한 확인", description = "유저의 권한을 확인합니다.")
     @Parameters({
-            @Parameter(name = "userId", description = "조회할 유저의 id, 빈 값일 경우 현재 로그인한 사용자의 권한을 확인합니다.", required = true),
+            @Parameter(name = "userId", description = "조회할 유저의 id, 빈 값일 경우 현재 로그인한 사용자의 권한을 확인합니다."),
             @Parameter(name = "loginId", description = "현재 로그인한 사용자의 유저아이디", hidden = true)
     })
     @ApiResponse(responseCode = "200", description = "유저의 권한 리턴")
