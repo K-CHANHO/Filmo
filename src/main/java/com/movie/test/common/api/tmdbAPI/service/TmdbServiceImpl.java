@@ -50,7 +50,7 @@ public class TmdbServiceImpl implements TmdbService {
     }
 
     @Override
-    public Object getMovieDetailInfo(MovieSearchApiDTO searchDTO) {
+    public Object getMovieDetailInfo(MovieDetailSearchApiDTO searchDTO) {
 
         WebClient webClient = getWebClient();
 
@@ -91,7 +91,7 @@ public class TmdbServiceImpl implements TmdbService {
 
         MovieImageDTO images = webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/images")
+//                        .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/images")
 //                        .queryParam("language", movieSearchApiDTO.getLanguage())
                         .build())
                 .retrieve()
@@ -124,7 +124,7 @@ public class TmdbServiceImpl implements TmdbService {
 
         MovieVideoDTO video = webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/videos")
+//                        .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/videos")
                         .queryParam("language", movieSearchApiDTO.getLanguage())
                         .build())
                 .retrieve()

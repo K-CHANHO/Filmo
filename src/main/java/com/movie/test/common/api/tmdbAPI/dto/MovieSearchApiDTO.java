@@ -6,25 +6,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Hidden
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class MovieSearchApiDTO {
 
-    // 영화 검색 리스트
+    // 검색어
     private String query;
 
+    @Hidden
     @Builder.Default
     private String language = "ko";
 
+    @Hidden
     @Builder.Default
     private int page = 1;
-
-    // 영화 상세 정보
-    private String movieId;
-
-
-
 }

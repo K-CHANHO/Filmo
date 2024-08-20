@@ -1,10 +1,11 @@
 package com.movie.test.common.api.tmdbAPI.service;
 
+import com.movie.test.common.api.tmdbAPI.dto.MovieDetailSearchApiDTO;
 import com.movie.test.common.api.tmdbAPI.dto.MovieSearchApiDTO;
 
 public interface TmdbService {
 
-    Object getMovieDetailInfo(MovieSearchApiDTO searchDTO);
+    Object getMovieDetailInfo(MovieDetailSearchApiDTO searchDTO);
     Object getMovieSearchList(MovieSearchApiDTO searchDTO);
     Object getProviders(String movieId);
     Object getImages(MovieSearchApiDTO movieSearchApiDTO);

@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
@@ -27,14 +29,10 @@ public class MovieSearchController {
 
     private final TmdbService tmdbService;
 
-    @Operation(summary = "영화 검색 리스트", description = "영화 검색 리스트를 조회합니다.")
-    @Parameters(value = {
-            @Parameter(name = "query", description = "검색어", required = true),
-            @Parameter(name = "page", description = "페이지, 기본값 1"),
-    })
+    @Operation(summary = "영화 검색", description = "영화를 검색합니다.")
     @ApiResponse(responseCode = "200", description = "영화 리스트 리턴")
-    @GetMapping("/searchList")
-    public ResponseEntity movieSearchList(MovieSearchApiDTO movieSearchApiDTO){
+    @PostMapping("/searchList")
+    public ResponseEntity searchMovieList(@RequestBody MovieSearchApiDTO movieSearchApiDTO){
 
         MovieSearchResponseDTO movieInfo = (MovieSearchResponseDTO) tmdbService.getMovieSearchList(movieSearchApiDTO);
 
@@ -47,10 +45,10 @@ public class MovieSearchController {
     })
     @ApiResponse(responseCode = "200", description = "영화 상세정보 리턴")
     @GetMapping("/searchDetail")
-    public ResponseEntity movieDetailInfo(MovieSearchApiDTO movieSearchApiDTO){
+    public ResponseEntity movieDetailInfo(MovieDetailSearchApiDTO movieDetailSearchApiDTO){
 
-        MovieDetailInfoDTO movieInfo = (MovieDetailInfoDTO) tmdbService.getMovieDetailInfo(movieSearchApiDTO);
-        movieInfo.setProviders(tmdbService.getProviders(movieSearchApiDTO.getMovieId()));
+        MovieDetailInfoDTO movieInfo = (MovieDetailInfoDTO) tmdbService.getMovieDetailInfo(movieDetailSearchApiDTO);
+        movieInfo.setProviders(tmdbService.getProviders(movieDetailSearchApiDTO.getMovieId()));
 
         return new ResponseEntity(movieInfo, HttpStatus.OK);
     }
