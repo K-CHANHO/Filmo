@@ -8,8 +8,8 @@ public interface TmdbService {
     Object getMovieDetailInfo(MovieDetailSearchApiDTO searchDTO);
     Object getMovieSearchList(MovieSearchApiDTO searchDTO);
     Object getProviders(String movieId);
-    Object getImages(MovieSearchApiDTO movieSearchApiDTO);
+    Object getImages(MovieDetailSearchApiDTO movieSearchApiDTO);
     Object getConfiguration();
-    Object getVideos(MovieSearchApiDTO movieSearchApiDTO);
+    Object getVideos(MovieDetailSearchApiDTO movieSearchApiDTO);
 
 }

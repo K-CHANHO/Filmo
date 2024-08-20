@@ -3,8 +3,6 @@ package com.movie.test.common.api.tmdbAPI.controller;
 import com.movie.test.common.api.tmdbAPI.dto.*;
 import com.movie.test.common.api.tmdbAPI.service.TmdbService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,17 +48,14 @@ public class MovieSearchController {
     }
 
     @Operation(summary = "영화 이미지 조회", description = "영화 이미지를 조회합니다.")
-    @Parameters(value = {
-            @Parameter(name = "movieId", description = "영화 id", required = true),
-    })
     @ApiResponse(responseCode = "200", description = "영화 이미지 정보 리턴, 사용법 : {base_url} + {size} + {file_path}")
-    @GetMapping("/posters")
-    public ResponseEntity getMoviePoster(MovieSearchApiDTO movieSearchApiDTO){
+    @PostMapping("/posters")
+    public ResponseEntity getMoviePoster(@RequestBody MovieDetailSearchApiDTO movieDetailSearchApiDTO){
 
         Map<String, Object> returnData = new HashMap<>();
 
         MovieConfigurationDTO configuration = (MovieConfigurationDTO) tmdbService.getConfiguration();
-        MovieImageDTO images = (MovieImageDTO) tmdbService.getImages(movieSearchApiDTO); // base_url + size + file_path
+        MovieImageDTO images = (MovieImageDTO) tmdbService.getImages(movieDetailSearchApiDTO); // base_url + size + file_path
 
         returnData.put("configuration", configuration);
         returnData.put("images", images);
@@ -70,14 +64,11 @@ public class MovieSearchController {
     }
 
     @Operation(summary = "영화 관련 동영상 조회", description = "영화 동영상을 조회합니다.")
-    @Parameters(value = {
-            @Parameter(name = "movieId", description = "영화 id", required = true),
-    })
     @ApiResponse(responseCode = "200", description = "영화 동영상 정보 리턴, 사용법 => 'site'가 'YouTube'일 경우 : https://www.youtube.com/embed/ + {key}")
-    @GetMapping("/videos")
-    public ResponseEntity getMovieVideo(MovieSearchApiDTO movieSearchApiDTO){
+    @PostMapping("/videos")
+    public ResponseEntity getMovieVideo(@RequestBody MovieDetailSearchApiDTO movieDetailSearchApiDTO){
 
-        MovieVideoDTO videos = (MovieVideoDTO) tmdbService.getVideos(movieSearchApiDTO);
+        MovieVideoDTO videos = (MovieVideoDTO) tmdbService.getVideos(movieDetailSearchApiDTO);
 
         return new ResponseEntity(videos, HttpStatus.OK);
     }

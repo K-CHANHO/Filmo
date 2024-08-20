@@ -85,13 +85,13 @@ public class TmdbServiceImpl implements TmdbService {
     }
 
     @Override
-    public Object getImages(MovieSearchApiDTO movieSearchApiDTO) {
+    public Object getImages(MovieDetailSearchApiDTO movieSearchApiDTO) {
 
         WebClient webClient = getWebClient();
 
         MovieImageDTO images = webClient.get()
                 .uri(uriBuilder -> uriBuilder
-//                        .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/images")
+                        .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/images")
 //                        .queryParam("language", movieSearchApiDTO.getLanguage())
                         .build())
                 .retrieve()
@@ -118,13 +118,13 @@ public class TmdbServiceImpl implements TmdbService {
     }
 
     @Override
-    public Object getVideos(MovieSearchApiDTO movieSearchApiDTO) {
+    public Object getVideos(MovieDetailSearchApiDTO movieSearchApiDTO) {
 
         WebClient webClient = getWebClient();
 
         MovieVideoDTO video = webClient.get()
                 .uri(uriBuilder -> uriBuilder
-//                        .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/videos")
+                        .path("/3/movie/" + movieSearchApiDTO.getMovieId() + "/videos")
                         .queryParam("language", movieSearchApiDTO.getLanguage())
                         .build())
                 .retrieve()
