@@ -1,6 +1,7 @@
 package com.movie.test.user.token.service;
 
 import com.movie.test.user.token.dto.JwtTokenDTO;
+import com.movie.test.user.userinfo.dto.CustomUser;
 import com.movie.test.user.userinfo.dto.UserDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -12,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -51,6 +51,7 @@ public class JwtTokenProvider {
                 .setSubject(authentication.getName())
                 .claim("userId", userDTO.getUserId())
                 .claim("auth", authorities)
+                .claim("nickname",userDTO.getNickname())
                 .setExpiration(Date.from(Instant.now().plus(accessTokenExpiration, ChronoUnit.DAYS)))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -87,7 +88,7 @@ public class JwtTokenProvider {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        UserDetails user = new User(claims.getSubject(), "", authorities);
+        UserDetails user = new CustomUser(claims.getSubject(), "", authorities, claims.get("userId").toString(), claims.get("nickname").toString());
         return new UsernamePasswordAuthenticationToken(user, "", authorities);
 
     }
