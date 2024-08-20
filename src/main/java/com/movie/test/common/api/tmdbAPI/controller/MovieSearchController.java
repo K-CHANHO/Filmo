@@ -24,14 +24,14 @@ import java.util.Map;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/movie")
+@RequestMapping("/movie/search")
 public class MovieSearchController {
 
     private final TmdbService tmdbService;
 
     @Operation(summary = "영화 검색", description = "영화를 검색합니다.")
     @ApiResponse(responseCode = "200", description = "영화 리스트 리턴")
-    @PostMapping("/searchList")
+    @PostMapping("/movieList")
     public ResponseEntity searchMovieList(@RequestBody MovieSearchApiDTO movieSearchApiDTO){
 
         MovieSearchResponseDTO movieInfo = (MovieSearchResponseDTO) tmdbService.getMovieSearchList(movieSearchApiDTO);
@@ -40,12 +40,9 @@ public class MovieSearchController {
     }
 
     @Operation(summary = "영화 상세 정보 검색", description = "영화 상제 정보를 검색합니다.")
-    @Parameters(value = {
-            @Parameter(name = "movieId", description = "영화 id", required = true),
-    })
     @ApiResponse(responseCode = "200", description = "영화 상세정보 리턴")
-    @GetMapping("/searchDetail")
-    public ResponseEntity movieDetailInfo(MovieDetailSearchApiDTO movieDetailSearchApiDTO){
+    @PostMapping("/movieDetail")
+    public ResponseEntity movieDetailInfo(@RequestBody MovieDetailSearchApiDTO movieDetailSearchApiDTO){
 
         MovieDetailInfoDTO movieInfo = (MovieDetailInfoDTO) tmdbService.getMovieDetailInfo(movieDetailSearchApiDTO);
         movieInfo.setProviders(tmdbService.getProviders(movieDetailSearchApiDTO.getMovieId()));
@@ -58,7 +55,7 @@ public class MovieSearchController {
             @Parameter(name = "movieId", description = "영화 id", required = true),
     })
     @ApiResponse(responseCode = "200", description = "영화 이미지 정보 리턴, 사용법 : {base_url} + {size} + {file_path}")
-    @GetMapping("/getPoster")
+    @GetMapping("/posters")
     public ResponseEntity getMoviePoster(MovieSearchApiDTO movieSearchApiDTO){
 
         Map<String, Object> returnData = new HashMap<>();
@@ -77,7 +74,7 @@ public class MovieSearchController {
             @Parameter(name = "movieId", description = "영화 id", required = true),
     })
     @ApiResponse(responseCode = "200", description = "영화 동영상 정보 리턴, 사용법 => 'site'가 'YouTube'일 경우 : https://www.youtube.com/embed/ + {key}")
-    @GetMapping("/getVideo")
+    @GetMapping("/videos")
     public ResponseEntity getMovieVideo(MovieSearchApiDTO movieSearchApiDTO){
 
         MovieVideoDTO videos = (MovieVideoDTO) tmdbService.getVideos(movieSearchApiDTO);
