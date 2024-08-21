@@ -13,6 +13,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class BookmarkServiceImpl implements BookmarkService{
@@ -52,8 +54,20 @@ public class BookmarkServiceImpl implements BookmarkService{
     }
 
     @Override
-    public boolean validationBookmarkId(Long bookmarkId) {
-        if(bookmarkId == null || bookmarkRepository.findById(bookmarkId).isEmpty()) return false;
+    public boolean validationBookmarkId(Long bookmarkId, CustomUser loginUser) {
+        // null 체크
+        if(bookmarkId == null) return false;
+
+        Optional<BookmarkEntity> bookmark = bookmarkRepository.findById(bookmarkId);
+
+        // 북마크가 존재하는 지 확인
+        boolean isEmpty = bookmark.isEmpty();
+        if(isEmpty) return false;
+
+        // 로그인한 사용자와 북마크한 사용자와 동일한 지 체크
+        boolean checkUser = loginUser.getUserId().equals(bookmark.orElseThrow().getUserId());
+        if(!checkUser) return false;
+
         return true;
     }
 

@@ -7,15 +7,18 @@ import com.movie.test.report.bookmark.dto.BookmarkListDto;
 import com.movie.test.report.bookmark.dto.BookmarkSaveDto;
 import com.movie.test.report.bookmark.service.BookmarkService;
 import com.movie.test.report.report.service.ReportService;
+import com.movie.test.user.userinfo.dto.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -63,17 +66,18 @@ public class BookmarkController {
 
     @Operation(summary = "북마크 삭제", description = "북마크한 감상문을 삭제합니다.")
     @Parameters(value = {
-            @Parameter(name = "bookmarkId", description = "북마크 아이디", required = true),
+            @Parameter(name = "bookmarkId", description = "북마크 아이디", required = true, in = ParameterIn.PATH),
     })
-    @DeleteMapping("/delete")
-    public ResponseEntity deleteBookmark(Long bookmarkId){
+    @DeleteMapping("/delete/{bookmarkId}")
+    public ResponseEntity deleteBookmark(@PathVariable Long bookmarkId, @AuthenticationPrincipal CustomUser loginUser){
 
-        if (!bookmarkService.validationBookmarkId(bookmarkId)) {
+        if (!bookmarkService.validationBookmarkId(bookmarkId, loginUser)) {
             return new ResponseEntity("잘못된 시도입니다. 다시 시도해주세요.", HttpStatus.BAD_REQUEST);
         }
+
         bookmarkService.deleteBookmark(bookmarkId);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity("북마크가 해제되었습니다.", HttpStatus.OK);
     }
 
     @Operation(summary = "북마크 수 조회", description = "해당 게시물이 북마크된 수를 조회합니다.")
