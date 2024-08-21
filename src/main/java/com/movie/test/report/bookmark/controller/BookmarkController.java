@@ -21,9 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 @RequestMapping("/bookmark")
 @Tag(name = "북마크", description = "북마크 관련 API")
@@ -36,7 +33,7 @@ public class BookmarkController {
 
     @Operation(summary = "북마크 리스트 조회", description = "북마크한 감상문을 조회합니다.")
     @Parameters(value = {
-            @Parameter(name = "bookmarkId", description = "마지막으로 조회된 북마크 아이디, 최초는 빈값"),
+            @Parameter(name = "bookmarkId", description = "마지막으로 조회된 북마크 아이디, 최초는 빈값", in = ParameterIn.QUERY),
     })
     @GetMapping("/list")
     public ResponseEntity getBookmarkList(BookmarkListDto bookmarkListDto, @Parameter(hidden = true) Pageable pageable) {
@@ -82,15 +79,15 @@ public class BookmarkController {
 
     @Operation(summary = "북마크 수 조회", description = "해당 게시물이 북마크된 수를 조회합니다.")
     @Parameters(value = {
-            @Parameter(name = "reportId", description = "조회하려는 감상문 아이디"),
+            @Parameter(name = "reportId", description = "조회하려는 감상문 아이디", in = ParameterIn.QUERY),
     })
     @GetMapping("/count")
     public ResponseEntity getBookmarkCount(String reportId) {
 
         Long bookmarkCount = bookmarkService.getBookmarkCount(reportId);
 
-        Map<String, Object> returnData = new HashMap<>();
-        returnData.put("bookmarkCount", bookmarkCount);
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("bookmarkCount", bookmarkCount);
 
         return new ResponseEntity(returnData, HttpStatus.OK);
     }
