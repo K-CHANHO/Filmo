@@ -1,15 +1,16 @@
 package com.movie.test.report.bookmark.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.movie.test.report.bookmark.dto.BookmarkDTO;
+import com.movie.test.report.bookmark.dto.BookmarkListDto;
 import com.movie.test.report.bookmark.service.BookmarkService;
 import com.movie.test.report.report.service.ReportService;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
@@ -27,19 +28,20 @@ public class BookmarkController {
 
     private final BookmarkService bookmarkService;
     private final ReportService reportService;
+    private final Gson gson;
 
     @Operation(summary = "북마크 리스트 조회", description = "북마크한 감상문을 조회합니다.")
     @Parameters(value = {
             @Parameter(name = "bookmarkId", description = "마지막으로 조회된 북마크 아이디, 최초는 빈값"),
     })
     @GetMapping("/list")
-    public ResponseEntity getBookmarkList(BookmarkDTO bookmarkDTO, @Parameter(hidden = true) Pageable pageable) {
+    public ResponseEntity getBookmarkList(BookmarkListDto bookmarkListDto, @Parameter(hidden = true) Pageable pageable) {
 
-        Slice<BookmarkDTO> bookmarkList = bookmarkService.getBookmarkList(bookmarkDTO, pageable);
+        Slice<BookmarkDTO> bookmarkList = bookmarkService.getBookmarkList(bookmarkListDto, pageable);
 
-        Map<String, Object> returnData = new HashMap<>();
-        returnData.put("bookmarkList", bookmarkList.getContent());
-        returnData.put("hasNext", bookmarkList.hasNext());
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("bookmarkList", gson.toJson(bookmarkList.getContent()));
+        returnData.addProperty("hasNext", bookmarkList.hasNext());
 
         return new ResponseEntity(returnData, HttpStatus.OK);
     }

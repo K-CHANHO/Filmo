@@ -1,6 +1,6 @@
 package com.movie.test.report.bookmark.repository;
 
-import com.movie.test.report.bookmark.dto.BookmarkDTO;
+import com.movie.test.report.bookmark.dto.BookmarkListDto;
 import com.movie.test.report.bookmark.entity.BookmarkEntity;
 import com.movie.test.report.bookmark.entity.QBookmarkEntity;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -20,12 +20,12 @@ public class BookmarkRepositoryCustomImpl implements BookmarkRepositoryCustom{
     private QBookmarkEntity bookmark = QBookmarkEntity.bookmarkEntity;
 
     @Override
-    public Slice<BookmarkEntity> getBookmarkList(BookmarkDTO bookmarkDTO, Pageable pageable) {
+    public Slice<BookmarkEntity> getBookmarkList(BookmarkListDto bookmarkListDto, Pageable pageable) {
 
         List<BookmarkEntity> bookmarkEntityList = jpaQueryFactory.selectFrom(bookmark)
                 .where(
-                        bookmark.userId.eq(bookmarkDTO.getUserId()),
-                        checkBookmarkId(bookmarkDTO.getBookmarkId())
+                        bookmark.userId.eq(bookmarkListDto.getUserId()),
+                        checkBookmarkId(bookmarkListDto.getBookmarkId())
                 )
                 .limit(pageable.getPageSize() + 1)
                 .orderBy(bookmark.bookmarkId.desc())

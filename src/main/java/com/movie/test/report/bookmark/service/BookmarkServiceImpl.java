@@ -1,6 +1,7 @@
 package com.movie.test.report.bookmark.service;
 
 import com.movie.test.report.bookmark.dto.BookmarkDTO;
+import com.movie.test.report.bookmark.dto.BookmarkListDto;
 import com.movie.test.report.bookmark.entity.BookmarkEntity;
 import com.movie.test.report.bookmark.repository.BookmarkRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,9 @@ public class BookmarkServiceImpl implements BookmarkService{
     }
 
     @Override
-    public Slice<BookmarkDTO> getBookmarkList(BookmarkDTO bookmarkDTO, Pageable pageable) {
+    public Slice<BookmarkDTO> getBookmarkList(BookmarkListDto bookmarkListDto, Pageable pageable) {
 
-        Slice<BookmarkEntity> bookmarkEntityList = bookmarkRepository.getBookmarkList(bookmarkDTO, pageable);
+        Slice<BookmarkEntity> bookmarkEntityList = bookmarkRepository.getBookmarkList(bookmarkListDto, pageable);
         Slice<BookmarkDTO> bookmarkList = bookmarkEntityList.map(BookmarkDTO::toDTO);
 
         return bookmarkList;
