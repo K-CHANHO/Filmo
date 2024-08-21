@@ -2,8 +2,9 @@ package com.movie.test.report.bookmark.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.movie.test.report.bookmark.dto.BookmarkDTO;
+import com.movie.test.report.bookmark.dto.BookmarkDto;
 import com.movie.test.report.bookmark.dto.BookmarkListDto;
+import com.movie.test.report.bookmark.dto.BookmarkSaveDto;
 import com.movie.test.report.bookmark.service.BookmarkService;
 import com.movie.test.report.report.service.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,7 +38,7 @@ public class BookmarkController {
     @GetMapping("/list")
     public ResponseEntity getBookmarkList(BookmarkListDto bookmarkListDto, @Parameter(hidden = true) Pageable pageable) {
 
-        Slice<BookmarkDTO> bookmarkList = bookmarkService.getBookmarkList(bookmarkListDto, pageable);
+        Slice<BookmarkDto> bookmarkList = bookmarkService.getBookmarkList(bookmarkListDto, pageable);
 
         JsonObject returnData = new JsonObject();
         returnData.addProperty("bookmarkList", gson.toJson(bookmarkList.getContent()));
@@ -47,18 +48,15 @@ public class BookmarkController {
     }
 
     @Operation(summary = "북마크 등록", description = "감상문을 북마크합니다.")
-    @Parameters(value = {
-            @Parameter(name = "reportId", description = "북마크하려는 감상문 아이디", required = true),
-    })
-    @PostMapping("/regist")
-    public ResponseEntity registBookmark(BookmarkDTO bookmarkDTO) {
+    @PostMapping("/save")
+    public ResponseEntity saveBookmark(@RequestBody BookmarkSaveDto bookmarkSaveDto) {
 
-        boolean validationReportId = reportService.validationReportId(bookmarkDTO.getReportId());
+        boolean validationReportId = reportService.validationReportId(bookmarkSaveDto.getReportId());
         if(!validationReportId) {
             return new ResponseEntity("북마크하려는 게시물이 없습니다. 다시 시도해주세요.", HttpStatus.BAD_REQUEST);
         }
 
-        BookmarkDTO savedBookmark = bookmarkService.registBookmark(bookmarkDTO);
+        BookmarkDto savedBookmark = bookmarkService.saveBookmark(bookmarkSaveDto);
 
         return new ResponseEntity(savedBookmark, HttpStatus.OK);
     }

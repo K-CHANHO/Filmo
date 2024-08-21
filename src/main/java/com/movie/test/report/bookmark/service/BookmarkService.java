@@ -1,16 +1,18 @@
 package com.movie.test.report.bookmark.service;
 
-import com.movie.test.report.bookmark.dto.BookmarkDTO;
+import com.movie.test.report.bookmark.dto.BookmarkDto;
 import com.movie.test.report.bookmark.dto.BookmarkListDto;
+import com.movie.test.report.bookmark.dto.BookmarkSaveDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 public interface BookmarkService {
 
-    BookmarkDTO registBookmark(BookmarkDTO bookmarkDTO);
+    BookmarkDto saveBookmark(BookmarkSaveDto bookmarkSaveDto);
+
     void deleteBookmark(Long bookmarkId);
 
-    Slice<BookmarkDTO> getBookmarkList(BookmarkListDto bookmarkListDto, Pageable pageable);
+    Slice<BookmarkDto> getBookmarkList(BookmarkListDto bookmarkListDto, Pageable pageable);
 
     boolean validationBookmarkId(Long bookmarkId);
 

@@ -21,4 +21,12 @@ public class CustomUser extends User {
         this.userId = userId1;
         this.nickname = nickname1;
     }
+
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public String getNickname() {
+        return this.nickname;
+    }
 }
