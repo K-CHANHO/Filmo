@@ -1,14 +1,15 @@
 package com.movie.test.inquiry.service;
 
-import com.movie.test.inquiry.dto.InquiryDTO;
+import com.movie.test.inquiry.dto.InquiryDto;
+import com.movie.test.inquiry.dto.InquirySaveDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 public interface InquiryService {
 
-    InquiryDTO getInquiry(String inquiryId);
+    InquiryDto getInquiry(String inquiryId);
 
-    void registInquiry(InquiryDTO inquiryDTO);
+    void registInquiry(InquirySaveDto inquiryDTO);
 
-    Slice<InquiryDTO> getInquiryList(String userId, String lastInquiryId, Pageable pageable);
+    Slice<InquiryDto> getInquiryList(String userId, String lastInquiryId, Pageable pageable);
 }

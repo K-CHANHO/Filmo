@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class InquiryDTO extends BaseTimeDTO {
+public class InquiryDto extends BaseTimeDTO {
 
     private String inquiryId;
     private String userId;
@@ -27,9 +27,9 @@ public class InquiryDTO extends BaseTimeDTO {
     private String answerYN; // 답변 여부
     private String userEmail; // 답변받을 이메일주소
 
-    public static InquiryDTO toDTO(InquiryEntity inquiryEntity){
+    public static InquiryDto toDTO(InquiryEntity inquiryEntity){
 
-        InquiryDTO inquiry = InquiryDTO.builder()
+        InquiryDto inquiry = InquiryDto.builder()
                 .inquiryId(inquiryEntity.getInquiryId())
                 .userId(inquiryEntity.getUserId())
                 .userEmail(inquiryEntity.getUserEmail())
@@ -44,7 +44,7 @@ public class InquiryDTO extends BaseTimeDTO {
         return inquiry;
     }
 
-    public static InquiryEntity toEntity(InquiryDTO inquiryDTO) {
+    public static InquiryEntity toEntity(InquiryDto inquiryDTO) {
 
         InquiryEntity inquiry = InquiryEntity.builder()
                 .inquiryId(inquiryDTO.getInquiryId())

@@ -1,7 +1,10 @@
 package com.movie.test.inquiry.service;
 
-import com.movie.test.inquiry.dto.InquiryDTO;
+import com.movie.test.common.cef.CustomUUID;
+import com.movie.test.inquiry.dto.InquiryDto;
+import com.movie.test.inquiry.dto.InquirySaveDto;
 import com.movie.test.inquiry.entity.InquiryEntity;
+import com.movie.test.inquiry.mapper.InquirySaveMapper;
 import com.movie.test.inquiry.repository.InquiryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +14,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,21 +23,18 @@ public class InquiryServiceImpl implements InquiryService {
     private final JavaMailSender sender;
 
     @Override
-    public InquiryDTO getInquiry(String inquiryId) {
+    public InquiryDto getInquiry(String inquiryId) {
         InquiryEntity inquiryEntity = inquiryRepository.findById(inquiryId).orElseThrow(NullPointerException::new);
-        InquiryDTO dto = InquiryDTO.toDTO(inquiryEntity);
+        InquiryDto dto = InquiryDto.toDTO(inquiryEntity);
 
         return dto;
     }
 
     @Override
-    public void registInquiry(InquiryDTO inquiry) {
+    public void registInquiry(InquirySaveDto inquiry) {
 
-        StringBuilder stringBuilder = new StringBuilder(String.valueOf(System.currentTimeMillis()));
-        stringBuilder.append(UUID.randomUUID().toString());
-
-        inquiry.setInquiryId(stringBuilder.toString());
-        inquiryRepository.save(InquiryDTO.toEntity(inquiry));
+        inquiry.setInquiryId(CustomUUID.createUUID());
+        inquiryRepository.save(InquirySaveMapper.INSTANCE.toEntity(inquiry));
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("gamsangmoon1@naver.com");
@@ -47,10 +46,10 @@ public class InquiryServiceImpl implements InquiryService {
     }
 
     @Override
-    public Slice<InquiryDTO> getInquiryList(String userId, String lastInquiryId, Pageable pageable) {
+    public Slice<InquiryDto> getInquiryList(String userId, String lastInquiryId, Pageable pageable) {
 
         if (lastInquiryId == null) lastInquiryId = "";
         Slice<InquiryEntity> inquiryList = inquiryRepository.getInquiryList(userId, lastInquiryId, pageable);
-        return inquiryList.map(InquiryDTO::toDTO);
+        return inquiryList.map(InquiryDto::toDTO);
     }
 }

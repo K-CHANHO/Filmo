@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
-public class UUIDCustom {
+public class CustomUUID {
 
     public static String createUUID(){
         String orgUUID = UUID.randomUUID().toString();
