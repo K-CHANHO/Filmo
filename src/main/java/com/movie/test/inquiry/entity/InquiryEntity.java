@@ -12,7 +12,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor

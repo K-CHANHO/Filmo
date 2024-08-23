@@ -2,12 +2,14 @@ package com.movie.test.inquiry.controller;
 
 import com.movie.test.inquiry.dto.InquiryDto;
 import com.movie.test.inquiry.dto.InquirySaveDto;
+import com.movie.test.inquiry.dto.InquiryUpdateDto;
 import com.movie.test.inquiry.service.InquiryService;
 import com.movie.test.user.userinfo.dto.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nullable;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -67,5 +69,14 @@ public class InquiryController {
         resultData.put("hasNext", inquiryList.hasNext());
 
         return new ResponseEntity(resultData, HttpStatus.OK);
+    }
+
+    @Operation(summary = "문의사항 답변여부 변경")
+    @PatchMapping("/update/answer")
+    public ResponseEntity updateInquiryAnswerYn(@Valid @RequestBody InquiryUpdateDto inquiryUpdateDto){
+
+        inquiryService.updateAnswerYn(inquiryUpdateDto);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

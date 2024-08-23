@@ -1,8 +1,10 @@
 package com.movie.test.inquiry.service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.movie.test.common.cef.CustomUUID;
 import com.movie.test.inquiry.dto.InquiryDto;
 import com.movie.test.inquiry.dto.InquirySaveDto;
+import com.movie.test.inquiry.dto.InquiryUpdateDto;
 import com.movie.test.inquiry.entity.InquiryEntity;
 import com.movie.test.inquiry.mapper.InquirySaveMapper;
 import com.movie.test.inquiry.repository.InquiryRepository;
@@ -50,5 +52,14 @@ public class InquiryServiceImpl implements InquiryService {
         if (lastInquiryId == null) lastInquiryId = "";
         Slice<InquiryEntity> inquiryList = inquiryRepository.getInquiryList(userId, lastInquiryId, pageable);
         return inquiryList.map(InquiryDto::toDTO);
+    }
+
+    @Override
+    public void updateAnswerYn(InquiryUpdateDto inquiryUpdateDto) {
+
+        InquiryEntity entity = inquiryRepository.findById(inquiryUpdateDto.getInquiryId()).orElseThrow(() -> new NotFoundException("존재하지 않는 문의사항입니다. 문의사항 아이디를 확인해주세요."));
+        InquiryEntity updatedEntity = entity.toBuilder().answerYN(inquiryUpdateDto.getAnswerYn()).build();
+        inquiryRepository.save(updatedEntity);
+
     }
 }
