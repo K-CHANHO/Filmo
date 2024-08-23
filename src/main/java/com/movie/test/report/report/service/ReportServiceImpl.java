@@ -1,6 +1,6 @@
 package com.movie.test.report.report.service;
 
-import com.movie.test.common.cef.UUIDCustom;
+import com.movie.test.common.cef.CustomUUID;
 import com.movie.test.report.report.dto.ReportDto;
 import com.movie.test.report.report.dto.ReportSearchDTO;
 import com.movie.test.report.report.dto.ReportSaveDto;
@@ -30,7 +30,7 @@ public class ReportServiceImpl implements ReportService {
 
         ReportDto reportDTO = ReportSaveMapper.INSTANCE.toReportDto(reportSaveDto);
 
-        reportDTO.setReportId(UUIDCustom.createUUID());
+        reportDTO.setReportId(CustomUUID.createUUID());
         ReportEntity saved = reportRepository.save(ReportDto.toEntity(reportDTO));
 
         return saved.getReportId();
