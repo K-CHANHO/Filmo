@@ -6,13 +6,12 @@ import com.movie.test.inquiry.service.InquiryService;
 import com.movie.test.user.userinfo.dto.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -43,7 +42,7 @@ public class InquiryController {
     }
 
     @Operation(summary = "문의사항 상세 조회", description = "문의사항을 조회합니다.")
-    @GetMapping("/getInquiry/{inquiryId}")
+    @GetMapping("/get/{inquiryId}")
     public ResponseEntity getInquiry(@PathVariable String inquiryId) {
 
         try{
@@ -56,15 +55,13 @@ public class InquiryController {
     }
 
     @Operation(summary = "문의사항 리스트 조회", description = "문의사항의 리스트를 조회합니다.")
-    @Parameters({
-            @Parameter(name = "lastInquiryId", description = "마지막에 조회된 문의사항 ID", required = true),
-    })
-    @GetMapping("/getInquiryList")
-    public ResponseEntity getInquiryList(@Parameter(hidden = true) String userId, String lastInquiryId, @Parameter(hidden = true) @PageableDefault(size = 5) Pageable pageable){
+    @Parameter(name = "lastInquiryId", description = "마지막에 조회된 문의사항 ID")
+    @GetMapping("/getList")
+    public ResponseEntity getInquiryList(@AuthenticationPrincipal CustomUser user, @Nullable String lastInquiryId, @Parameter(hidden = true) Pageable pageable){
 
         Map<String, Object> resultData = new HashMap<>();
 
-        Slice<InquiryDto> inquiryList = inquiryService.getInquiryList(userId, lastInquiryId, pageable);
+        Slice<InquiryDto> inquiryList = inquiryService.getInquiryList(user.getUserId(), lastInquiryId, pageable);
 
         resultData.put("inquiryList", inquiryList.getContent());
         resultData.put("hasNext", inquiryList.hasNext());
