@@ -26,7 +26,6 @@ public class InquiryServiceImpl implements InquiryService {
     public InquiryDto getInquiry(String inquiryId) {
         InquiryEntity inquiryEntity = inquiryRepository.findById(inquiryId).orElseThrow(NullPointerException::new);
         InquiryDto dto = InquiryDto.toDTO(inquiryEntity);
-
         return dto;
     }
 

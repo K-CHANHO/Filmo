@@ -2,6 +2,7 @@ package com.movie.test.inquiry.dto;
 
 import com.movie.test.common.dto.BaseTimeDTO;
 import com.movie.test.inquiry.entity.InquiryEntity;
+import com.movie.test.inquiry.mapper.InquiryMapper;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,7 +42,8 @@ public class InquiryDto extends BaseTimeDTO {
                 .lastModifiedDate(inquiryEntity.getLastModifiedDate())
                 .build();
 
-        return inquiry;
+//        return inquiry;
+        return InquiryMapper.INSTANCE.toDto(inquiryEntity);
     }
 
     public static InquiryEntity toEntity(InquiryDto inquiryDTO) {
@@ -56,7 +58,8 @@ public class InquiryDto extends BaseTimeDTO {
                 .answerYN(inquiryDTO.getAnswerYN())
                 .build();
 
-        return inquiry;
+//        return inquiry;
+        return InquiryMapper.INSTANCE.toEntity(inquiryDTO);
     }
 
 
