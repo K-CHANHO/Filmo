@@ -1,5 +1,6 @@
 package com.movie.test.user.userinfo.service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.movie.test.common.api.s3.service.S3Service;
 import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.service.JwtTokenProvider;
@@ -78,7 +79,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserInfo(String userid) {
 
-        UserDto userDTO = UserDto.toDTO(userRepository.findById(userid).get());
+        UserDto userDTO = UserDto.toDTO(userRepository.findById(userid).orElseThrow(()->new NotFoundException("존재하지 않는 사용자입니다.")));
 
         return userDTO;
     }

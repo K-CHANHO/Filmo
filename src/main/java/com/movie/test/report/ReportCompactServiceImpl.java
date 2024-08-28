@@ -11,6 +11,7 @@ import com.movie.test.report.report.service.ReportService;
 import com.movie.test.report.view.service.ViewService;
 import com.movie.test.user.userinfo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ReportCompactServiceImpl implements ReportCompactService{
 
     private final ReportService reportService;
@@ -74,6 +76,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
      */
     @Override
     public ReportSimpleDTO getSimpleReport(String reportId) {
+        log.error("reportId: " + reportId);
 
         // 제목, 내용, 작성시간, 이미지
         ReportDto reportDTO = reportService.getReport(reportId);
@@ -82,6 +85,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         Timestamp createDate = reportDTO.getCreateDate();
         String imageUrl = reportDTO.getImageUrl();
 
+        log.error("userId: {}", reportDTO.getUserId());
         // 닉네임
         String nickname = userService.getUserInfo(reportDTO.getUserId()).getNickname();
 
