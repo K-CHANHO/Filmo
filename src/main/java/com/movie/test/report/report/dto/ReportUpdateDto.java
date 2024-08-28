@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class ReportUpdateDto {
 
-    @Schema(description = "감상문 아이디", hidden = true)
+    @Schema(description = "감상문 아이디")
     String reportId;
 
     @Schema(description = "감상문 제목")

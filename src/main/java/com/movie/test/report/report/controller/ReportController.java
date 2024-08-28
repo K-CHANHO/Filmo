@@ -82,7 +82,7 @@ public class ReportController {
 
     @Operation(summary = "감상문 수정", description = "감상문을 수정합니다.")
     @ApiResponse(responseCode = "200", description = "수정된 감상문 id 리턴")
-    @PostMapping("/updateReport")
+    @PatchMapping("/updateReport")
     public ResponseEntity updateReport(@RequestBody ReportUpdateDto reportUpdateDto){
 
         String reportId = reportCompactService.updateReport(reportUpdateDto);
