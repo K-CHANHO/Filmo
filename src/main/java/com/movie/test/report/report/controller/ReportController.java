@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.movie.test.report.ReportCompactService;
 import com.movie.test.report.report.dto.*;
 import com.movie.test.report.report.service.ReportService;
+import com.movie.test.user.userinfo.dto.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,9 +39,9 @@ public class ReportController {
     @Operation(summary = "감상문 등록", description = "감상문을 등록합니다.")
     @ApiResponse(responseCode = "200", description = "등록된 감상문 id 리턴")
     @PostMapping("/save")
-    public ResponseEntity saveReport(@RequestBody ReportSaveDto reportSaveDto, String loginId) {
+    public ResponseEntity saveReport(@RequestBody ReportSaveDto reportSaveDto, @AuthenticationPrincipal CustomUser user) {
 
-        reportSaveDto.setUserId(loginId);
+        reportSaveDto.setUserId(user.getUserId());
         String reportId = reportCompactService.saveReport(reportSaveDto);
 
         JsonObject returnData = new JsonObject();
@@ -109,7 +111,7 @@ public class ReportController {
         return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
-    @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다. 다른 사용자가 작성한 감상문을 조회하려면 userId 값을 추가해주세요.")
+    @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다. 다른 사용자가 작성한 감상문을 조회하려면 targetId 값을 추가해주세요.")
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
     @PostMapping("/searchReport")
     public ResponseEntity getSearchReport(@RequestBody ReportSearchDTO reportSearchDTO, @Parameter(hidden = true) Pageable pageable){

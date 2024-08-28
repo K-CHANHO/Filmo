@@ -72,7 +72,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
     }
 
     public BooleanBuilder searchCondition(ReportSearchDTO searchDTO) {
-        return keywordTitle(searchDTO.getKeyword()).and(keywordContent(searchDTO.getKeyword())).and(otherUserId(searchDTO.getUserId()));
+        return keywordTitle(searchDTO.getKeyword()).and(keywordContent(searchDTO.getKeyword())).and(targetUserId(searchDTO.getTargetId()));
     }
 
     private BooleanBuilder keywordTitle(String keyword) {
@@ -83,8 +83,8 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
         return nullSafeBooleanBuilder(() -> report.content.contains(keyword));
     }
 
-    private BooleanBuilder otherUserId(String otherUserId){
-        return nullSafeBooleanBuilder(() -> report.userId.eq(otherUserId));
+    private BooleanBuilder targetUserId(String targetUserId){
+        return nullSafeBooleanBuilder(() -> report.userId.eq(targetUserId));
     }
 
     private BooleanBuilder nullSafeBooleanBuilder(Supplier<BooleanExpression> supplier) {

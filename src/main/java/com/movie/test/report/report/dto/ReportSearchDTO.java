@@ -20,6 +20,6 @@ public class ReportSearchDTO {
     private String keyword;
 
     @Schema(description = "해당 사용자의 감상문 검색")
-    private String userId;
+    private String targetId;
 
 }
