@@ -72,7 +72,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
     }
 
     public BooleanBuilder searchCondition(ReportSearchDTO searchDTO) {
-        return keywordTitle(searchDTO.getKeyword()).and(keywordContent(searchDTO.getKeyword())).and(targetUserId(searchDTO.getTargetId()));
+        return keywordTitle(searchDTO.getKeyword()).or(keywordContent(searchDTO.getKeyword())).or(targetUserId(searchDTO.getTargetId()));
     }
 
     private BooleanBuilder keywordTitle(String keyword) {
