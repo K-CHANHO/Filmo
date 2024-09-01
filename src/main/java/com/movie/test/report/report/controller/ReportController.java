@@ -59,14 +59,9 @@ public class ReportController {
     @GetMapping("/getReport/{reportId}")
     public ResponseEntity getReport(@PathVariable String reportId) {
 
-        // 리턴값
-        JsonObject returnData = new JsonObject();
-
         // 감상문이 없으면
         if (!reportService.validationReportId(reportId)) {
-            returnData.addProperty("msg", "감상문이 존재하지 않습니다.");
-            returnData.addProperty("status", "404");
-            return new ResponseEntity(returnData, HttpStatus.NOT_FOUND);
+            return new ResponseEntity("감상문이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
         } else {
             ReportDto singleReport = reportCompactService.getSingleReport(reportId);
 
@@ -75,10 +70,7 @@ public class ReportController {
             // 조회수 증가 TODO: 추후 REDIS로 구현해보기
             // viewService.addViewCount(reportId);
 
-            String jsonReport = gson.toJson(singleReport);
-            returnData.addProperty("value", jsonReport);
-
-            return new ResponseEntity(returnData, HttpStatus.OK);
+            return new ResponseEntity(singleReport, HttpStatus.OK);
         }
     }
 
@@ -89,11 +81,7 @@ public class ReportController {
 
         String reportId = reportCompactService.updateReport(reportUpdateDto);
 
-        // 리턴 값을 위한 객체 value, msg, status로 구성
-        JsonObject returnData = new JsonObject();
-        returnData.addProperty("value", reportId);
-
-        return new ResponseEntity(returnData, HttpStatus.OK);
+        return new ResponseEntity(reportId, HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 삭제", description = "감상문을 삭제하고 관련 데이터(댓글, 태그, 신고내역)도 삭제합니다.")
@@ -104,11 +92,7 @@ public class ReportController {
 
         reportCompactService.deleteReport(reportId);
 
-        // 리턴 값을 위한 객체 value, msg, status로 구성
-        JsonObject returnData = new JsonObject();
-        returnData.addProperty("msg", "success");
-
-        return new ResponseEntity(returnData, HttpStatus.OK);
+        return new ResponseEntity("감상문이 삭제되었습니다.", HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다. 다른 사용자가 작성한 감상문을 조회하려면 targetId 값을 추가해주세요.")
@@ -119,14 +103,13 @@ public class ReportController {
         Slice<ReportSimpleDTO> searchReport = reportCompactService.getReportList(reportSearchDTO, pageable);
         Long searchReportCount = reportService.getSearchReportCount(reportSearchDTO);
 
-        String searchReportJson = gson.toJson(searchReport.getContent());
+        ReportSearchReturnDto returnDto = ReportSearchReturnDto.builder()
+                .searchReport(searchReport.getContent())
+                .searchReportCount(searchReportCount)
+                .hasNext(searchReport.hasNext())
+                .build();
 
-        JsonObject returnData = new JsonObject();
-        returnData.addProperty("searchReportCount", searchReportCount);
-        returnData.addProperty("reportList", searchReportJson);
-        returnData.addProperty("hasNext", searchReport.hasNext());
-
-        return new ResponseEntity(returnData, HttpStatus.OK);
+        return new ResponseEntity(returnDto, HttpStatus.OK);
     }
 
 
