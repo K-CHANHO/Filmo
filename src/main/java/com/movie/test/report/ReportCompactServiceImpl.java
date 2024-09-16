@@ -4,7 +4,7 @@ import com.movie.test.report.bookmark.service.BookmarkService;
 import com.movie.test.report.complaint.service.ComplaintService;
 import com.movie.test.report.hashtag.service.TagService;
 import com.movie.test.report.like.service.LikeService;
-import com.movie.test.report.reply.dto.ReplyDTO;
+import com.movie.test.report.reply.dto.ReplyDto;
 import com.movie.test.report.reply.service.ReplyService;
 import com.movie.test.report.report.dto.*;
 import com.movie.test.report.report.service.ReportService;
@@ -133,7 +133,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         reportDTO.setComplaintCount(complaintService.getComplaintCount(reportId));
 
         // 3. 댓글 조회
-        List<ReplyDTO> replies = replyService.getReplies(reportId);
+        List<ReplyDto> replies = replyService.getReplies(reportId);
         reportDTO.setReplyCount((long) replies.size());
 
         // 4. 태그 조회

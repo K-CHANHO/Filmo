@@ -1,6 +1,8 @@
 package com.movie.test.report.reply.service;
 
-import com.movie.test.report.reply.dto.ReplyDTO;
+import com.movie.test.common.cef.CustomUUID;
+import com.movie.test.report.reply.dto.ReplyDto;
+import com.movie.test.report.reply.dto.ReplySaveDto;
 import com.movie.test.report.reply.entity.ReplyEntity;
 import com.movie.test.report.reply.repository.ReplyRepository;
 import com.movie.test.user.userinfo.repository.UserRepository;
@@ -20,21 +22,16 @@ public class ReplyServiceImpl implements ReplyService {
     private final UserRepository userRepository;
 
     @Override
-    public ReplyDTO registReply(ReplyDTO replyDTO) {
+    public ReplySaveDto saveReply(ReplySaveDto replySaveDto) {
 
-        StringBuilder stringBuilder = new StringBuilder(String.valueOf(System.currentTimeMillis()));
-        stringBuilder.append(UUID.randomUUID().toString());
+        replySaveDto.setReplyId(CustomUUID.createUUID());
+        ReplyEntity replyEntity = ReplySaveDto.toEntity(replySaveDto);
 
-        replyDTO.setReplyId(stringBuilder.toString());
-        ReplyEntity reply = ReplyDTO.toEntity(replyDTO);
-
-        ReplyDTO savedReply = ReplyDTO.toDTO(replyRepository.save(reply));
-
-        return savedReply;
+        return replySaveDto;
     }
 
     @Override
-    public ReplyDTO modifyReply(ReplyDTO replyDTO) {
+    public ReplyDto modifyReply(ReplyDto replyDTO) {
         ReplyEntity originReply = replyRepository.findById(replyDTO.getReplyId()).get();
 
         ReplyEntity modifiedReply = ReplyEntity.builder()
@@ -45,39 +42,39 @@ public class ReplyServiceImpl implements ReplyService {
                 .content(replyDTO.getContent())
                 .build();
 
-        ReplyDTO savedReply = ReplyDTO.toDTO(replyRepository.save(modifiedReply));
+        ReplyDto savedReply = ReplyDto.toDTO(replyRepository.save(modifiedReply));
 
         return savedReply;
     }
 
     @Override
-    public List<ReplyDTO> getReplies(String reportId) {
-        List<ReplyDTO> replyDTOS = new ArrayList<>();
+    public List<ReplyDto> getReplies(String reportId) {
+        List<ReplyDto> replyDtos = new ArrayList<>();
 
         List<ReplyEntity> replies = replyRepository.findByReportIdAndUpReplyIdIsNullOrderByCreateDate(reportId);
         replies.forEach((reply)->{
-            ReplyDTO dto = ReplyDTO.toDTO(reply);
+            ReplyDto dto = ReplyDto.toDTO(reply);
             dto.setSubReply(getSubReplies(dto.getReplyId()));
             dto.setNickname(userRepository.findById(dto.getUserId()).get().getNickname());
 
-            replyDTOS.add(dto);
+            replyDtos.add(dto);
         });
 
-        return replyDTOS;
+        return replyDtos;
     }
 
     @Override
-    public List<ReplyDTO> getSubReplies(String replyId) {
-        List<ReplyDTO> replyDTOS = new ArrayList<>();
+    public List<ReplyDto> getSubReplies(String replyId) {
+        List<ReplyDto> replyDtos = new ArrayList<>();
 
         List<ReplyEntity> replies = replyRepository.findByUpReplyIdOrderByCreateDate(replyId);
         replies.forEach((reply)->{
-            ReplyDTO dto = ReplyDTO.toDTO(reply);
-            replyDTOS.add(dto);
+            ReplyDto dto = ReplyDto.toDTO(reply);
+            replyDtos.add(dto);
             dto.setNickname(userRepository.findById(dto.getUserId()).get().getNickname());
         });
 
-        return replyDTOS;
+        return replyDtos;
     }
 
     @Override

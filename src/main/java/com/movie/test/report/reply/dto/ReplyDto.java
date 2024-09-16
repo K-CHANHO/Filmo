@@ -17,7 +17,7 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReplyDTO extends BaseTimeDTO {
+public class ReplyDto extends BaseTimeDTO {
 
     private String replyId; // 댓글 고유 id
     private String upReplyId; // 대댓글인 경우 원댓글 id
@@ -26,10 +26,10 @@ public class ReplyDTO extends BaseTimeDTO {
     private String content; // 댓글내용
 
     private String nickname; // 댓글 작성자 닉네임
-    private List<ReplyDTO> subReply;
+    private List<ReplyDto> subReply;
 
-    public static ReplyDTO toDTO(ReplyEntity entity) {
-        ReplyDTO dto = ReplyDTO.builder()
+    public static ReplyDto toDTO(ReplyEntity entity) {
+        ReplyDto dto = ReplyDto.builder()
                 .replyId(entity.getReplyId())
                 .upReplyId(entity.getUpReplyId())
                 .reportId(entity.getReportId())
@@ -42,7 +42,7 @@ public class ReplyDTO extends BaseTimeDTO {
         return dto;
     }
 
-    public static ReplyEntity toEntity(ReplyDTO dto){
+    public static ReplyEntity toEntity(ReplyDto dto){
         ReplyEntity entity = ReplyEntity.builder()
                 .replyId(dto.getReplyId())
                 .upReplyId(dto.getUpReplyId())
