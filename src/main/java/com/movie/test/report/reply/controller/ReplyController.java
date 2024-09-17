@@ -26,7 +26,7 @@ public class ReplyController {
 
     @Operation(summary = "댓글 가져오기", description = "해당 감상문의 댓글을 조회합니다")
     @Parameter(name = "reportId", description = "감상문 id", required = true)
-    @GetMapping("/getReplies/{reportId}")
+    @GetMapping("/get/{reportId}")
     public List<ReplyDto> getReplies(@PathVariable String reportId) {
         List<ReplyDto> replies = replyService.getReplies(reportId);
 
@@ -63,8 +63,9 @@ public class ReplyController {
 
     @Operation(summary = "댓글 삭제", description = "댓글을 삭제합니다.")
     @Parameter(name = "replyId", description = "삭제할 댓글 id", required = true)
-    @GetMapping("/deleteReply/{replyId}")
-    public void deleteReply(@PathVariable String replyId) {
+    @DeleteMapping("/deleteReply/{replyId}")
+    public ResponseEntity deleteReply(@PathVariable String replyId) {
         replyService.deleteReply(replyId);
+        return new ResponseEntity("댓글 삭제 성공", HttpStatus.OK);
     }
 }
