@@ -7,7 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "mv_reply", indexes = {@Index(name = "index_upReplyId",columnList = "upReplyId")})
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString

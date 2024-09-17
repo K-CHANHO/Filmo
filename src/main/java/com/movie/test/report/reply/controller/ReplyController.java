@@ -2,11 +2,11 @@ package com.movie.test.report.reply.controller;
 
 import com.movie.test.report.reply.dto.ReplyDto;
 import com.movie.test.report.reply.dto.ReplySaveDto;
+import com.movie.test.report.reply.dto.ReplyUpdateDto;
 import com.movie.test.report.reply.service.ReplyService;
 import com.movie.test.user.userinfo.dto.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,10 +53,12 @@ public class ReplyController {
     }
 
     @Operation(summary = "댓글 수정", description = "댓글을 수정합니다.")
-
     @PatchMapping("/update")
-    public void modifyReply(@RequestBody ReplyDto replyDTO) {
-        replyService.modifyReply(replyDTO);
+    public ResponseEntity modifyReply(@RequestBody ReplyUpdateDto replyUpdateDto) {
+
+        ReplyDto replyDto = replyService.updateReply(replyUpdateDto);
+
+        return new ResponseEntity(replyDto, HttpStatus.OK);
     }
 
     @Operation(summary = "댓글 삭제", description = "댓글을 삭제합니다.")

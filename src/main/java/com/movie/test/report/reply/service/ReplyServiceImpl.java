@@ -3,6 +3,7 @@ package com.movie.test.report.reply.service;
 import com.movie.test.common.cef.CustomUUID;
 import com.movie.test.report.reply.dto.ReplyDto;
 import com.movie.test.report.reply.dto.ReplySaveDto;
+import com.movie.test.report.reply.dto.ReplyUpdateDto;
 import com.movie.test.report.reply.entity.ReplyEntity;
 import com.movie.test.report.reply.repository.ReplyRepository;
 import com.movie.test.user.userinfo.repository.UserRepository;
@@ -26,25 +27,23 @@ public class ReplyServiceImpl implements ReplyService {
 
         replySaveDto.setReplyId(CustomUUID.createUUID());
         ReplyEntity replyEntity = ReplySaveDto.toEntity(replySaveDto);
+        replyRepository.save(replyEntity);
 
         return replySaveDto;
     }
 
     @Override
-    public ReplyDto modifyReply(ReplyDto replyDTO) {
-        ReplyEntity originReply = replyRepository.findById(replyDTO.getReplyId()).get();
+    public ReplyDto updateReply(ReplyUpdateDto replyUpdateDto) {
+        ReplyEntity originReply = replyRepository.findById(replyUpdateDto.getReplyId())
+                .orElseThrow();
 
-        ReplyEntity modifiedReply = ReplyEntity.builder()
-                .replyId(originReply.getReplyId())
-                .upReplyId(originReply.getUpReplyId())
-                .userId(originReply.getUserId())
-                .reportId(originReply.getReportId())
-                .content(replyDTO.getContent())
+        ReplyEntity modifiedReply = originReply.toBuilder()
+                .content(replyUpdateDto.getContent())
                 .build();
 
-        ReplyDto savedReply = ReplyDto.toDTO(replyRepository.save(modifiedReply));
+        ReplyEntity updatedReply = replyRepository.save(modifiedReply);
 
-        return savedReply;
+        return ReplyDto.toDTO(updatedReply);
     }
 
     @Override
