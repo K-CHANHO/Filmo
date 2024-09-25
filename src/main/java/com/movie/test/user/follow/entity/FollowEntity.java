@@ -20,13 +20,12 @@ import org.hibernate.annotations.UuidGenerator;
 public class FollowEntity extends BaseTimeEntity {
 
     @Id
-//    @UuidGenerator
     private String followId;
 
     @Column
     private String userId; // 팔로우 당사자
 
     @Column
-    private String followTarget; // 팔로우 대상
+    private String targetId; // 팔로우 대상
 
 }

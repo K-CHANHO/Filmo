@@ -21,13 +21,13 @@ public class FollowDTO extends BaseTimeDTO {
 
     private String userId; // 팔로우 당사자
 
-    private String followTarget; // 팔로우 대상
+    private String targetId; // 팔로우 대상
 
     public static FollowDTO toDTO(FollowEntity entity) {
         FollowDTO dto = FollowDTO.builder()
                 .followId(entity.getFollowId())
                 .userId(entity.getUserId())
-                .followTarget(entity.getFollowTarget())
+                .targetId(entity.getTargetId())
                 .createDate(entity.getCreateDate())
                 .lastModifiedDate(entity.getLastModifiedDate())
                 .build();
@@ -39,7 +39,7 @@ public class FollowDTO extends BaseTimeDTO {
         FollowEntity entity = FollowEntity.builder()
                 .followId(dto.getFollowId())
                 .userId(dto.getUserId())
-                .followTarget(dto.getFollowTarget())
+                .targetId(dto.getTargetId())
                 .build();
 
         return entity;

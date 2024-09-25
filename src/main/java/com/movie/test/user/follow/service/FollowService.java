@@ -2,12 +2,13 @@ package com.movie.test.user.follow.service;
 
 import com.movie.test.user.follow.dto.FollowDTO;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
+import com.movie.test.user.follow.dto.FollowSaveDto;
 import com.movie.test.user.userinfo.dto.UserDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 public interface FollowService {
-    FollowDTO registFollowing(FollowDTO followDTO);
+    FollowSaveDto saveFollow(FollowSaveDto followSaveDto);
 
     void cancleFollow(String followId);
 

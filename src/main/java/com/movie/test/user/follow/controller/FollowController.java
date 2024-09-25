@@ -2,7 +2,9 @@ package com.movie.test.user.follow.controller;
 
 import com.movie.test.user.follow.dto.FollowDTO;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
+import com.movie.test.user.follow.dto.FollowSaveDto;
 import com.movie.test.user.follow.service.FollowService;
+import com.movie.test.user.userinfo.dto.CustomUser;
 import com.movie.test.user.userinfo.dto.UserDto;
 import com.movie.test.user.userinfo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,26 +33,21 @@ import java.util.Map;
 @Tag(name = "팔로우", description = "팔로우 관련 API")
 @RequiredArgsConstructor
 @Slf4j
+@PreAuthorize("hasRole('ROLE_USER')")
 public class FollowController {
 
     private final FollowService followService;
     private final UserService userService;
 
     @Operation(summary = "팔로잉 등록", description = "팔로잉을 등록합니다.")
-    @Parameters({
-            @Parameter(name = "followTarget", description = "대상 id", required = true),
-    })
     @ApiResponse(responseCode = "200", description = "등록된 팔로잉 정보 리턴")
-    @PostMapping("/regist")
-    public ResponseEntity registFollow(FollowDTO followDTO) {
+    @PostMapping("/save")
+    public ResponseEntity saveFollow(FollowSaveDto followSaveDto, @AuthenticationPrincipal CustomUser user) {
 
-        FollowDTO followingResult = followService.registFollowing(followDTO);
+        followSaveDto.setUserId(user.getUserId());
+        FollowSaveDto returnData = followService.saveFollow(followSaveDto);
 
-        // 팔로우 한 유저의 닉네임 추가
-        String followTargetNickname = userService.getUserInfo(followingResult.getFollowTarget()).getNickname();
-        followingResult.setFollowTargetNickname(followTargetNickname);
-
-        return new ResponseEntity(followingResult, HttpStatus.OK);
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     @Operation(summary = "팔로잉 취소", description = "팔로잉을 취소합니다.")

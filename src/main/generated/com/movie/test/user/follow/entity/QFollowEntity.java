@@ -26,10 +26,10 @@ public class QFollowEntity extends EntityPathBase<FollowEntity> {
 
     public final StringPath followId = createString("followId");
 
-    public final StringPath followTarget = createString("followTarget");
-
     //inherited
     public final DateTimePath<java.sql.Timestamp> lastModifiedDate = _super.lastModifiedDate;
+
+    public final StringPath targetId = createString("targetId");
 
     public final StringPath userId = createString("userId");
 

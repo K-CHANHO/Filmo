@@ -28,11 +28,11 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
     public Slice<UserEntity> getFollowingUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable) {
 
         // 팔로잉 id 리스트 추출
-        List<String> followingUserId = jpaQueryFactory.select(follow.followTarget)
-                .from(follow, user).leftJoin(user).on(follow.followTarget.eq(user.userId))
+        List<String> followingUserId = jpaQueryFactory.select(follow.targetId)
+                .from(follow, user).leftJoin(user).on(follow.targetId.eq(user.userId))
                 .where(
                         follow.userId.eq(followListSearchDTO.getUserId()),
-                        follow.followTarget.gt(followListSearchDTO.getLastUserId()),
+                        follow.targetId.gt(followListSearchDTO.getLastUserId()),
                         nicknameCheck(followListSearchDTO.getKeyword())
                 )
                 .orderBy(follow.createDate.desc())
@@ -59,10 +59,10 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
     public Slice<UserEntity> getFollowerUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable) {
 
         // 팔로워 id 리스트 추출
-        List<String> followerUserId = jpaQueryFactory.select(follow.followTarget)
+        List<String> followerUserId = jpaQueryFactory.select(follow.targetId)
                 .from(follow).leftJoin(user).on(follow.userId.eq(user.userId))
                 .where(
-                        follow.followTarget.eq(followListSearchDTO.getUserId()),
+                        follow.targetId.eq(followListSearchDTO.getUserId()),
                         follow.userId.gt(followListSearchDTO.getLastUserId()),
                         nicknameCheck(followListSearchDTO.getKeyword())
                 )

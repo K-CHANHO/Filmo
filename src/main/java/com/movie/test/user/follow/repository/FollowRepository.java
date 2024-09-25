@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FollowRepository extends JpaRepository<FollowEntity, String>, FollowRepositoryCustom {
-    FollowEntity findByUserIdAndFollowTarget(String userId, String followTarget);
+    FollowEntity findByUserIdAndTargetId(String userId, String targetId);
 
     Long countByUserId(String userId);
 
-    Long countByFollowTarget(String FollowTarget);
+    Long countByTargetId(String TargetId);
 
-    Boolean existsByUserIdAndFollowTarget(String userId, String followTarget);
+    Boolean existsByUserIdAndTargetId(String userId, String targetId);
 }
