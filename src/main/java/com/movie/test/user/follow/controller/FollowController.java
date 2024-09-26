@@ -1,6 +1,6 @@
 package com.movie.test.user.follow.controller;
 
-import com.movie.test.user.follow.dto.FollowDTO;
+import com.movie.test.user.follow.dto.FollowDeleteDto;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
 import com.movie.test.user.follow.dto.FollowSaveDto;
 import com.movie.test.user.follow.service.FollowService;
@@ -20,10 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,12 +48,11 @@ public class FollowController {
     }
 
     @Operation(summary = "팔로잉 취소", description = "팔로잉을 취소합니다.")
-    @Parameter(name = "followId", description = "팔로우 id", required = true)
     @ApiResponse(responseCode = "200")
-    @PostMapping("/cancle")
-    public ResponseEntity cancleFollow(String followId){
+    @DeleteMapping("/cancle")
+    public ResponseEntity cancleFollow(FollowDeleteDto followDeleteDto, @AuthenticationPrincipal CustomUser user){
 
-        followService.cancleFollow(followId);
+        followService.cancleFollow(followDeleteDto.getFollowId(), user.getUserId());
 
         return new ResponseEntity(HttpStatus.OK);
     }

@@ -28,7 +28,9 @@ public class FollowServiceImpl implements FollowService{
     @Override
     public FollowSaveDto saveFollow(FollowSaveDto followSaveDto) {
 
+        // 팔로우 대상이 존재하지 않는 유저일 경우
         userRepository.findById(followSaveDto.getTargetId()).orElseThrow(()->new UsernameNotFoundException("팔로우하려는 유저는 존재하지 않는 유저입니다."));
+
         // 이미 팔로우한 경우
         FollowEntity checkValid = followRepository.findByUserIdAndTargetId(followSaveDto.getUserId(), followSaveDto.getTargetId());
         if(checkValid != null){
@@ -44,7 +46,11 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public void cancleFollow(String followId) {
+    public void cancleFollow(String followId, String userId) {
+
+        followRepository.findById(followId)
+                .filter(followEntity -> followEntity.getUserId().equals(userId))
+                .orElseThrow(()-> new RuntimeException("잘못된 접근입니다."));
         followRepository.deleteById(followId);
     }
 
