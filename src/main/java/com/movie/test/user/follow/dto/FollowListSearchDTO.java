@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 // follow랑 block이랑 로직 비슷해서 두 곳에서 사용.
 public class FollowListSearchDTO {
     private String userId;
-    private String otherUserId;
 
     @Builder.Default
     private String lastUserId="";

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -33,8 +34,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             // token에서 userId 추출하여 request에 parameter로 추가.
             ModifiableHttpServletRequest tempRequest = new ModifiableHttpServletRequest(request);
-            tempRequest.setParameter("userId", jwtTokenProvider.getUserId(token));
-            request = (HttpServletRequest) tempRequest;
+            if(tempRequest.getParameter("userId") == null || tempRequest.getParameter("userId").isEmpty()) {
+                tempRequest.setParameter("userId", jwtTokenProvider.getUserId(token));
+                request = (HttpServletRequest) tempRequest;
+            }
         }
 
         filterChain.doFilter(request, response);
