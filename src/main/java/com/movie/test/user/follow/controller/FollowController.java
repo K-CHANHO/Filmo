@@ -59,12 +59,16 @@ public class FollowController {
 
     @Operation(summary = "팔로잉 목록", description = "팔로잉 목록을 조회합니다.")
     @Parameters({
+        @Parameter(name = "userId", description = "조회할 유저의 id, Null인 경우 로그인한 사용자의 팔로워 조회"),
         @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id, 처음엔 NULL"),
         @Parameter(name = "keyword", description = "검색어"),
     })
     @ApiResponse(responseCode = "200", description = "팔로잉 목록 리턴")
     @GetMapping("/followingList")
     public ResponseEntity getFollowingList(FollowListSearchDTO followListSearchDTO, @Parameter(hidden = true) Pageable pageable){
+
+        // 유저정보가 없으면 Exception
+        userService.getUserInfo(followListSearchDTO.getUserId());
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
         Slice<UserDto> followingUserInfo = followService.getFollowingUserInfo(followListSearchDTO, pageable);
@@ -78,14 +82,15 @@ public class FollowController {
 
     @Operation(summary = "팔로워 목록", description = "팔로워(나를 팔로잉 하는 사람) 목록을 조회합니다.")
     @Parameters({
-            @Parameter(name = "userId", description = "조회할 유저의 id, Null인 경우 로그인한 사용자의 팔로워 조회", required = false),
-            @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id", required = false),
+            @Parameter(name = "userId", description = "조회할 유저의 id, Null인 경우 로그인한 사용자의 팔로워 조회"),
+            @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id"),
             @Parameter(name = "keyword", description = "검색어")
     })
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
     @GetMapping("/followerList")
     public ResponseEntity getFollowerList(FollowListSearchDTO followListSearchDTO,  @Parameter(hidden = true) Pageable pageable){
 
+        userService.getUserInfo(followListSearchDTO.getUserId());
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
         Slice<UserDto> followerUserInfo = followService.getFollowerUserInfo(followListSearchDTO, pageable);
 
@@ -104,26 +109,26 @@ public class FollowController {
     @GetMapping("/isFollow")
     public ResponseEntity isFollowing(@AuthenticationPrincipal CustomUser user, String targetId){
 
+        userService.getUserInfo(targetId);
         boolean isFollowing = followService.isFollowing(user.getUserId(), targetId);
 
         return new ResponseEntity(isFollowing, HttpStatus.OK);
     }
 
     @Operation(summary = "팔로잉/팔로워 수 확인", description = "유저의 팔로잉/팔로워 수를 확인")
-    @Parameter(name = "otherUserId", description = "확인할 유저의 id", required = true)
+    @Parameter(name = "userId", description = "확인할 유저의 id, Null인 경우 로그인한 사용자의 ID로 조회")
     @GetMapping("/countFollow")
-    public ResponseEntity countFollow(@Parameter(hidden = true)String userId, String otherUserId) {
+    public ResponseEntity countFollow(FollowListSearchDTO followListSearchDTO) {
 
-        if(otherUserId == null) otherUserId = userId;
+        String userId = followListSearchDTO.getUserId();
 
-        Long countFollowing = followService.countFollowing(otherUserId);
-        Long countFollower = followService.countFollower(otherUserId);
-//        Long countBlock = followService.countBlock(otherUserId);
+        userService.getUserInfo(userId);
+        Long countFollowing = followService.countFollowing(userId);
+        Long countFollower = followService.countFollower(userId);
 
         Map<String, Object> resultData = new HashMap<>();
         resultData.put("countFollowing", countFollowing);
         resultData.put("countFollower", countFollower);
-//        resultData.put("countBlock", countBlock);
 
         return new ResponseEntity(resultData, HttpStatus.OK);
     }
