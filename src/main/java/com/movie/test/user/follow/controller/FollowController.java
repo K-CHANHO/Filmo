@@ -98,13 +98,13 @@ public class FollowController {
 
     @Operation(summary = "팔로잉 확인", description = "상대를 팔로잉하고 있는 지 확인")
     @Parameters({
-            @Parameter(name = "followTarget", description = "상대 id", required = true)
+            @Parameter(name = "targetId", description = "상대 id", required = true)
     })
     @ApiResponse(responseCode = "200", description = "팔로잉하고 있는 경우 true, 아닌 경우 false 리턴")
     @GetMapping("/isFollow")
-    public ResponseEntity isFollowing(@Parameter(hidden = true)String userId, String followTarget){
+    public ResponseEntity isFollowing(@AuthenticationPrincipal CustomUser user, String targetId){
 
-        boolean isFollowing = followService.isFollowing(userId, followTarget);
+        boolean isFollowing = followService.isFollowing(user.getUserId(), targetId);
 
         return new ResponseEntity(isFollowing, HttpStatus.OK);
     }
