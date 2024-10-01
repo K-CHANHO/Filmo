@@ -27,21 +27,14 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
     @Override
     public Slice<UserEntity> getFollowingUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable) {
 
-        // 팔로잉 id 리스트 추출
-        List<String> followingUserId = jpaQueryFactory.select(follow.targetId)
-                .from(follow, user).leftJoin(user).on(follow.targetId.eq(user.userId))
+        List<UserEntity> followingUserInfo = jpaQueryFactory.select(user)
+                .from(follow).leftJoin(user).on(follow.targetId.eq(user.userId))
                 .where(
                         follow.userId.eq(followListSearchDTO.getUserId()),
                         follow.targetId.gt(followListSearchDTO.getLastUserId()),
                         nicknameCheck(followListSearchDTO.getKeyword())
                 )
                 .orderBy(follow.createDate.desc())
-                .fetch();
-
-        // id 리스트를 통해 유저정보 추출
-        List<UserEntity> followingUserInfo = jpaQueryFactory.selectFrom(user)
-                .where(user.userId.in(followingUserId))
-                .limit(pageable.getPageSize() + 1)
                 .fetch();
 
         boolean hasNext = false;
@@ -59,21 +52,22 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
     public Slice<UserEntity> getFollowerUserInfo(FollowListSearchDTO followListSearchDTO, Pageable pageable) {
 
         // 팔로워 id 리스트 추출
-        List<String> followerUserId = jpaQueryFactory.select(follow.targetId)
+        // TODO : JOIN이니 여기서 바로 user 정보 리턴해주기 !
+        List<UserEntity> followerUserInfo = jpaQueryFactory.select(user)
                 .from(follow).leftJoin(user).on(follow.userId.eq(user.userId))
                 .where(
-                        follow.targetId.eq(followListSearchDTO.getUserId()),
-                        follow.userId.gt(followListSearchDTO.getLastUserId()),
+                        follow.userId.eq(followListSearchDTO.getUserId()),
+                        follow.targetId.gt(followListSearchDTO.getLastUserId()),
                         nicknameCheck(followListSearchDTO.getKeyword())
                 )
                 .orderBy(follow.createDate.desc())
                 .fetch();
 
-        // id 리스트를 통해 유저정보 추출
-        List<UserEntity> followerUserInfo = jpaQueryFactory.selectFrom(user)
-                .where(user.userId.in(followerUserId))
-                .limit(pageable.getPageSize() + 1)
-                .fetch();
+//        // id 리스트를 통해 유저정보 추출
+//        List<UserEntity> followerUserInfo = jpaQueryFactory.selectFrom(user)
+//                .where(user.userId.in(followerUserId))
+//                .limit(pageable.getPageSize() + 1)
+//                .fetch();
 
         boolean hasNext = false;
         if(followerUserInfo.size() > pageable.getPageSize()){

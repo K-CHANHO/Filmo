@@ -59,7 +59,7 @@ public class FollowController {
 
     @Operation(summary = "팔로잉 목록", description = "팔로잉 목록을 조회합니다.")
     @Parameters({
-        @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id"),
+        @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id, 처음엔 NULL"),
         @Parameter(name = "keyword", description = "검색어"),
     })
     @ApiResponse(responseCode = "200", description = "팔로잉 목록 리턴")
@@ -70,7 +70,6 @@ public class FollowController {
         Slice<UserDto> followingUserInfo = followService.getFollowingUserInfo(followListSearchDTO, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
-//        resultData.put("followingUserInfoList", followingUserInfo); -> pageable 중복으로 JSON 변환 에러.. 해결법 찾는 중
         resultData.put("followingUserInfoList", followingUserInfo.getContent());
         resultData.put("hasNext", followingUserInfo.hasNext());
 
