@@ -10,7 +10,7 @@ import org.springframework.data.domain.Slice;
 public interface BlockService {
     BlockDto saveBlock(BlockSaveDto blockSaveDto);
 
-    void cancleBlock(String blockId);
+    void deleteBlock(String blockId);
 
     Slice<UserDto> getBlockList(FollowListSearchDTO blockListSearchDTO, Pageable pageable);
 

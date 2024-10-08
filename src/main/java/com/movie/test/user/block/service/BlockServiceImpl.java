@@ -38,7 +38,7 @@ public class BlockServiceImpl implements BlockService{
     }
 
     @Override
-    public void cancleBlock(String blockId) {
+    public void deleteBlock(String blockId) {
         blockRepository.deleteById(blockId);
     }
 

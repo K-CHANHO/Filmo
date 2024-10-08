@@ -1,5 +1,6 @@
 package com.movie.test.user.block.controller;
 
+import com.movie.test.user.block.dto.BlockDeleteDto;
 import com.movie.test.user.block.dto.BlockDto;
 import com.movie.test.user.block.dto.BlockSaveDto;
 import com.movie.test.user.block.service.BlockService;
@@ -46,12 +47,11 @@ public class BlockController {
     }
 
     @Operation(summary = "차단 취소", description = "차단을 취소합니다.")
-    @Parameter(name = "blockId", description = "차단 id", required = true)
     @ApiResponse(responseCode = "200")
-    @PostMapping("/cancle")
-    public ResponseEntity cancleBlock(String blockId){
-
-        blockService.cancleBlock(blockId);
+    @DeleteMapping("/delete")
+    public ResponseEntity deleteBlock(BlockDeleteDto blockDeleteDto){
+        // TODO : 권한체크 -> 쿼리에 userId 추가? 아니면 소스 단에서 제어?
+        blockService.deleteBlock(blockDeleteDto.getBlockId());
 
         return new ResponseEntity(HttpStatus.OK);
     }
