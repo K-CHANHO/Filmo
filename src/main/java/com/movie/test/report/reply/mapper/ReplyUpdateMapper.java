@@ -1,6 +1,5 @@
 package com.movie.test.report.reply.mapper;
 
-import com.movie.test.report.reply.dto.ReplySaveDto;
 import com.movie.test.report.reply.dto.ReplyUpdateDto;
 import com.movie.test.report.reply.entity.ReplyEntity;
 import org.mapstruct.Mapper;
