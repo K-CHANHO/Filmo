@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface FollowSaveMapper {
 
-    FollowSaveMapper INSTNACE = Mappers.getMapper(FollowSaveMapper.class);
+    FollowSaveMapper INSTANCE = Mappers.getMapper(FollowSaveMapper.class);
 
     FollowEntity toFollowEntity(FollowSaveDto followSaveDto);
     FollowSaveDto toFollowSaveDto(FollowEntity followEntity);

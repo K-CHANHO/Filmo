@@ -26,11 +26,11 @@ public class FollowSaveDto {
     private String userId;
 
     public static FollowEntity toEntity(FollowSaveDto dto){
-        return FollowSaveMapper.INSTNACE.toFollowEntity(dto);
+        return FollowSaveMapper.INSTANCE.toFollowEntity(dto);
     }
 
     public static FollowSaveDto toDto(FollowEntity entity){
-        return FollowSaveMapper.INSTNACE.toFollowSaveDto(entity);
+        return FollowSaveMapper.INSTANCE.toFollowSaveDto(entity);
     }
 
 }
