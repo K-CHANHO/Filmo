@@ -1,13 +1,14 @@
 package com.movie.test.user.block.service;
 
-import com.movie.test.user.block.dto.BlockDTO;
+import com.movie.test.user.block.dto.BlockDto;
+import com.movie.test.user.block.dto.BlockSaveDto;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
 import com.movie.test.user.userinfo.dto.UserDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 public interface BlockService {
-    BlockDTO registBlock(BlockDTO blockDTO);
+    BlockDto saveBlock(BlockSaveDto blockSaveDto);
 
     void cancleBlock(String blockId);
 

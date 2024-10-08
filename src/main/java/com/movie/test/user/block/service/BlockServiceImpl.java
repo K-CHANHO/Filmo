@@ -1,6 +1,8 @@
 package com.movie.test.user.block.service;
 
-import com.movie.test.user.block.dto.BlockDTO;
+import com.movie.test.common.cef.CustomUUID;
+import com.movie.test.user.block.dto.BlockDto;
+import com.movie.test.user.block.dto.BlockSaveDto;
 import com.movie.test.user.block.entity.BlockEntity;
 import com.movie.test.user.block.repository.BlockRepository;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
@@ -12,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -22,19 +22,19 @@ public class BlockServiceImpl implements BlockService{
     private final BlockRepository blockRepository;
 
     @Override
-    public BlockDTO registBlock(BlockDTO blockDTO) {
+    public BlockDto saveBlock(BlockSaveDto blockSaveDto) {
 
-        BlockEntity blockEntity = blockRepository.findByUserIdAndTargetId(blockDTO.getUserId(), blockDTO.getTargetId());
+        BlockEntity blockEntity = blockRepository.findByUserIdAndTargetId(blockSaveDto.getUserId(), blockSaveDto.getTargetId());
 
         // 이미 차단한 경우 해당 데이터 리턴
         if(blockEntity != null){
-            return BlockDTO.toDTO(blockEntity);
+            return BlockDto.toDTO(blockEntity);
         }
 
-        blockDTO.setBlockId(UUID.randomUUID().toString());
-        blockEntity = blockRepository.save(BlockDTO.toEntity(blockDTO));
+        blockSaveDto.setBlockId(CustomUUID.createUUID());
+        blockEntity = blockRepository.save(BlockSaveDto.toEntity(blockSaveDto));
 
-        return BlockDTO.toDTO(blockEntity);
+        return BlockDto.toDTO(blockEntity);
     }
 
     @Override

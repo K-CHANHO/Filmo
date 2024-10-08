@@ -1,8 +1,10 @@
 package com.movie.test.user.block.controller;
 
-import com.movie.test.user.block.dto.BlockDTO;
+import com.movie.test.user.block.dto.BlockDto;
+import com.movie.test.user.block.dto.BlockSaveDto;
 import com.movie.test.user.block.service.BlockService;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
+import com.movie.test.user.userinfo.dto.CustomUser;
 import com.movie.test.user.userinfo.dto.UserDto;
 import com.movie.test.user.userinfo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,10 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,20 +35,14 @@ public class BlockController {
     private final UserService userService;
 
     @Operation(summary = "차단 등록", description = "차단을 등록합니다.")
-    @Parameters({
-            @Parameter(name = "targetId", description = "대상 id", required = true),
-    })
     @ApiResponse(responseCode = "200", description = "차단 정보 리턴")
-    @PostMapping("/regist")
-    public ResponseEntity registBlock(BlockDTO blockDTO) {
+    @PostMapping("/save")
+    public ResponseEntity saveBlock(@RequestBody BlockSaveDto blockSaveDto, @AuthenticationPrincipal CustomUser user) {
 
-        BlockDTO blockResult = blockService.registBlock(blockDTO);
+        blockSaveDto.setUserId(user.getUserId());
+        BlockDto blockDto = blockService.saveBlock(blockSaveDto);
 
-        // 팔로우 한 유저의 닉네임 추가
-        String targetNickname = userService.getUserInfo(blockResult.getTargetId()).getNickname();
-        blockResult.setBlockTargetNickname(targetNickname);
-
-        return new ResponseEntity(blockResult, HttpStatus.OK);
+        return new ResponseEntity(blockDto, HttpStatus.OK);
     }
 
     @Operation(summary = "차단 취소", description = "차단을 취소합니다.")
