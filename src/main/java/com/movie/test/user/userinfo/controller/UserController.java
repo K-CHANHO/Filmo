@@ -49,12 +49,7 @@ public class UserController {
 
         UserDto signupUser = userService.saveUser(userSignupDto);
 
-        // json 변환 후 리턴
-        JsonObject returnData = new JsonObject();
-        returnData.addProperty("value", gson.toJson(signupUser));
-        returnData.addProperty("status", "200");
-
-        return new ResponseEntity(returnData, HttpStatus.OK);
+        return new ResponseEntity(signupUser, HttpStatus.OK);
 
     }
 
@@ -77,11 +72,7 @@ public class UserController {
             JwtTokenDTO token = userService.loginUser(getUserinfo);
             tokenService.saveRefreshToken(token);
 
-            JsonObject returnData = new JsonObject();
-            returnData.addProperty("value", gson.toJson(token));
-            returnData.addProperty("status", "200");
-
-            return new ResponseEntity<>(returnData, HttpStatus.OK);
+            return new ResponseEntity<>(token, HttpStatus.OK);
 
         } else { // 존재하지 않는 유저일 경우 401 에러 리턴
             JsonObject returnData = new JsonObject();
@@ -112,11 +103,7 @@ public class UserController {
 
         UserDto userinfo = userService.getUserInfo(userId);
 
-        JsonObject returnData = new JsonObject();
-        returnData.addProperty("value", gson.toJson(userinfo));
-        returnData.addProperty("status", "200");
-
-        return new ResponseEntity(returnData, HttpStatus.OK);
+        return new ResponseEntity(userinfo, HttpStatus.OK);
     }
 
     /**
@@ -138,13 +125,8 @@ public class UserController {
         }
 
         List<String> roles = userService.getUserRoles(userId);
-        String jsonRoles = gson.toJson(roles);
 
-        JsonObject returnData = new JsonObject();
-        returnData.addProperty("value", jsonRoles);
-        returnData.addProperty("status", "200");
-
-        return new ResponseEntity(returnData, HttpStatus.OK);
+        return new ResponseEntity(roles, HttpStatus.OK);
     }
 
     /**
@@ -159,11 +141,7 @@ public class UserController {
 
         UserDto modifiedUserinfo = userService.updateUserinfo(userInfoModifyDto, loginId);
 
-        JsonObject returnData = new JsonObject();
-        returnData.addProperty("value", gson.toJson(modifiedUserinfo));
-        returnData.addProperty("status", "200");
-
-        return new ResponseEntity(returnData, HttpStatus.OK);
+        return new ResponseEntity(modifiedUserinfo, HttpStatus.OK);
 
     }
 }
