@@ -100,6 +100,7 @@ public class UserController {
                 userId = user.getUserId();
         }
 
+        userId = userId.trim();
         UserDto userinfo = userService.getUserInfo(userId);
 
         return new ResponseEntity(userinfo, HttpStatus.OK);
@@ -111,18 +112,19 @@ public class UserController {
     @Operation(summary = "유저권한 확인", description = "유저의 권한을 확인합니다.")
     @Parameters({
             @Parameter(name = "userId", description = "조회할 유저의 id, 빈 값일 경우 현재 로그인한 사용자의 권한을 확인합니다."),
-            @Parameter(name = "loginId", description = "현재 로그인한 사용자의 유저아이디", hidden = true)
     })
     @ApiResponse(responseCode = "200", description = "유저의 권한 리턴")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/roles")
-    public ResponseEntity getUserRoles(String userId, String loginId) {
+    public ResponseEntity getUserRoles(UserIdDto userIdDto, @AuthenticationPrincipal CustomUser user) {
 
+        String userId = userIdDto.getUserId();
         // userId가 빈 값일 경우 현재 로그인한 사용자의 ID로 대체
         if(userId == null || userId.equals("")) {
-            userId = loginId;
+            userId = userIdDto.getUserId();
         }
 
+        userId = userId.trim();
         List<String> roles = userService.getUserRoles(userId);
 
         return new ResponseEntity(roles, HttpStatus.OK);
