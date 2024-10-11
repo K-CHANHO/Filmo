@@ -5,10 +5,7 @@ import com.google.gson.JsonObject;
 import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.dto.TokenDTO;
 import com.movie.test.user.token.service.TokenService;
-import com.movie.test.user.userinfo.dto.UserDto;
-import com.movie.test.user.userinfo.dto.UserInfoModifyDto;
-import com.movie.test.user.userinfo.dto.UserLoginDto;
-import com.movie.test.user.userinfo.dto.UserSignupDto;
+import com.movie.test.user.userinfo.dto.*;
 import com.movie.test.user.userinfo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -89,16 +87,17 @@ public class UserController {
     @Operation(summary = "유저정보 조회", description = "회원 정보를 조회합니다.")
     @Parameters({
         @Parameter(name = "userId", description = "조회할 유저의 id, 빈 값이면 현재 로그인한 사용자의 정보를 조회한다."),
-        @Parameter(name = "loginId", description = "현재 로그인한 유저의 아이디", hidden = true)
     })
     @ApiResponse(responseCode = "200", description = "조회한 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/get")
-    public ResponseEntity getUserInfo(String userId, String loginId) {
+    public ResponseEntity getUserInfo(UserIdDto userIdDto, @AuthenticationPrincipal CustomUser user) {
+
 
         // userId가 빈 값일 경우 현재 로그인한 사용자의 ID로 대체
-            if(userId == null || userId.equals("")) {
-                userId = loginId;
+        String userId = userIdDto.getUserId();
+        if(userId == null || userId.trim().equals("")) {
+                userId = user.getUserId();
         }
 
         UserDto userinfo = userService.getUserInfo(userId);
