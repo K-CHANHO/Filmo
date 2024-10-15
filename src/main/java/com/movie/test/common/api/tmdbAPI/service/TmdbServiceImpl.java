@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.*;
 @Service
 @Slf4j
 public class TmdbServiceImpl implements TmdbService {
@@ -46,7 +47,6 @@ public class TmdbServiceImpl implements TmdbService {
         .block();
 
         return resultDTO;
-
     }
 
     @Override
@@ -63,6 +63,8 @@ public class TmdbServiceImpl implements TmdbService {
                 .bodyToMono(MovieDetailInfoDTO.class)
                 .block();
 
+        String certification = getCertification(searchDTO.getMovieId());
+        resultDTO.setCertification(certification);
         return resultDTO;
     }
 
@@ -133,5 +135,31 @@ public class TmdbServiceImpl implements TmdbService {
 
 
         return video;
+    }
+
+    @Override
+    public String getCertification(String movieId) {
+        WebClient webClient = getWebClient();
+        MovieCertificationDTO certificationDTO = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/3/movie/"+ movieId +"/release_dates")
+                        .build())
+                .retrieve()
+                .bodyToMono(MovieCertificationDTO.class)
+                .block();
+
+        return Objects.requireNonNull(certificationDTO).getResults().stream()
+                .filter(result -> "KR".equals(result.getIso_3166_1()))
+                .flatMap(result -> result.getRelease_dates().stream()
+                        .map(MovieCertificationDTO.CertificationResult.ReleaseDateResult::getCertification))
+                .filter(certification -> certification != null && !certification.isEmpty())
+                .findFirst()
+                .or(() -> certificationDTO.getResults().stream()
+                        .filter(result -> "US".equals(result.getIso_3166_1()))
+                        .flatMap(result -> result.getRelease_dates().stream()
+                                .map(MovieCertificationDTO.CertificationResult.ReleaseDateResult::getCertification))
+                        .filter(certification -> certification != null && !certification.isEmpty())
+                        .findFirst())
+                .orElse("No certification available");
     }
 }

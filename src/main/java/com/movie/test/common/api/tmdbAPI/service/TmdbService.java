@@ -11,5 +11,5 @@ public interface TmdbService {
     Object getImages(MovieDetailSearchApiDTO movieSearchApiDTO);
     Object getConfiguration();
     Object getVideos(MovieDetailSearchApiDTO movieSearchApiDTO);
-
+    Object getCertification(String movieId);
 }

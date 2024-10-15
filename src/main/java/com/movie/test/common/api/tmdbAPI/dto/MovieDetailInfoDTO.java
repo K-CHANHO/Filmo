@@ -37,5 +37,5 @@ public class MovieDetailInfoDTO {
     private Integer vote_count;
 
     private Object providers;
-
+    private String certification;
 }
