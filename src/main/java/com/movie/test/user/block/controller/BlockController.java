@@ -27,7 +27,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/block")
-@Tag(name = "차단", description = "차단 관련 API")
+@Tag(name = "차단", description = "차단 관련 API / deprecated")
 @RequiredArgsConstructor
 @Slf4j
 public class BlockController {
@@ -35,7 +35,7 @@ public class BlockController {
     private final BlockService blockService;
     private final UserService userService;
 
-    @Operation(summary = "차단 등록", description = "차단을 등록합니다.")
+    @Operation(summary = "차단 등록", description = "차단을 등록합니다.", deprecated = true)
     @ApiResponse(responseCode = "200", description = "차단 정보 리턴")
     @PostMapping("/save")
     public ResponseEntity saveBlock(@RequestBody BlockSaveDto blockSaveDto, @AuthenticationPrincipal CustomUser user) {
@@ -46,7 +46,7 @@ public class BlockController {
         return new ResponseEntity(blockDto, HttpStatus.OK);
     }
 
-    @Operation(summary = "차단 취소", description = "차단을 취소합니다.")
+    @Operation(summary = "차단 취소", description = "차단을 취소합니다.", deprecated = true)
     @ApiResponse(responseCode = "200")
     @DeleteMapping("/delete")
     public ResponseEntity deleteBlock(BlockDeleteDto blockDeleteDto){
@@ -56,7 +56,7 @@ public class BlockController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @Operation(summary = "차단 목록", description = "차단 목록을 조회합니다.")
+    @Operation(summary = "차단 목록", description = "차단 목록을 조회합니다.", deprecated = true)
     @Parameters({
         @Parameter(name = "lastUserId", description = "마지막으로 조회된 유저 id"),
         @Parameter(name = "keyword", description = "검색어"),
@@ -75,7 +75,7 @@ public class BlockController {
         return new ResponseEntity(resultData, HttpStatus.OK);
     }
 
-    @Operation(summary = "차단 확인", description = "상대를 차단하고 있는 지 확인")
+    @Operation(summary = "차단 확인", description = "상대를 차단하고 있는 지 확인", deprecated = true)
     @Parameters({
             @Parameter(name = "targetId", description = "상대 id", required = true)
     })
@@ -88,7 +88,7 @@ public class BlockController {
         return new ResponseEntity(isBlocking, HttpStatus.OK);
     }
 
-    @Operation(summary = "차단 수 확인", description = "내가 차단하고 있는 유저의 수를 확인")
+    @Operation(summary = "차단 수 확인", description = "내가 차단하고 있는 유저의 수를 확인", deprecated = true)
     @Parameter(hidden = true)
     @GetMapping("/count")
     public ResponseEntity countFollow(@Parameter(hidden = true)String userId) {
