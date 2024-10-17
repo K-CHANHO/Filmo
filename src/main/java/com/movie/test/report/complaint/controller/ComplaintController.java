@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "감상문 신고", description = "신고 API")
+@Tag(name = "감상문 신고", description = "신고 API / deprecated")
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -23,7 +23,7 @@ public class ComplaintController {
 
     private final ComplaintService complaintService;
 
-    @Operation(summary = "감상문 신고", description = "신고 내용을 DB에 저장합니다.")
+    @Operation(summary = "감상문 신고", description = "신고 내용을 DB에 저장합니다.", deprecated = true)
     @Parameters(value = {
             @Parameter(name = "reportId", description = "신고당한 감상문 id"),
             @Parameter(name = "content", description = "신고내용")
@@ -37,7 +37,7 @@ public class ComplaintController {
         return new ResponseEntity(registedComplaint.getComplaintId(), HttpStatus.OK);
     }
 
-    @Operation(summary = "감상문 신고 취소", description = "감상문 신고를 취소합니다.")
+    @Operation(summary = "감상문 신고 취소", description = "감상문 신고를 취소합니다.", deprecated = true)
     @Parameters(value = {
             @Parameter(name = "reportId", description = "신고당한 감상문 id"),
     })
