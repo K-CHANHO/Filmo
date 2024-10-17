@@ -62,7 +62,7 @@ public class UserController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody UserLoginDto userLoginDto){
-        boolean isExistUser = userService.isExistUser(userLoginDto.getUid(), userLoginDto.getType());
+        Boolean isExistUser = userService.isExistUser(userLoginDto.getUid(), userLoginDto.getType());
 
 
         if(isExistUser) { // 존재하는 유저인 경우 토큰 발급
