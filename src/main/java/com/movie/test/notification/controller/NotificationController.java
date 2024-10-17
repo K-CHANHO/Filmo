@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Tag(name = "공지사항", description = "공지사항 관련 API")
+@Tag(name = "공지사항", description = "공지사항 관련 API / deprecated")
 @RestController
 @RequestMapping("/notification")
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
-    @Operation(summary = "공지사항 등록", description = "공지사항을 등록합니다.")
+    @Operation(summary = "공지사항 등록", description = "공지사항을 등록합니다.", deprecated = true)
     @Parameters(value = {
             @Parameter(name = "title", description = "공지사항 제목", required = true),
             @Parameter(name = "content", description = "공지사항 내용", required = true),
@@ -41,7 +41,7 @@ public class NotificationController {
     }
 
     @GetMapping("/getList")
-    @Operation(summary = "공지사항 리스트", description = "공지사항 리스트를 조회합니다.")
+    @Operation(summary = "공지사항 리스트", description = "공지사항 리스트를 조회합니다.", deprecated = true)
     @Parameters(value = {
             @Parameter(name = "notificationId", description = "마지막에 조회된 공지사항 Id, 빈 값일 경우 전체조회"),
     })
@@ -57,7 +57,7 @@ public class NotificationController {
         return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
-    @Operation(summary = "공지사항 조회", description = "공지사항을 조회합니다.")
+    @Operation(summary = "공지사항 조회", description = "공지사항을 조회합니다.", deprecated = true)
     @Parameters(value = {
             @Parameter(name = "notificationId", description = "공지사항 Id"),
     })
@@ -69,7 +69,7 @@ public class NotificationController {
         return new ResponseEntity(noti, HttpStatus.OK);
     }
 
-    @Operation(summary = "공지사항 삭제", description = "공지사항을 삭제합니다.")
+    @Operation(summary = "공지사항 삭제", description = "공지사항을 삭제합니다.", deprecated = true)
     @Parameters(value = {
             @Parameter(name = "notificationId", description = "공지사항 Id"),
     })
@@ -81,7 +81,7 @@ public class NotificationController {
         return new ResponseEntity("Notification Deleted", HttpStatus.OK);
     }
 
-    @Operation(summary = "공지사항 수정", description = "공지사항을 수정합니다.")
+    @Operation(summary = "공지사항 수정", description = "공지사항을 수정합니다.", deprecated = true)
     @Parameters(value = {
             @Parameter(name = "notificationId", description = "공지사항 id", required = true),
             @Parameter(name = "title", description = "공지사항 제목", required = true),
