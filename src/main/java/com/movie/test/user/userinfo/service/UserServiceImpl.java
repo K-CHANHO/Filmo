@@ -133,8 +133,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isExistUser(String uid, String type) {
-        boolean isExist = userRepository.existsByUidAndType(uid, type);
+    public Boolean isExistUser(String uid, String type) {
+        Boolean isExist = userRepository.existsByUidAndType(uid, type);
         return isExist;
     }
 }

@@ -20,5 +20,5 @@ public interface UserService {
 
     UserDto updateUserinfo(UserInfoModifyDto userInfoModifyDto, String loginId);
 
-    boolean isExistUser(String uid, String type);
+    Boolean isExistUser(String uid, String type);
 }
