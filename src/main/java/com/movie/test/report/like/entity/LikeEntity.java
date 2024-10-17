@@ -2,10 +2,13 @@ package com.movie.test.report.like.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.sql.Timestamp;
+
 @Entity
-@Table(name = "mv_report_like")
+@Table(name = "mv_like")
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,8 +22,14 @@ public class LikeEntity {
     private Long likeId;
 
     @Column
-    private String reportId;
+    private String userId;
 
     @Column
-    private String userId;
+    private String targetId;
+
+    @Column
+    private String type;
+
+    @CreationTimestamp
+    private Timestamp createdAt;
 }

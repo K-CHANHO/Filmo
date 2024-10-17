@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LikeRepository extends JpaRepository<LikeEntity, Long>, LikeReporisotyCustrom {
 
-    LikeEntity findByReportIdAndUserId(String reportId, String userId);
+    boolean existsByTargetIdAndUserIdAndType(String targetId, String userId, String type);
 
-    Long countByReportId(String reportId);
+    Long countByTargetId(String targetId);
 
-    void deleteByReportId(String reportId);
+    void deleteByLikeIdAndUserId(long likeId, String userId);
+
+    void deleteByTargetId(String targetId);
 }

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,15 +16,17 @@ import lombok.NoArgsConstructor;
 @Hidden
 public class LikeDTO {
 
-    private Long likeId;
-    private String reportId;
+    private long likeId;
     private String userId;
+    private String targetId;
+    private String type;
 
     public static LikeEntity toEntity(LikeDTO dto){
 
         LikeEntity entity = LikeEntity.builder()
-                .reportId(dto.getReportId())
                 .userId(dto.getUserId())
+                .targetId(dto.getTargetId())
+                .type(dto.getType())
                 .build();
 
         return entity;
@@ -32,8 +36,9 @@ public class LikeDTO {
 
         LikeDTO dto = LikeDTO.builder()
                 .likeId(entity.getLikeId())
-                .reportId(entity.getReportId())
                 .userId(entity.getUserId())
+                .targetId(entity.getTargetId())
+                .type(entity.getType())
                 .build();
 
         return dto;
