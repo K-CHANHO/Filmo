@@ -28,7 +28,6 @@ import java.util.List;
 @Tag(name = "감상문", description = "감상문 관련 API")
 @RestController
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_USER')")
 @RequestMapping("/report")
 public class ReportController {
 

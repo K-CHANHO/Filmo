@@ -89,7 +89,6 @@ public class UserController {
         @Parameter(name = "userId", description = "조회할 유저의 id, 빈 값이면 현재 로그인한 사용자의 정보를 조회한다."),
     })
     @ApiResponse(responseCode = "200", description = "조회한 회원정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
-    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/get")
     public ResponseEntity getUserInfo(UserIdDto userIdDto, @AuthenticationPrincipal CustomUser user) {
 
@@ -114,7 +113,6 @@ public class UserController {
             @Parameter(name = "userId", description = "조회할 유저의 id, 빈 값일 경우 현재 로그인한 사용자의 권한을 확인합니다."),
     })
     @ApiResponse(responseCode = "200", description = "유저의 권한 리턴")
-    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/roles")
     public ResponseEntity getUserRoles(UserIdDto userIdDto, @AuthenticationPrincipal CustomUser user) {
 
@@ -136,7 +134,6 @@ public class UserController {
     @Operation(summary = "유저정보 수정", description = "유저의 정보를 수정합니다.")
     @Parameter(name = "loginId", description = "현재 로그인한 유저의 아이디", hidden = true)
     @ApiResponse(responseCode = "200", description = "수정된 유저정보 리턴", content = @Content(schema = @Schema(implementation = UserDto.class)))
-    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/update")
     public ResponseEntity updateUserInfo(@RequestBody UserInfoModifyDto userInfoModifyDto, String loginId){
 
