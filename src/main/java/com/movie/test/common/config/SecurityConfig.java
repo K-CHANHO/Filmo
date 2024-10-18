@@ -13,7 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import java.util.stream.Stream;
 
@@ -29,7 +31,8 @@ public class SecurityConfig {
     private String[] swagger = {"/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/api-docs/**"};
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+        MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(introspector);
 
         http
                 .csrf(csrf -> csrf.disable())
@@ -38,16 +41,9 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(
-                                Stream.of(excludePath).map(AntPathRequestMatcher::antMatcher).toArray(AntPathRequestMatcher[]::new)
-                        ).permitAll()
-                        .requestMatchers(
-                                Stream.of(swagger).map(AntPathRequestMatcher::antMatcher).toArray(AntPathRequestMatcher[]::new)
-                        ).permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-//                        .requestMatchers(PathRequest.toH2Console()).permitAll()
-//                        .anyRequest().authenticated() // 그 외 요청은 인증 필요
-                        .anyRequest().permitAll() // 그 외 요청은 인증 필요
+                    .requestMatchers(mvc.pattern("/user/login"), mvc.pattern("/user/signup"), mvc.pattern("/error"), mvc.pattern("/h2-console/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/admin/**")).hasRole("ADMIN")
+                    .anyRequest().authenticated() // 그 외 요청은 인증 필요
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
         ;
