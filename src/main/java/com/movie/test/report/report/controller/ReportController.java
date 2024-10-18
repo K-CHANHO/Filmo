@@ -92,7 +92,7 @@ public class ReportController {
 
         reportCompactService.deleteReport(reportId);
 
-        return new ResponseEntity("감상문이 삭제되었습니다.", HttpStatus.OK);
+        return new ResponseEntity(reportId, HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다. 다른 사용자가 작성한 감상문을 조회하려면 targetId 값을 추가해주세요.")
