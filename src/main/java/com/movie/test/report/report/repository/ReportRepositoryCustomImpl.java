@@ -28,7 +28,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
         List<String> reportIdList = jpaQueryFactory.select(report.reportId)
                 .from(report)
                 .where(
-                        report.reportId.gt(reportSearchDTO.getLastReportId()),
+                        report.reportId.lt(reportSearchDTO.getLastReportId()),
                         searchCondition(reportSearchDTO)
                 )
                 .orderBy(report.createDate.desc())
