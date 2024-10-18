@@ -2,6 +2,7 @@ package com.movie.test.report.like.dto;
 
 import com.movie.test.report.like.entity.LikeEntity;
 import com.movie.test.report.like.mapper.LikeMapper;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
+@Hidden
 public class LikeDto {
 
     @Schema(description = "좋아요 아이디")

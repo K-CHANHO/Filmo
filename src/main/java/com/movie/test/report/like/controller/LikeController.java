@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/like")
-@PreAuthorize("hasRole('ROLE_USER')")
 public class LikeController {
 
     private final LikeService likeService;
@@ -47,7 +45,7 @@ public class LikeController {
             @Parameter(name = "type", description = "'report' OR 'reply'", required = true)
     })
     @GetMapping("/check")
-    public ResponseEntity checkLikst(LikeDto likeDTO, @AuthenticationPrincipal CustomUser user){
+    public ResponseEntity checkLike(LikeDto likeDTO, @AuthenticationPrincipal CustomUser user){
         boolean isExistLike = likeService.checkLike(likeDTO, user.getUserId());
         return new ResponseEntity(isExistLike, HttpStatus.OK);
     }
@@ -57,8 +55,8 @@ public class LikeController {
             @Parameter(name = "targetId", description = "감상문 OR 댓글 id", required = true)
     })
     @GetMapping("/count")
-    public ResponseEntity countLike(LikeDto likeDTO){
-        Long countLike = likeService.countLike(likeDTO.getTargetId());
+    public ResponseEntity countLike(String targetId){
+        Long countLike = likeService.countLike(targetId);
         return new ResponseEntity(countLike, HttpStatus.OK);
     }
 }
