@@ -12,9 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReportSearchDTO {
 
-    @Builder.Default
     @Schema(description = "마지막으로 조회된 감상문 id")
-    private String lastReportId="";
+    private String lastReportId;
 
     @Schema(description = "검색어")
     private String keyword;

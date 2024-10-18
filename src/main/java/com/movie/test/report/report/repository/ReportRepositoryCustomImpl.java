@@ -28,7 +28,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
         List<String> reportIdList = jpaQueryFactory.select(report.reportId)
                 .from(report)
                 .where(
-                        report.reportId.lt(reportSearchDTO.getLastReportId()),
+                        //report.reportId.lt(reportSearchDTO.getLastReportId()),
                         searchCondition(reportSearchDTO)
                 )
                 .orderBy(report.createDate.desc())
@@ -72,7 +72,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
     }
 
     public BooleanBuilder searchCondition(ReportSearchDTO searchDTO) {
-        return keywordTitle(searchDTO.getKeyword()).or(keywordContent(searchDTO.getKeyword())).or(targetUserId(searchDTO.getTargetId()));
+        return keywordTitle(searchDTO.getKeyword()).or(keywordContent(searchDTO.getKeyword())).or(targetUserId(searchDTO.getTargetId())).or(lastReportId(searchDTO.getLastReportId()));
     }
 
     private BooleanBuilder keywordTitle(String keyword) {
@@ -85,6 +85,10 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
 
     private BooleanBuilder targetUserId(String targetUserId){
         return nullSafeBooleanBuilder(() -> report.userId.eq(targetUserId));
+    }
+
+    private BooleanBuilder lastReportId(String lastReportId){
+        return nullSafeBooleanBuilder(() -> report.reportId.lt(lastReportId));
     }
 
     private BooleanBuilder nullSafeBooleanBuilder(Supplier<BooleanExpression> supplier) {
