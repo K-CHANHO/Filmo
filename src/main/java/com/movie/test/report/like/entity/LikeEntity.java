@@ -18,8 +18,7 @@ import java.sql.Timestamp;
 public class LikeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long likeId;
+    private String likeId;
 
     @Column
     private String userId;
