@@ -30,7 +30,6 @@ import java.util.Map;
 @Tag(name = "팔로우", description = "팔로우 관련 API")
 @RequiredArgsConstructor
 @Slf4j
-@PreAuthorize("hasRole('ROLE_USER')")
 public class FollowController {
 
     private final FollowService followService;
