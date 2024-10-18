@@ -2417,3 +2417,6 @@ org.h2.jdbc.JdbcSQLFeatureNotSupportedException: Feature not supported: "CHARACT
 2024-10-18 10:57:54.336337+09:00 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop [*]mv_like"; expected "TABLE, INDEX, USER, SEQUENCE, CONSTANT, TRIGGER, MATERIALIZED, VIEW, ROLE, ALIAS, SCHEMA, ALL OBJECTS, DOMAIN, TYPE, AGGREGATE, SYNONYM"; SQL statement:
 drop mv_like [42001-224]
+2024-10-18 14:34:04.694382+09:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]59a6c4a7-b747-4282-bf1c-f55b019d14a6"; SQL statement:
+59a6c4a7-b747-4282-bf1c-f55b019d14a6 [42000-224]
