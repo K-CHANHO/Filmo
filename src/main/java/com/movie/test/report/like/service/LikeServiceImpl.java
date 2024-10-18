@@ -1,5 +1,6 @@
 package com.movie.test.report.like.service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.movie.test.common.cef.CustomUUID;
 import com.movie.test.report.like.dto.LikeDto;
 import com.movie.test.report.like.dto.LikeSaveDto;
@@ -68,6 +69,8 @@ public class LikeServiceImpl implements LikeService{
     @Override
     @Transactional()
     public void cancelLike(String likeId, String userId) {
+        if(!likeRepository.findById(likeId).orElseThrow(()->new NotFoundException("존재하지 않는 좋아요입니다. likeId를 확인해주세요.")).getUserId().equals(userId))
+            throw new RuntimeException("잘못된 접근입니다.");
         likeRepository.deleteByLikeIdAndUserId(likeId, userId);
     }
 

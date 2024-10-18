@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LikeRepository extends JpaRepository<LikeEntity, Long>, LikeReporisotyCustrom {
+public interface LikeRepository extends JpaRepository<LikeEntity, String>, LikeReporisotyCustrom {
 
     boolean existsByTargetIdAndUserIdAndType(String targetId, String userId, String type);
 

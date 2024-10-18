@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/like")
+@PreAuthorize("hasRole('ROLE_USER')")
 public class LikeController {
 
     private final LikeService likeService;
@@ -33,10 +35,10 @@ public class LikeController {
     @Parameters(value = {
             @Parameter(name = "likeId", description = "like id", required = true)
     })
-    @PostMapping("/cancel")
-    public ResponseEntity cancelLike(LikeDto likeDTO, @AuthenticationPrincipal CustomUser user) {
-        likeService.cancelLike(likeDTO.getLikeId(), user.getUserId());
-        return new ResponseEntity(HttpStatus.OK);
+    @DeleteMapping("/cancel")
+    public ResponseEntity cancelLike(String likeId, @AuthenticationPrincipal CustomUser user) {
+        likeService.cancelLike(likeId, user.getUserId());
+        return new ResponseEntity(likeId, HttpStatus.OK);
     }
 
     @Operation(summary = "좋아요 확인", description = "감상문이나 댓글을 좋아요 했는지 확인합니다.")
