@@ -43,15 +43,9 @@ public class JwtTokenProvider {
 
     public JwtTokenDTO createToken(UserDto userDTO, Authentication authentication){
 
-        List<String> authoritiesList = authentication.getAuthorities().stream()
+        String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-
-        if (authoritiesList.contains("ROLE_ADMIN")) {
-            authoritiesList.add("ROLE_USER");
-        }
-
-        String authorities = String.join(",", authoritiesList);
+                .collect(Collectors.joining(","));
 
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
