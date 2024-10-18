@@ -19,9 +19,13 @@ public class QLikeEntity extends EntityPathBase<LikeEntity> {
 
     public static final QLikeEntity likeEntity = new QLikeEntity("likeEntity");
 
-    public final NumberPath<Long> likeId = createNumber("likeId", Long.class);
+    public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);
 
-    public final StringPath reportId = createString("reportId");
+    public final StringPath likeId = createString("likeId");
+
+    public final StringPath targetId = createString("targetId");
+
+    public final StringPath type = createString("type");
 
     public final StringPath userId = createString("userId");
 

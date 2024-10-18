@@ -1,16 +1,16 @@
 package com.movie.test.report.like.service;
 
-import com.movie.test.report.like.dto.LikeDTO;
-import com.movie.test.user.userinfo.dto.CustomUser;
+import com.movie.test.report.like.dto.LikeDto;
+import com.movie.test.report.like.dto.LikeSaveDto;
 
 public interface LikeService {
-    void registLike(LikeDTO likeDTO, String userId);
+    LikeDto saveLike(LikeSaveDto likeDTO, String userId);
 
-    boolean checkLike(LikeDTO likeDTO, String userId);
+    boolean checkLike(LikeDto likeDTO, String userId);
 
     Long countLike(String targetId);
 
-    void cancelLike(long likeId, String userId);
+    void cancelLike(String likeId, String userId);
 
     void deleteLike(String targetId);
 }
