@@ -174,7 +174,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         tagService.deleteTagInReport(reportUpdateDto.getReportId());
         tagService.saveTags(reportUpdateDto.getReportId(), reportUpdateDto.getTagString());
 
-        return null;
+        return reportId;
     }
 
     /**

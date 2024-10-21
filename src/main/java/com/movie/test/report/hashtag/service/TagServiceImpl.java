@@ -35,9 +35,11 @@ public class TagServiceImpl implements TagService{
     // 태그 저장
     public void saveTags(String reportId, String fullTags) {
 
+        // 태그 없는 경우 return
+        if(fullTags == null || fullTags.isEmpty()) return;
+
         Long tagId = null;
         String[] tags = fullTags.split(",");
-
         for (int i = 0; i <tags.length; i++) {
             TagEntity tagEntity = tagRepository.findByContent(tags[i]);
 

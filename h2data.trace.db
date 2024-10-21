@@ -2420,3 +2420,5 @@ drop mv_like [42001-224]
 2024-10-18 14:34:04.694382+09:00 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]59a6c4a7-b747-4282-bf1c-f55b019d14a6"; SQL statement:
 59a6c4a7-b747-4282-bf1c-f55b019d14a6 [42000-224]
+2024-10-18 17:34:29.426867+09:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-224]
