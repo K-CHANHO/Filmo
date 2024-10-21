@@ -1,11 +1,9 @@
 package com.movie.test.user.follow.service;
 
 import com.movie.test.common.cef.CustomUUID;
-import com.movie.test.user.follow.dto.FollowDTO;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
 import com.movie.test.user.follow.dto.FollowSaveDto;
 import com.movie.test.user.follow.entity.FollowEntity;
-import com.movie.test.user.follow.mapper.FollowSaveMapper;
 import com.movie.test.user.follow.repository.FollowRepository;
 import com.movie.test.user.userinfo.dto.UserDto;
 import com.movie.test.user.userinfo.entity.UserEntity;
@@ -15,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -73,6 +69,11 @@ public class FollowServiceImpl implements FollowService{
         Boolean isFollowing = followRepository.existsByUserIdAndTargetId(userId, targetId);
 
         return isFollowing;
+    }
+
+    @Override
+    public String getFollowId(String userId, String targetId) {
+        return followRepository.findByUserIdAndTargetId(userId, targetId).getFollowId();
     }
 
     @Override

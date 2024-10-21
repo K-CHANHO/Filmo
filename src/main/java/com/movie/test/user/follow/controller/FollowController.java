@@ -1,5 +1,6 @@
 package com.movie.test.user.follow.controller;
 
+import com.google.gson.JsonObject;
 import com.movie.test.user.follow.dto.FollowDeleteDto;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
 import com.movie.test.user.follow.dto.FollowSaveDto;
@@ -18,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,11 +107,17 @@ public class FollowController {
     @ApiResponse(responseCode = "200", description = "팔로잉하고 있는 경우 true, 아닌 경우 false 리턴")
     @GetMapping("/isFollow")
     public ResponseEntity isFollowing(@AuthenticationPrincipal CustomUser user, String targetId){
+        JsonObject returnData = new JsonObject();
 
         userService.getUserInfo(targetId);
         boolean isFollowing = followService.isFollowing(user.getUserId(), targetId);
+        if(isFollowing){
+            returnData.addProperty("followId", followService.getFollowId(user.getUserId(), targetId));
+        }
 
-        return new ResponseEntity(isFollowing, HttpStatus.OK);
+        returnData.addProperty("isFollowing", isFollowing);
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     @Operation(summary = "팔로잉/팔로워 수 확인", description = "유저의 팔로잉/팔로워 수를 확인")

@@ -22,4 +22,6 @@ public interface FollowService {
     Long countFollower(String userId);
 
     Long countBlock(String userId);
+
+    String getFollowId(String userId, String targetId);
 }
