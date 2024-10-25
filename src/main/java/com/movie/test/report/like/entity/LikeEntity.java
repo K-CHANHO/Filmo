@@ -1,11 +1,12 @@
 package com.movie.test.report.like.entity;
 
-import jakarta.persistence.*;
+import com.movie.test.common.entity.BaseTimeEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
-
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "mv_like")
@@ -15,7 +16,7 @@ import java.sql.Timestamp;
 @ToString
 @Getter
 @DynamicUpdate
-public class LikeEntity {
+public class LikeEntity extends BaseTimeEntity {
 
     @Id
     private String likeId;
@@ -28,7 +29,4 @@ public class LikeEntity {
 
     @Column
     private String type;
-
-    @CreationTimestamp
-    private Timestamp createdAt;
 }
