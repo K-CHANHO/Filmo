@@ -16,6 +16,6 @@ public class ReportAccessHandler{
         return reportRepository.findById(id)
                 .map(report -> report.getUserId())
                 .map(userId -> userRepository.findById(userId))
-                .get().get().getUid();
+                .get().get().getEmail();
     }
 }

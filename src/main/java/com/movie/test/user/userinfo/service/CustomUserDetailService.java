@@ -23,13 +23,13 @@ public class CustomUserDetailService implements UserDetailsService {
 //                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다."));
 
         UserEntity user = userRepository.findByUid(username).orElseThrow(()-> new UsernameNotFoundException("존재하지 않는 유저입니다."));
-        CustomUser customUser = new CustomUser(user.getUid(), user.getType(), createUserDetails(user).getAuthorities(), user.getUserId(), user.getNickname());
+        CustomUser customUser = new CustomUser(user.getEmail(), user.getType(), createUserDetails(user).getAuthorities(), user.getUserId(), user.getNickname());
         return customUser;
     }
 
     public UserDetails createUserDetails(UserEntity member){
         return User.builder()
-                .username(member.getUid())
+                .username(member.getEmail())
                 .password(member.getType())
                 .roles(member.getRoles().split(";"))
                 .build();

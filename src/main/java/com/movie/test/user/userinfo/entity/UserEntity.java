@@ -4,10 +4,8 @@ import com.movie.test.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Table(name = "mv_user", indexes = @Index(name = "idx_nickname", columnList = "nickname", unique = true))
@@ -24,7 +22,7 @@ public class UserEntity extends BaseTimeEntity {
     private String userId; // 자체 uid
 
     @Column(nullable = false)
-    private String uid; // 소셜 uid
+    private String email; // 소셜 uid
 
     @Column(nullable = false)
     private String type; // 소셜 type

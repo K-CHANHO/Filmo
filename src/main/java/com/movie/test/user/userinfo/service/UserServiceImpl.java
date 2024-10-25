@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public JwtTokenDTO loginUser(UserDto userDTO) {
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDTO.getUid(), userDTO.getType());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDTO.getEmail(), userDTO.getType());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 토큰 생성
