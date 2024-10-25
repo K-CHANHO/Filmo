@@ -66,7 +66,7 @@ public class BookmarkController {
             @Parameter(name = "bookmarkId", description = "북마크 아이디", required = true, in = ParameterIn.PATH),
     })
     @DeleteMapping("/delete/{bookmarkId}")
-    public ResponseEntity deleteBookmark(@PathVariable Long bookmarkId, @AuthenticationPrincipal CustomUser loginUser){
+    public ResponseEntity deleteBookmark(@PathVariable String bookmarkId, @AuthenticationPrincipal CustomUser loginUser){
 
         if (!bookmarkService.validationBookmarkId(bookmarkId, loginUser)) {
             return new ResponseEntity("잘못된 시도입니다. 다시 시도해주세요.", HttpStatus.BAD_REQUEST);

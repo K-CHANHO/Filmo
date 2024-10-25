@@ -11,11 +11,11 @@ public interface BookmarkService {
 
     BookmarkDto saveBookmark(BookmarkSaveDto bookmarkSaveDto);
 
-    void deleteBookmark(Long bookmarkId);
+    void deleteBookmark(String bookmarkId);
 
     Slice<BookmarkDto> getBookmarkList(BookmarkListDto bookmarkListDto, Pageable pageable);
 
-    boolean validationBookmarkId(Long bookmarkId, CustomUser loginUser);
+    boolean validationBookmarkId(String bookmarkId, CustomUser loginUser);
 
     Long getBookmarkCount(String reportId);
 

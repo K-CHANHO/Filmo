@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class BookmarkListDto {
 
     @Schema(description = "북마크 아이디")
-    Long bookmarkId;
+    String bookmarkId;
 
     String userId;
 
