@@ -6,7 +6,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-25T11:15:54+0900",
+    date = "2024-10-25T14:18:55+0900",
     comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.3.jar, environment: Java 17.0.7 (Oracle Corporation)"
 )
 public class UserMapperImpl implements UserMapper {
@@ -22,6 +22,7 @@ public class UserMapperImpl implements UserMapper {
         userEntity.createDate( userDTO.getCreateDate() );
         userEntity.lastModifiedDate( userDTO.getLastModifiedDate() );
         userEntity.userId( userDTO.getUserId() );
+        userEntity.email( userDTO.getEmail() );
         userEntity.type( userDTO.getType() );
         userEntity.nickname( userDTO.getNickname() );
         userEntity.profileUrl( userDTO.getProfileUrl() );
@@ -42,6 +43,7 @@ public class UserMapperImpl implements UserMapper {
 
         userDto.createDate( userEntity.getCreateDate() );
         userDto.lastModifiedDate( userEntity.getLastModifiedDate() );
+        userDto.email( userEntity.getEmail() );
         userDto.userId( userEntity.getUserId() );
         userDto.type( userEntity.getType() );
         userDto.nickname( userEntity.getNickname() );
