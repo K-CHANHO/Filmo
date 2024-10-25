@@ -22,7 +22,7 @@ public class CustomUserDetailService implements UserDetailsService {
 //                .map(this::createUserDetails)
 //                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다."));
 
-        UserEntity user = userRepository.findByUid(username).orElseThrow(()-> new UsernameNotFoundException("존재하지 않는 유저입니다."));
+        UserEntity user = userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("존재하지 않는 유저입니다."));
         CustomUser customUser = new CustomUser(user.getEmail(), user.getType(), createUserDetails(user).getAuthorities(), user.getUserId(), user.getNickname());
         return customUser;
     }

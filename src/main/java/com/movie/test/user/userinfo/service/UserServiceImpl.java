@@ -34,9 +34,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto saveUser(UserSignupDto userSignupDto) {
 
-        if(isExistUser(userSignupDto.getUid(), userSignupDto.getType())){
-            UserEntity existUser = userRepository.findByUidAndType(userSignupDto.getUid(), userSignupDto.getType());
-            return UserDto.toDTO(existUser);
+        if(isExistUser(userSignupDto.getEmail())){
+            UserEntity existUser = userRepository.findByEmail(userSignupDto.getEmail()).get();
+            return UserDto.builder().email(userSignupDto.getEmail()).type(existUser.getType()).build();
         }
 
         UserDto userDto = UserSignupDto.toUserDto(userSignupDto);
@@ -85,9 +85,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserInfoByUidAndType(String uid, String type) {
+    public UserDto getUserInfoByUidAndType(String email, String type) {
 
-        UserEntity existUser = userRepository.findByUidAndType(uid, type);
+        UserEntity existUser = userRepository.findByEmailAndType(email, type);
 
         if(existUser != null) {
             return UserDto.toDTO(existUser);
@@ -133,8 +133,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean isExistUser(String uid, String type) {
-        Boolean isExist = userRepository.existsByUidAndType(uid, type);
+    public Boolean isExistUser(String email) {
+        Boolean isExist = userRepository.existsByEmail(email);
+        return isExist;
+    }
+
+    @Override
+    public Boolean isExistUser(String email, String type) {
+        Boolean isExist = userRepository.existsByEmailAndType(email, type);
         return isExist;
     }
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserSignupDto {
 
-    private String uid;
+    private String email;
     private String type;
     private String profileUrl;
 

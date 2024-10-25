@@ -47,6 +47,14 @@ public class UserController {
 
         UserDto signupUser = userService.saveUser(userSignupDto);
 
+        if(signupUser.getUserId() == null){
+            JsonObject returnData = new JsonObject();
+            returnData.addProperty("msg", "이미 가입된 이메일입니다. 가입한 플랫폼으로 로그인해주세요.");
+            returnData.addProperty("email", signupUser.getEmail());
+            returnData.addProperty("type", signupUser.getType());
+            return new ResponseEntity(returnData, HttpStatus.OK);
+        }
+
         return new ResponseEntity(signupUser, HttpStatus.OK);
 
     }
@@ -62,11 +70,11 @@ public class UserController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody UserLoginDto userLoginDto){
-        Boolean isExistUser = userService.isExistUser(userLoginDto.getUid(), userLoginDto.getType());
+        Boolean isExistUser = userService.isExistUser(userLoginDto.getEmail(), userLoginDto.getType());
 
 
         if(isExistUser) { // 존재하는 유저인 경우 토큰 발급
-            UserDto getUserinfo = userService.getUserInfoByUidAndType(userLoginDto.getUid(), userLoginDto.getType());
+            UserDto getUserinfo = userService.getUserInfoByUidAndType(userLoginDto.getEmail(), userLoginDto.getType());
             JwtTokenDTO token = userService.loginUser(getUserinfo);
             tokenService.saveRefreshToken(token);
 
