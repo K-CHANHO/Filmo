@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         } else {
             // TODO : 기본 프로필사진 설정하기.
         }
-        userDto.setRoles("ROLE_USER");
+        userDto.setRoles("USER");
 
         UserEntity user = UserDto.toEntity(userDto);
         UserEntity savedUser = userRepository.save(user);
