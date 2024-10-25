@@ -31,6 +31,9 @@ jobs:
       - run: touch ./src/main/resources/application.properties
       - run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.properties
       - run: cat ./src/main/resources/application.properties
+      - run: touch ./src/main/resources/application-dev.properties
+      - run: echo "${{ secrets.APPLICATION_DEV }}" > ./src/main/resources/application-dev.properties
+      - run: cat ./src/main/resources/application-dev.properties
       - run: touch ./src/main/resources/application-prod.properties
       - run: echo "${{ secrets.APPLICATION_PROD }}" > ./src/main/resources/application-prod.properties
       - run: cat ./src/main/resources/application-prod.properties
@@ -92,9 +95,9 @@ jobs:
                     echo "#### THERE IS NO PROCESS ####"
             else
                     echo "#### KILL PROCESS ####"
-                    sudo fuser -k 8080/tcp || true
+                    sudo fuser -k 9998/tcp || true
             fi
 
             echo "#### RUN $SOURCE_DIR/$FILE_NAME ####"
 
-            sudo nohup java -jar -Dspring.profiles.active=prod $SOURCE_DIR/$FILE_NAME > nohup.out 2> nohup.err < /dev/null &
+            sudo nohup java -jar -Dspring.profiles.active=dev $SOURCE_DIR/$FILE_NAME > nohup.out 2> nohup.err < /dev/null &
