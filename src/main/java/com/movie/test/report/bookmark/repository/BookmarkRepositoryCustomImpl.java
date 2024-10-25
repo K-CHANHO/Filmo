@@ -42,7 +42,7 @@ public class BookmarkRepositoryCustomImpl implements BookmarkRepositoryCustom{
         return bookmarkEntities;
     }
 
-    private BooleanExpression checkBookmarkId(Long bookmarkId){
+    private BooleanExpression checkBookmarkId(String bookmarkId){
         return bookmarkId != null ? bookmark.bookmarkId.lt(bookmarkId) : null;
     }
 }

@@ -1,5 +1,6 @@
 package com.movie.test.report.bookmark.service;
 
+import com.movie.test.common.cef.CustomUUID;
 import com.movie.test.report.bookmark.dto.BookmarkDto;
 import com.movie.test.report.bookmark.dto.BookmarkListDto;
 import com.movie.test.report.bookmark.dto.BookmarkSaveDto;
@@ -34,13 +35,14 @@ public class BookmarkServiceImpl implements BookmarkService{
         }
 
         BookmarkDto bookmarkDto = BookmarkSaveMapper.INSTANCE.toBookmark(bookmarkSaveDto);
+        bookmarkDto.setBookmarkId(CustomUUID.createUUID());
         BookmarkEntity savedBookmark = bookmarkRepository.save(BookmarkDto.toEntity(bookmarkDto));
 
         return BookmarkDto.toDTO(savedBookmark);
     }
 
     @Override
-    public void deleteBookmark(Long bookmarkId) {
+    public void deleteBookmark(String bookmarkId) {
         bookmarkRepository.deleteById(bookmarkId);
     }
 
@@ -54,7 +56,7 @@ public class BookmarkServiceImpl implements BookmarkService{
     }
 
     @Override
-    public boolean validationBookmarkId(Long bookmarkId, CustomUser loginUser) {
+    public boolean validationBookmarkId(String bookmarkId, CustomUser loginUser) {
         // null 체크
         if(bookmarkId == null) return false;
 

@@ -19,7 +19,7 @@ public class QBookmarkEntity extends EntityPathBase<BookmarkEntity> {
 
     public static final QBookmarkEntity bookmarkEntity = new QBookmarkEntity("bookmarkEntity");
 
-    public final NumberPath<Long> bookmarkId = createNumber("bookmarkId", Long.class);
+    public final StringPath bookmarkId = createString("bookmarkId");
 
     public final StringPath reportId = createString("reportId");
 

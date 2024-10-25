@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.movie.test.report.bookmark.dto.BookmarkDto;
 import com.movie.test.report.bookmark.dto.BookmarkListDto;
+import com.movie.test.report.bookmark.dto.BookmarkListReturnDto;
 import com.movie.test.report.bookmark.dto.BookmarkSaveDto;
 import com.movie.test.report.bookmark.service.BookmarkService;
 import com.movie.test.report.report.service.ReportService;
@@ -40,9 +41,10 @@ public class BookmarkController {
 
         Slice<BookmarkDto> bookmarkList = bookmarkService.getBookmarkList(bookmarkListDto, pageable);
 
-        JsonObject returnData = new JsonObject();
-        returnData.addProperty("bookmarkList", gson.toJson(bookmarkList.getContent()));
-        returnData.addProperty("hasNext", bookmarkList.hasNext());
+        BookmarkListReturnDto returnData = BookmarkListReturnDto.builder()
+                .bookmarkList(bookmarkList.getContent())
+                .hasNext(bookmarkList.hasNext())
+                .build();
 
         return new ResponseEntity(returnData, HttpStatus.OK);
     }
@@ -66,7 +68,7 @@ public class BookmarkController {
             @Parameter(name = "bookmarkId", description = "북마크 아이디", required = true, in = ParameterIn.PATH),
     })
     @DeleteMapping("/delete/{bookmarkId}")
-    public ResponseEntity deleteBookmark(@PathVariable Long bookmarkId, @AuthenticationPrincipal CustomUser loginUser){
+    public ResponseEntity deleteBookmark(@PathVariable String bookmarkId, @AuthenticationPrincipal CustomUser loginUser){
 
         if (!bookmarkService.validationBookmarkId(bookmarkId, loginUser)) {
             return new ResponseEntity("잘못된 시도입니다. 다시 시도해주세요.", HttpStatus.BAD_REQUEST);

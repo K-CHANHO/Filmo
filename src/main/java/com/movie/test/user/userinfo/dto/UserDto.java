@@ -20,8 +20,8 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class UserDto extends BaseTimeDTO {
 
-    @Schema(description = "소셜로그인 UID")
-    private String uid;
+    @Schema(description = "소셜로그인 email")
+    private String email;
 
     @Schema(description = "유저 고유값")
     private String userId;
@@ -45,36 +45,10 @@ public class UserDto extends BaseTimeDTO {
     private String roles;
 
     public static UserDto toDTO(UserEntity entity) {
-        /*
-        UserDto dto = UserDto.builder()
-                .uid(entity.getUid())
-                .userId(entity.getUserId())
-                .type(entity.getType())
-                .nickname(entity.getNickname())
-                .profileURL(entity.getProfileURL())
-                .lastLoginDate(entity.getLastLoginDate())
-                .createDate(entity.getCreateDate())
-                .lastModifiedDate(entity.getLastModifiedDate())
-                .introduction(entity.getIntroduction())
-                .roles(Arrays.stream(entity.getRoles().split(",")).toList())
-                .build();
-        */
         return UserMapper.INSTANCE.toDto(entity);
     }
 
     public static UserEntity toEntity(UserDto dto) {
-        /*
-        UserEntity entity = UserEntity.builder()
-                .uid(dto.getUid())
-                .userId(dto.getUserId())
-                .type(dto.getType())
-                .nickname(dto.getNickname())
-                .profileURL(dto.profileURL)
-                .lastLoginDate(dto.lastLoginDate)
-                .introduction(dto.getIntroduction())
-                .roles(dto.getRoles().stream().collect(Collectors.joining(",")))
-                .build();
-        */
         return UserMapper.INSTANCE.toEntity(dto);
     }
 }

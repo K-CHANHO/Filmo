@@ -24,6 +24,8 @@ public class QUserEntity extends EntityPathBase<UserEntity> {
     //inherited
     public final DateTimePath<java.sql.Timestamp> createDate = _super.createDate;
 
+    public final StringPath email = createString("email");
+
     public final StringPath introduction = createString("introduction");
 
     public final DateTimePath<java.sql.Timestamp> lastLoginDate = createDateTime("lastLoginDate", java.sql.Timestamp.class);
@@ -38,8 +40,6 @@ public class QUserEntity extends EntityPathBase<UserEntity> {
     public final StringPath roles = createString("roles");
 
     public final StringPath type = createString("type");
-
-    public final StringPath uid = createString("uid");
 
     public final StringPath userId = createString("userId");
 

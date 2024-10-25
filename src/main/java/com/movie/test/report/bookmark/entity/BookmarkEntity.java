@@ -15,8 +15,7 @@ import lombok.NoArgsConstructor;
 public class BookmarkEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookmarkId;
+    private String bookmarkId;
 
     @Column
     private String userId;

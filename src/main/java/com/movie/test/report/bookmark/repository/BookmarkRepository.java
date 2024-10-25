@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookmarkRepository extends JpaRepository<BookmarkEntity, Long>, BookmarkRepositoryCustom {
+public interface BookmarkRepository extends JpaRepository<BookmarkEntity, String>, BookmarkRepositoryCustom {
     Long countByReportId(String reportId);
 
     boolean existsByUserIdAndReportId(String userId, String reportId);

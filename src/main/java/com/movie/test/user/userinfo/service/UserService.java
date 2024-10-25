@@ -12,7 +12,7 @@ public interface UserService {
     UserDto saveUser(UserSignupDto userSignupDto);
 
     UserDto getUserInfo(String userid);
-    UserDto getUserInfoByUidAndType(String uid, String type);
+    UserDto getUserInfoByUidAndType(String email, String type);
 
     JwtTokenDTO loginUser(UserDto userDTO);
 
@@ -20,5 +20,6 @@ public interface UserService {
 
     UserDto updateUserinfo(UserInfoModifyDto userInfoModifyDto, String loginId);
 
-    Boolean isExistUser(String uid, String type);
+    Boolean isExistUser(String email);
+    Boolean isExistUser(String email, String type);
 }
