@@ -19,7 +19,7 @@ public class ReportViewScheduler {
     private final ViewRepository viewRepository;
     private final RedisTemplate redisTemplate;
 
-    @Scheduled(initialDelay = 10000, fixedDelay = 60000)
+//    @Scheduled(initialDelay = 10000, fixedDelay = 60000)
     public void updateReportView(){
 //        RedisTemplate redisTemplate = redisService.getRedisTemplate();
         log.info("조회수 스케쥴러 진입");
