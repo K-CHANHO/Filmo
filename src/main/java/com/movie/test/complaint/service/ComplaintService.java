@@ -1,10 +1,10 @@
-package com.movie.test.report.complaint.service;
+package com.movie.test.complaint.service;
 
-import com.movie.test.report.complaint.dto.ComplaintDTO;
+import com.movie.test.complaint.dto.ComplaintDto;
 
 public interface ComplaintService {
 
-    ComplaintDTO registComplaint(ComplaintDTO complaintDTO);
+    ComplaintDto registComplaint(ComplaintDto complaintDTO);
 
     long getComplaintCount(String reportId);
 

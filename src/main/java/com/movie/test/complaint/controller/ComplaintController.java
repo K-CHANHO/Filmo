@@ -1,7 +1,7 @@
-package com.movie.test.report.complaint.controller;
+package com.movie.test.complaint.controller;
 
-import com.movie.test.report.complaint.dto.ComplaintDTO;
-import com.movie.test.report.complaint.service.ComplaintService;
+import com.movie.test.complaint.dto.ComplaintDto;
+import com.movie.test.complaint.service.ComplaintService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "감상문 신고", description = "신고 API / deprecated")
+@Tag(name = "신고", description = "신고 API")
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -23,15 +23,15 @@ public class ComplaintController {
 
     private final ComplaintService complaintService;
 
-    @Operation(summary = "감상문 신고", description = "신고 내용을 DB에 저장합니다.", deprecated = true)
+    @Operation(summary = "감상문 신고", description = "감상문 또는 댓글을 신고합니다")
     @Parameters(value = {
             @Parameter(name = "reportId", description = "신고당한 감상문 id"),
             @Parameter(name = "content", description = "신고내용")
     })
-    @PostMapping("/registComplaint")
-    public ResponseEntity registComplaint(ComplaintDTO complaintDTO) {
+    @PostMapping("/save")
+    public ResponseEntity saveComplaint(ComplaintDto complaintDTO) {
 
-        ComplaintDTO registedComplaint = complaintService.registComplaint(complaintDTO);
+        ComplaintDto registedComplaint = complaintService.registComplaint(complaintDTO);
         log.info("[{}] 님이 [{}] 감상문을 신고하였습니다.", complaintDTO.getUserId(), complaintDTO.getReportId());
 
         return new ResponseEntity(registedComplaint.getComplaintId(), HttpStatus.OK);

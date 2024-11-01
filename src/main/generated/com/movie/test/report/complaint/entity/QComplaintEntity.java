@@ -2,6 +2,7 @@ package com.movie.test.report.complaint.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
+import com.movie.test.complaint.entity.ComplaintEntity;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;

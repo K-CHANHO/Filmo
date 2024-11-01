@@ -20,7 +20,8 @@ public class ComplaintDto extends BaseTimeDTO {
 
     private String complaintId; // 신고 id
     private String userId; // 신고한 유저
-    private String reportId; // 신고당한 감상문
+    private String targetId; // 대상 id
+    private String type; // 감상문 또는 댓글
     private String content; // 신고내용
 
     public static ComplaintDto toDTO(ComplaintEntity entity) {

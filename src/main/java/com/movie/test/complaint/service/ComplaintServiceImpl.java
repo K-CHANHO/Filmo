@@ -1,8 +1,8 @@
-package com.movie.test.report.complaint.service;
+package com.movie.test.complaint.service;
 
-import com.movie.test.report.complaint.dto.ComplaintDTO;
-import com.movie.test.report.complaint.entity.ComplaintEntity;
-import com.movie.test.report.complaint.repository.ComplaintRepository;
+import com.movie.test.complaint.dto.ComplaintDto;
+import com.movie.test.complaint.entity.ComplaintEntity;
+import com.movie.test.complaint.repository.ComplaintRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     private final ComplaintRepository complaintRepository;
 
     @Override
-    public ComplaintDTO registComplaint(ComplaintDTO complaintDTO) {
+    public ComplaintDto registComplaint(ComplaintDto complaintDTO) {
 
         // 동일한 사용자가 동일한 게시물 중복 신고 방지.
         ComplaintEntity complaint = complaintRepository.findByUserIdAndReportId(complaintDTO.getUserId(), complaintDTO.getReportId());
@@ -27,10 +27,10 @@ public class ComplaintServiceImpl implements ComplaintService {
             stringBuilder.append(UUID.randomUUID().toString());
 
             complaintDTO.setComplaintId(stringBuilder.toString());
-            complaint = complaintRepository.save(ComplaintDTO.toEntity(complaintDTO));
+            complaint = complaintRepository.save(ComplaintDto.toEntity(complaintDTO));
         }
 
-        return ComplaintDTO.toDTO(complaint);
+        return ComplaintDto.toDTO(complaint);
     }
 
     @Override
