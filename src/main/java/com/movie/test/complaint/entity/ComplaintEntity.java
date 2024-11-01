@@ -1,4 +1,4 @@
-package com.movie.test.report.complaint.entity;
+package com.movie.test.complaint.entity;
 
 import com.movie.test.common.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
@@ -25,7 +25,10 @@ public class ComplaintEntity extends BaseTimeEntity {
     private String userId; // 신고한 유저
 
     @Column
-    private String reportId; // 신고당한 감상문
+    private String type; // 게시글 또는 댓글
+
+    @Column
+    private String targetId; // 대상 id
 
     @Column
     private String content; // 신고내용
