@@ -1,5 +1,6 @@
 package com.movie.test.user.block.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.movie.test.common.dto.BaseTimeDTO;
 import com.movie.test.user.block.entity.BlockEntity;
 import com.movie.test.user.block.mapper.BlockMapper;
@@ -14,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BlockDto extends BaseTimeDTO {
 
     private String blockId;
@@ -21,7 +23,6 @@ public class BlockDto extends BaseTimeDTO {
     private String userId; // 유저아이디
 
     private String targetId; // 차단 대상
-    private String blockTargetNickname; // 차단 대상 닉네임
 
     public static BlockDto toDTO(BlockEntity entity) {
         return BlockMapper.INSTANCE.toDto(entity);

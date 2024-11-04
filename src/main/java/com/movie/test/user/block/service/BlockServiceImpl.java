@@ -4,6 +4,7 @@ import com.movie.test.common.cef.CustomUUID;
 import com.movie.test.user.block.dto.BlockDto;
 import com.movie.test.user.block.dto.BlockSaveDto;
 import com.movie.test.user.block.entity.BlockEntity;
+import com.movie.test.user.block.mapper.BlockSaveMapper;
 import com.movie.test.user.block.repository.BlockRepository;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
 import com.movie.test.user.userinfo.dto.UserDto;
@@ -30,9 +31,9 @@ public class BlockServiceImpl implements BlockService{
         if(blockEntity != null){
             return BlockDto.toDTO(blockEntity);
         }
-
-        blockSaveDto.setBlockId(CustomUUID.createUUID());
-        blockEntity = blockRepository.save(BlockSaveDto.toEntity(blockSaveDto));
+        BlockDto blockDto = BlockSaveMapper.INSTANCE.toMetaDto(blockSaveDto);
+        blockDto.setBlockId(CustomUUID.createUUID());
+        blockEntity = blockRepository.save(BlockDto.toEntity(blockDto));
 
         return BlockDto.toDTO(blockEntity);
     }
