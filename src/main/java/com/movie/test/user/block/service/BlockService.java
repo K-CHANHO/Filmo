@@ -1,5 +1,6 @@
 package com.movie.test.user.block.service;
 
+import com.movie.test.user.block.dto.BlockDeleteDto;
 import com.movie.test.user.block.dto.BlockDto;
 import com.movie.test.user.block.dto.BlockSaveDto;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
@@ -10,7 +11,7 @@ import org.springframework.data.domain.Slice;
 public interface BlockService {
     BlockDto saveBlock(BlockSaveDto blockSaveDto);
 
-    void deleteBlock(String blockId);
+    String deleteBlock(BlockDeleteDto blockDeleteDto);
 
     Slice<UserDto> getBlockList(FollowListSearchDTO blockListSearchDTO, Pageable pageable);
 

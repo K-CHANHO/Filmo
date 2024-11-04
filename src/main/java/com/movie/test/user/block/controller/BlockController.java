@@ -49,11 +49,12 @@ public class BlockController {
     @Operation(summary = "차단 취소", description = "차단을 취소합니다.")
     @ApiResponse(responseCode = "200")
     @DeleteMapping("/delete")
-    public ResponseEntity deleteBlock(@RequestBody BlockDeleteDto blockDeleteDto){
-        // TODO : 권한체크 -> 쿼리에 userId 추가? 아니면 소스 단에서 제어?
-        blockService.deleteBlock(blockDeleteDto.getBlockId());
+    public ResponseEntity deleteBlock(@RequestBody BlockDeleteDto blockDeleteDto, @AuthenticationPrincipal CustomUser user){
 
-        return new ResponseEntity(HttpStatus.OK);
+        blockDeleteDto.setUserId(user.getUserId());
+        String deletedId = blockService.deleteBlock(blockDeleteDto);
+
+        return new ResponseEntity(deletedId, HttpStatus.OK);
     }
 
     @Operation(summary = "차단 목록", description = "차단 목록을 조회합니다.")

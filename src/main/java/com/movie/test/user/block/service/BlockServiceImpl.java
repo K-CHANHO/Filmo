@@ -1,6 +1,7 @@
 package com.movie.test.user.block.service;
 
 import com.movie.test.common.cef.CustomUUID;
+import com.movie.test.user.block.dto.BlockDeleteDto;
 import com.movie.test.user.block.dto.BlockDto;
 import com.movie.test.user.block.dto.BlockSaveDto;
 import com.movie.test.user.block.entity.BlockEntity;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -39,8 +41,11 @@ public class BlockServiceImpl implements BlockService{
     }
 
     @Override
-    public void deleteBlock(String blockId) {
-        blockRepository.deleteById(blockId);
+    @Transactional
+    public String deleteBlock(BlockDeleteDto blockDeleteDto) {
+        blockRepository.deleteByBlockIdAndUserId(blockDeleteDto.getBlockId(), blockDeleteDto.getUserId());
+
+        return blockDeleteDto.getBlockId();
     }
 
     @Override
