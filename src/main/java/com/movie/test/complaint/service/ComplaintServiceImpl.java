@@ -6,6 +6,8 @@ import com.movie.test.complaint.dto.ComplaintSaveDto;
 import com.movie.test.complaint.entity.ComplaintEntity;
 import com.movie.test.complaint.mapper.ComplaintSaveMapper;
 import com.movie.test.complaint.repository.ComplaintRepository;
+import com.movie.test.report.reply.repository.ReplyRepository;
+import com.movie.test.report.report.repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +18,21 @@ import org.springframework.transaction.annotation.Transactional;
 public class ComplaintServiceImpl implements ComplaintService {
 
     private final ComplaintRepository complaintRepository;
+    private final ReportRepository reportRepository;
+    private final ReplyRepository replyRepository;
 
     @Override
     public ComplaintDto saveComplaint(ComplaintSaveDto complaintSaveDto) {
+
+        boolean validation = false;
+        if("report".equals(complaintSaveDto.getType().toLowerCase())){
+            validation = reportRepository.existsById(complaintSaveDto.getTargetId());
+        } else if("reply".equals(complaintSaveDto.getType().toLowerCase())){
+            validation = replyRepository.existsById(complaintSaveDto.getTargetId());
+        }
+        if(!validation){
+            throw new RuntimeException("신고하려는 대상이 유효하지 않습니다.");
+        }
 
         // 동일한 사용자가 동일한 게시물 중복 신고 방지.
         ComplaintEntity complaint = complaintRepository.findByUserIdAndTargetId(complaintSaveDto.getUserId(), complaintSaveDto.getTargetId());

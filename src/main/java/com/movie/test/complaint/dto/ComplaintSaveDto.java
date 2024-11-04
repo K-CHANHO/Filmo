@@ -15,10 +15,10 @@ public class ComplaintSaveDto extends BaseTimeDTO {
     @Hidden
     private String userId;
 
-    @Schema(description = "신고할 대상의 id")
+    @Schema(description = "신고할 대상의 id", requiredMode = Schema.RequiredMode.REQUIRED)
     private String targetId;
 
-    @Schema(description = "report: 감상문, reply: 댓글")
+    @Schema(description = "report: 감상문, reply: 댓글", requiredMode = Schema.RequiredMode.REQUIRED)
     private String type;
 
     @Schema(description = "신고 내용")
