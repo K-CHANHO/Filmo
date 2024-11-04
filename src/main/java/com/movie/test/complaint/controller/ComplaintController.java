@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ public class ComplaintController {
 
     @Operation(summary = "감상문 신고", description = "감상문 또는 댓글을 신고합니다")
     @PostMapping("/save")
-    public ResponseEntity saveComplaint(ComplaintSaveDto complaintSaveDto, @AuthenticationPrincipal CustomUser user) {
+    public ResponseEntity saveComplaint(@RequestBody ComplaintSaveDto complaintSaveDto, @AuthenticationPrincipal CustomUser user) {
 
         complaintSaveDto.setUserId(user.getUserId());
         ComplaintDto savedComplaintDto = complaintService.saveComplaint(complaintSaveDto);
