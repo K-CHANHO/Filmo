@@ -48,8 +48,8 @@ public class SecurityConfig {
                                 AntPathRequestMatcher.antMatcher("/admin/**")
                         ).hasRole("ADMIN")
 //                        .requestMatchers(PathRequest.toH2Console()).permitAll()
-//                        .anyRequest().authenticated() // 그 외 요청은 인증 필요
-                        .anyRequest().permitAll() // 그 외 요청은 인증 필요
+                        .anyRequest().authenticated() // 그 외 요청은 인증 필요
+//                        .anyRequest().permitAll() // 그 외 요청은 인증 필요
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
         ;
