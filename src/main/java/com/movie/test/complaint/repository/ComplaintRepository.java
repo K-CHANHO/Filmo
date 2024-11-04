@@ -7,13 +7,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ComplaintRepository extends JpaRepository<ComplaintEntity, String> {
 
-    long countByReportId(String reportId);
+    long countByTargetId(String targetId);
 
-    void deleteByReportId(String reportId);
+    void deleteByTargetId(String targetId);
 
-    boolean existsByUserIdAndReportId(String userId, String reportId);
+    boolean existsByUserIdAndTargetId(String userId, String targetId);
 
-    ComplaintEntity findByUserIdAndReportId(String userId, String reportId);
+    ComplaintEntity findByUserIdAndTargetId(String userId, String targetId);
 
-    void deleteByUserIdAndReportId(String userId, String reportId);
+    void deleteByUserIdAndTargetId(String userId, String targetId);
 }

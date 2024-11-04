@@ -1,13 +1,14 @@
 package com.movie.test.complaint.service;
 
+import com.movie.test.common.cef.CustomUUID;
 import com.movie.test.complaint.dto.ComplaintDto;
+import com.movie.test.complaint.dto.ComplaintSaveDto;
 import com.movie.test.complaint.entity.ComplaintEntity;
+import com.movie.test.complaint.mapper.ComplaintSaveMapper;
 import com.movie.test.complaint.repository.ComplaintRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,17 +18,15 @@ public class ComplaintServiceImpl implements ComplaintService {
     private final ComplaintRepository complaintRepository;
 
     @Override
-    public ComplaintDto registComplaint(ComplaintDto complaintDTO) {
+    public ComplaintDto saveComplaint(ComplaintSaveDto complaintSaveDto) {
 
         // 동일한 사용자가 동일한 게시물 중복 신고 방지.
-        ComplaintEntity complaint = complaintRepository.findByUserIdAndReportId(complaintDTO.getUserId(), complaintDTO.getReportId());
+        ComplaintEntity complaint = complaintRepository.findByUserIdAndTargetId(complaintSaveDto.getUserId(), complaintSaveDto.getTargetId());
 
         if(complaint == null){
-            StringBuilder stringBuilder = new StringBuilder(String.valueOf(System.currentTimeMillis()));
-            stringBuilder.append(UUID.randomUUID().toString());
-
-            complaintDTO.setComplaintId(stringBuilder.toString());
-            complaint = complaintRepository.save(ComplaintDto.toEntity(complaintDTO));
+            ComplaintDto complaintDto = ComplaintSaveMapper.INSTANCE.toMetaDto(complaintSaveDto);
+            complaintDto.setComplaintId(CustomUUID.createUUID());
+            complaint = complaintRepository.save(ComplaintDto.toEntity(complaintDto));
         }
 
         return ComplaintDto.toDTO(complaint);
@@ -36,18 +35,18 @@ public class ComplaintServiceImpl implements ComplaintService {
     @Override
     public long getComplaintCount(String reportId) {
 
-        long complaintCount = complaintRepository.countByReportId(reportId);
+        long complaintCount = complaintRepository.countByTargetId(reportId);
 
         return complaintCount;
     }
 
     @Override
     public void deleteComplaintByReportId(String reportId) {
-        complaintRepository.deleteByReportId(reportId);
+        complaintRepository.deleteByTargetId(reportId);
     }
 
     @Override
     public void deleteById(String userId, String reportId) {
-        complaintRepository.deleteByUserIdAndReportId(userId, reportId);
+        complaintRepository.deleteByUserIdAndTargetId(userId, reportId);
     }
 }

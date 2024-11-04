@@ -1,7 +1,9 @@
 package com.movie.test.complaint.controller;
 
 import com.movie.test.complaint.dto.ComplaintDto;
+import com.movie.test.complaint.dto.ComplaintSaveDto;
 import com.movie.test.complaint.service.ComplaintService;
+import com.movie.test.user.userinfo.dto.CustomUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,17 +27,13 @@ public class ComplaintController {
     private final ComplaintService complaintService;
 
     @Operation(summary = "감상문 신고", description = "감상문 또는 댓글을 신고합니다")
-    @Parameters(value = {
-            @Parameter(name = "reportId", description = "신고당한 감상문 id"),
-            @Parameter(name = "content", description = "신고내용")
-    })
     @PostMapping("/save")
-    public ResponseEntity saveComplaint(ComplaintDto complaintDTO) {
+    public ResponseEntity saveComplaint(ComplaintSaveDto complaintSaveDto, @AuthenticationPrincipal CustomUser user) {
 
-        ComplaintDto registedComplaint = complaintService.registComplaint(complaintDTO);
-        log.info("[{}] 님이 [{}] 감상문을 신고하였습니다.", complaintDTO.getUserId(), complaintDTO.getReportId());
+        complaintSaveDto.setUserId(user.getUserId());
+        ComplaintDto savedComplaintDto = complaintService.saveComplaint(complaintSaveDto);
 
-        return new ResponseEntity(registedComplaint.getComplaintId(), HttpStatus.OK);
+        return new ResponseEntity(savedComplaintDto.getComplaintId(), HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 신고 취소", description = "감상문 신고를 취소합니다.", deprecated = true)
