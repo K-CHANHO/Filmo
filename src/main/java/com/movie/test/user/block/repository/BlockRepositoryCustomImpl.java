@@ -3,7 +3,7 @@ package com.movie.test.user.block.repository;
 import com.movie.test.user.block.entity.QBlockEntity;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
 import com.movie.test.user.userinfo.entity.QUserEntity;
-import com.movie.test.user.userinfo.entity.UserEntity;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -24,32 +24,27 @@ public class BlockRepositoryCustomImpl implements BlockRepositoryCustom {
     private QUserEntity user = QUserEntity.userEntity;
 
     @Override
-    public Slice<UserEntity> getBlockList(FollowListSearchDTO searchDTO, Pageable pageable) {
+    public Slice<Tuple> getBlockList(FollowListSearchDTO searchDTO, Pageable pageable) {
 
-        List<String> fetch = jpaQueryFactory.select(block.targetId)
+        List<Tuple> fetch = jpaQueryFactory.select(block.blockId, block.targetId, user.nickname)
                 .from(block)
+                .leftJoin(user).on(block.targetId.eq(user.userId))
                 .where(
                         block.userId.eq(searchDTO.getUserId()),
                         block.userId.gt(searchDTO.getLastUserId()),
                         nicknameCheck(searchDTO.getKeyword())
                 )
+                .limit(pageable.getPageSize() + 1)
                 .orderBy(block.createDate.desc())
                 .fetch();
 
-        List<UserEntity> userEntities = jpaQueryFactory.selectFrom(user)
-                .where(
-                        user.userId.in(fetch)
-                )
-                .limit(pageable.getPageSize() + 1)
-                .fetch();
-
         boolean hasNext = false;
-        if(userEntities.size() > pageable.getPageSize()){
+        if(fetch.size() > pageable.getPageSize()){
             hasNext = true;
-            userEntities.remove(pageable.getPageSize());
+            fetch.remove(pageable.getPageSize());
         }
 
-        return new SliceImpl<>(userEntities, pageable, hasNext);
+        return new SliceImpl<>(fetch, pageable, hasNext);
     }
 
     private BooleanExpression nicknameCheck(String keyword) {
