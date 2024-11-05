@@ -19,7 +19,13 @@ public class QLikeEntity extends EntityPathBase<LikeEntity> {
 
     public static final QLikeEntity likeEntity = new QLikeEntity("likeEntity");
 
-    public final DateTimePath<java.sql.Timestamp> createdAt = createDateTime("createdAt", java.sql.Timestamp.class);
+    public final com.movie.test.common.entity.QBaseTimeEntity _super = new com.movie.test.common.entity.QBaseTimeEntity(this);
+
+    //inherited
+    public final DateTimePath<java.sql.Timestamp> createDate = _super.createDate;
+
+    //inherited
+    public final DateTimePath<java.sql.Timestamp> lastModifiedDate = _super.lastModifiedDate;
 
     public final StringPath likeId = createString("likeId");
 

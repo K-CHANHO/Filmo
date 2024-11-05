@@ -1,8 +1,7 @@
-package com.movie.test.report.complaint.entity;
+package com.movie.test.complaint.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.movie.test.complaint.entity.ComplaintEntity;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -16,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QComplaintEntity extends EntityPathBase<ComplaintEntity> {
 
-    private static final long serialVersionUID = -1644179313L;
+    private static final long serialVersionUID = -789544553L;
 
     public static final QComplaintEntity complaintEntity = new QComplaintEntity("complaintEntity");
 
@@ -32,7 +31,9 @@ public class QComplaintEntity extends EntityPathBase<ComplaintEntity> {
     //inherited
     public final DateTimePath<java.sql.Timestamp> lastModifiedDate = _super.lastModifiedDate;
 
-    public final StringPath reportId = createString("reportId");
+    public final StringPath targetId = createString("targetId");
+
+    public final StringPath type = createString("type");
 
     public final StringPath userId = createString("userId");
 
