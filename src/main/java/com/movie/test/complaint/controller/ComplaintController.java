@@ -37,7 +37,7 @@ public class ComplaintController {
         return new ResponseEntity(savedComplaintDto.getComplaintId(), HttpStatus.OK);
     }
 
-    @Operation(summary = "감상문 신고 취소", description = "감상문 신고를 취소합니다.", deprecated = true)
+    @Operation(summary = "감상문 신고 취소", description = "감상문 신고를 취소합니다. => 신고는 취소 불가", deprecated = true)
     @Parameters(value = {
             @Parameter(name = "reportId", description = "신고당한 감상문 id"),
     })
