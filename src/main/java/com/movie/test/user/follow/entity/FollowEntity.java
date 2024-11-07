@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UuidGenerator;
 
 @Entity
@@ -17,6 +18,7 @@ import org.hibernate.annotations.UuidGenerator;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @DynamicUpdate
+@SQLDelete(sql = "UPDATE mv_follow SET isDeleted = true, deleteDate = now() WHERE followId = ?")
 public class FollowEntity extends BaseTimeEntity {
 
     @Id

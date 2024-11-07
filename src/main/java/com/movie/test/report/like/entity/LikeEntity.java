@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Table(name = "mv_like")
@@ -16,6 +17,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @ToString
 @Getter
 @DynamicUpdate
+@SQLDelete(sql = "UPDATE mv_like SET isDeleted = true, deleteDate = now() WHERE likeId = ?")
 public class LikeEntity extends BaseTimeEntity {
 
     @Id

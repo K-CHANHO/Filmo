@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Table(name = "mv_bookmark")
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@SQLDelete(sql = "UPDATE mv_bookmark SET isDeleted = true, deleteDate = now() WHERE bookmarkId = ?")
 public class BookmarkEntity {
 
     @Id

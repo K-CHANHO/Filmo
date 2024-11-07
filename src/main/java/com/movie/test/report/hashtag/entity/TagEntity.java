@@ -4,6 +4,7 @@ import com.movie.test.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Builder
@@ -13,6 +14,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Getter
 @DynamicUpdate
 @Table(name = "mv_hashtag")
+@SQLDelete(sql = "UPDATE mv_hashtag SET isDeleted = true, deleteDate = now() WHERE tagId = ?")
 public class TagEntity extends BaseTimeEntity {
 
     @Id
