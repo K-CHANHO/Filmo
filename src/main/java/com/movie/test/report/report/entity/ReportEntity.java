@@ -4,6 +4,7 @@ import com.movie.test.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Table(name = "mv_report")
@@ -13,6 +14,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @ToString
 @Getter
 @DynamicUpdate
+@SQLDelete(sql = "UPDATE mv_report SET isDeleted = true, deleteDate = now() WHERE reportId = ?")
 public class ReportEntity extends BaseTimeEntity {
 
     @Id

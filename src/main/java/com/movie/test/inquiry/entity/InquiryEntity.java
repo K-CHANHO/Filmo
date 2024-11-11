@@ -9,6 +9,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Getter
@@ -19,6 +20,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 @DynamicInsert
 @Table(name = "mv_inquiry")
+@SQLDelete(sql = "UPDATE mv_inquiry SET isDeleted = true, deleteDate = now() WHERE inquiryId = ?")
 public class InquiryEntity extends BaseTimeEntity {
 
     @Id
