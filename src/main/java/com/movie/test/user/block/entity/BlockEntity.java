@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Table(name = "mv_block")
@@ -16,6 +17,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @DynamicUpdate
+@SQLDelete(sql = "UPDATE mv_block SET isDeleted = true, deleteDate = now() WHERE blockId = ?")
 public class BlockEntity extends BaseTimeEntity {
 
     @Id

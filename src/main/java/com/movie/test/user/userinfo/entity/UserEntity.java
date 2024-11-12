@@ -4,6 +4,7 @@ import com.movie.test.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLDelete;
 
 import java.sql.Timestamp;
 
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @ToString
 @Getter
+@SQLDelete(sql = "UPDATE mv_user SET isDeleted = true, deleteDate = now() WHERE userId = ?")
 public class UserEntity extends BaseTimeEntity {
 
     @Id
