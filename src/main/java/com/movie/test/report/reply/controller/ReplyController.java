@@ -27,8 +27,8 @@ public class ReplyController {
     @Operation(summary = "댓글 가져오기", description = "해당 감상문의 댓글을 조회합니다")
     @Parameter(name = "reportId", description = "감상문 id", required = true)
     @GetMapping("/get/{reportId}")
-    public List<ReplyDto> getReplies(@PathVariable String reportId) {
-        List<ReplyDto> replies = replyService.getReplies(reportId);
+    public List<ReplyDto> getReplies(@PathVariable String reportId, @Parameter(hidden = true) String userId) {
+        List<ReplyDto> replies = replyService.getReplies(reportId, userId);
 
         return replies;
     }
@@ -36,8 +36,8 @@ public class ReplyController {
     @Operation(summary = "서브댓글 가져오기", description = "원댓글의 서브댓글을 조회합니다", deprecated = true)
     @Parameter(name = "replyId", description = "원댓글 id", required = true)
     @GetMapping("/getSubReplies/{replyId}")
-    public List<ReplyDto> getSubReplies(@PathVariable String replyId) {
-        List<ReplyDto> replies = replyService.getSubReplies(replyId);
+    public List<ReplyDto> getSubReplies(@PathVariable String replyId, String userId) {
+        List<ReplyDto> replies = replyService.getSubReplies(replyId, userId);
 
         return replies;
     }

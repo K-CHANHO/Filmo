@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReplyRepository extends JpaRepository<ReplyEntity, String> {
+public interface ReplyRepository extends JpaRepository<ReplyEntity, String> , ReplyRepositoryCustom{
 
     List<ReplyEntity> findByReportIdOrderByCreateDate(String reportId);
     List<ReplyEntity> findByReportIdAndUpReplyIdIsNullOrderByCreateDate(String reportId);

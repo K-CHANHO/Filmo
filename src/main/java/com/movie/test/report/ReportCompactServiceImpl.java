@@ -93,7 +93,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         Long likeCount = likeService.countLike(reportId);
 
         // 댓글 수
-        Long replyCount =  Long.valueOf(replyService.getReplies(reportId).size());
+        Long replyCount =  Long.valueOf(replyService.getReplies(reportId, "NEED TO FIX").size());
 
         // 북마크 수
         Long bookmarkCount = bookmarkService.getBookmarkCount(reportId);
@@ -133,7 +133,7 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         reportDTO.setComplaintCount(complaintService.getComplaintCount(reportId));
 
         // 3. 댓글 조회
-        List<ReplyDto> replies = replyService.getReplies(reportId);
+        List<ReplyDto> replies = replyService.getReplies(reportId, "NEED TO FIX");
         reportDTO.setReplyCount((long) replies.size());
 
         // 4. 태그 조회
