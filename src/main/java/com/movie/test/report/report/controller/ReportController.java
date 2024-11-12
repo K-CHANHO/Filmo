@@ -97,7 +97,9 @@ public class ReportController {
     @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다. 다른 사용자가 작성한 감상문을 조회하려면 targetId 값을 추가해주세요.")
     @ApiResponse(responseCode = "200", description = "팔로워 목록 리턴")
     @PostMapping("/searchReport")
-    public ResponseEntity getSearchReport(@RequestBody ReportSearchDTO reportSearchDTO, @Parameter(hidden = true) Pageable pageable){
+    public ResponseEntity getSearchReport(@RequestBody ReportSearchDTO reportSearchDTO, @Parameter(hidden = true) Pageable pageable, @AuthenticationPrincipal CustomUser user){
+
+        reportSearchDTO.setUserId(user.getUserId());
 
         Slice<ReportSimpleDTO> searchReport = reportCompactService.getReportList(reportSearchDTO, pageable);
         Long searchReportCount = reportService.getSearchReportCount(reportSearchDTO);
