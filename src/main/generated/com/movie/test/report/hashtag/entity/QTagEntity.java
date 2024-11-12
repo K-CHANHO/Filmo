@@ -27,6 +27,12 @@ public class QTagEntity extends EntityPathBase<TagEntity> {
     public final DateTimePath<java.sql.Timestamp> createDate = _super.createDate;
 
     //inherited
+    public final DateTimePath<java.sql.Timestamp> deleteDate = _super.deleteDate;
+
+    //inherited
+    public final BooleanPath isDeleted = _super.isDeleted;
+
+    //inherited
     public final DateTimePath<java.sql.Timestamp> lastModifiedDate = _super.lastModifiedDate;
 
     public final NumberPath<Long> tagId = createNumber("tagId", Long.class);

@@ -30,7 +30,13 @@ public class QInquiryEntity extends EntityPathBase<InquiryEntity> {
     //inherited
     public final DateTimePath<java.sql.Timestamp> createDate = _super.createDate;
 
+    //inherited
+    public final DateTimePath<java.sql.Timestamp> deleteDate = _super.deleteDate;
+
     public final StringPath inquiryId = createString("inquiryId");
+
+    //inherited
+    public final BooleanPath isDeleted = _super.isDeleted;
 
     //inherited
     public final DateTimePath<java.sql.Timestamp> lastModifiedDate = _super.lastModifiedDate;

@@ -24,9 +24,15 @@ public class QUserEntity extends EntityPathBase<UserEntity> {
     //inherited
     public final DateTimePath<java.sql.Timestamp> createDate = _super.createDate;
 
+    //inherited
+    public final DateTimePath<java.sql.Timestamp> deleteDate = _super.deleteDate;
+
     public final StringPath email = createString("email");
 
     public final StringPath introduction = createString("introduction");
+
+    //inherited
+    public final BooleanPath isDeleted = _super.isDeleted;
 
     public final DateTimePath<java.sql.Timestamp> lastLoginDate = createDateTime("lastLoginDate", java.sql.Timestamp.class);
 

@@ -27,6 +27,12 @@ public class QReplyEntity extends EntityPathBase<ReplyEntity> {
     public final DateTimePath<java.sql.Timestamp> createDate = _super.createDate;
 
     //inherited
+    public final DateTimePath<java.sql.Timestamp> deleteDate = _super.deleteDate;
+
+    //inherited
+    public final BooleanPath isDeleted = _super.isDeleted;
+
+    //inherited
     public final DateTimePath<java.sql.Timestamp> lastModifiedDate = _super.lastModifiedDate;
 
     public final StringPath replyId = createString("replyId");

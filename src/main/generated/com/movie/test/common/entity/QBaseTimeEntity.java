@@ -21,6 +21,10 @@ public class QBaseTimeEntity extends EntityPathBase<BaseTimeEntity> {
 
     public final DateTimePath<java.sql.Timestamp> createDate = createDateTime("createDate", java.sql.Timestamp.class);
 
+    public final DateTimePath<java.sql.Timestamp> deleteDate = createDateTime("deleteDate", java.sql.Timestamp.class);
+
+    public final BooleanPath isDeleted = createBoolean("isDeleted");
+
     public final DateTimePath<java.sql.Timestamp> lastModifiedDate = createDateTime("lastModifiedDate", java.sql.Timestamp.class);
 
     public QBaseTimeEntity(String variable) {
