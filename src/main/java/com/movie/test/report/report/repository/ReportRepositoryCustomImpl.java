@@ -2,6 +2,7 @@ package com.movie.test.report.report.repository;
 
 import com.movie.test.report.report.dto.ReportSearchDTO;
 import com.movie.test.report.report.entity.QReportEntity;
+import com.movie.test.user.block.entity.QBlockEntity;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -21,15 +22,25 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
 
     private QReportEntity report = QReportEntity.reportEntity;
+    private QBlockEntity block = QBlockEntity.blockEntity;
 
     @Override
     public Slice<String> getReportListId(ReportSearchDTO reportSearchDTO, Pageable pageable) {
+
+        // 차단한 유저의 ID 구하기
+        List<String> blockUserId = jpaQueryFactory.select(block.targetId)
+                .from(block)
+                .where(
+                        block.userId.eq(reportSearchDTO.getUserId())
+                )
+                .fetch();
 
         List<String> reportIdList = jpaQueryFactory.select(report.reportId)
                 .from(report)
                 .where(
                         //report.reportId.lt(reportSearchDTO.getLastReportId()),
-                        searchCondition(reportSearchDTO)
+                        searchCondition(reportSearchDTO),
+                        report.userId.notIn(blockUserId)
                 )
                 .orderBy(report.createDate.desc())
                 .limit(pageable.getPageSize() + 1)

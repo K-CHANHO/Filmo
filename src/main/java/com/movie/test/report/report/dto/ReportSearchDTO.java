@@ -1,5 +1,6 @@
 package com.movie.test.report.report.dto;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,5 +21,8 @@ public class ReportSearchDTO {
 
     @Schema(description = "해당 사용자의 감상문 검색")
     private String targetId;
+
+    @Hidden
+    private String userId;
 
 }

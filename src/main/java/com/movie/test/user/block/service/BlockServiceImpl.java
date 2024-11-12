@@ -8,7 +8,8 @@ import com.movie.test.user.block.entity.BlockEntity;
 import com.movie.test.user.block.mapper.BlockSaveMapper;
 import com.movie.test.user.block.repository.BlockRepository;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
-import com.querydsl.core.Tuple;
+import com.movie.test.user.userinfo.dto.UserDto;
+import com.movie.test.user.userinfo.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -48,10 +49,10 @@ public class BlockServiceImpl implements BlockService{
     }
 
     @Override
-    public Slice<Tuple> getBlockList(FollowListSearchDTO blockListSearchDTO, Pageable pageable) {
-        Slice<Tuple> blockList = blockRepository.getBlockList(blockListSearchDTO, pageable);
-//        Slice<UserDto> blockListDTO = blockList.map(UserDto::toDTO);
-        return blockList;
+    public Slice<UserDto> getBlockList(FollowListSearchDTO blockListSearchDTO, Pageable pageable) {
+        Slice<UserEntity> blockList = blockRepository.getBlockList(blockListSearchDTO, pageable);
+        Slice<UserDto> blockListDTO = blockList.map(UserDto::toDTO);
+        return blockListDTO;
     }
 
     @Override

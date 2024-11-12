@@ -3,7 +3,7 @@ package com.movie.test.user.block.repository;
 import com.movie.test.user.block.entity.QBlockEntity;
 import com.movie.test.user.follow.dto.FollowListSearchDTO;
 import com.movie.test.user.userinfo.entity.QUserEntity;
-import com.querydsl.core.Tuple;
+import com.movie.test.user.userinfo.entity.UserEntity;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +24,10 @@ public class BlockRepositoryCustomImpl implements BlockRepositoryCustom {
     private QUserEntity user = QUserEntity.userEntity;
 
     @Override
-    public Slice<Tuple> getBlockList(FollowListSearchDTO searchDTO, Pageable pageable) {
+    public Slice<UserEntity> getBlockList(FollowListSearchDTO searchDTO, Pageable pageable) {
 
-        List<Tuple> fetch = jpaQueryFactory.select(block.blockId, block.targetId, user.nickname)
+        List<String> fetch = jpaQueryFactory.select(block.targetId)
                 .from(block)
-                .leftJoin(user).on(block.targetId.eq(user.userId))
                 .where(
                         block.userId.eq(searchDTO.getUserId()),
                         block.userId.gt(searchDTO.getLastUserId()),
@@ -38,13 +37,19 @@ public class BlockRepositoryCustomImpl implements BlockRepositoryCustom {
                 .orderBy(block.createDate.desc())
                 .fetch();
 
+        List<UserEntity> targetUser = jpaQueryFactory.selectFrom(user)
+                .where(
+                        user.userId.in(fetch)
+                )
+                .fetch();
+
         boolean hasNext = false;
         if(fetch.size() > pageable.getPageSize()){
             hasNext = true;
             fetch.remove(pageable.getPageSize());
         }
 
-        return new SliceImpl<>(fetch, pageable, hasNext);
+        return new SliceImpl<>(targetUser, pageable, hasNext);
     }
 
     private BooleanExpression nicknameCheck(String keyword) {

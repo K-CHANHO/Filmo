@@ -11,8 +11,8 @@ public interface ReplyService {
     ReplySaveDto saveReply(ReplySaveDto replySaveDtoe);
     ReplyDto updateReply(ReplyUpdateDto replyUpdateDto);
 
-    List<ReplyDto> getReplies(String reportId);
-    List<ReplyDto> getSubReplies(String replyId);
+    List<ReplyDto> getReplies(String reportId, String userId);
+    List<ReplyDto> getSubReplies(String replyId, String userId);
 
     void deleteReply(String replyId);
 

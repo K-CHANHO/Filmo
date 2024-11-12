@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -47,13 +46,13 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public List<ReplyDto> getReplies(String reportId) {
+    public List<ReplyDto> getReplies(String reportId, String userId) {
         List<ReplyDto> replyDtos = new ArrayList<>();
 
-        List<ReplyEntity> replies = replyRepository.findByReportIdAndUpReplyIdIsNullOrderByCreateDate(reportId);
+        List<ReplyEntity> replies = replyRepository.findFirstDepthReply(reportId, userId);
         replies.forEach((reply)->{
             ReplyDto dto = ReplyDto.toDTO(reply);
-            dto.setSubReply(getSubReplies(dto.getReplyId()));
+            dto.setSubReply(getSubReplies(dto.getReplyId(), userId));
             dto.setNickname(userRepository.findById(dto.getUserId()).get().getNickname());
 
             replyDtos.add(dto);
@@ -63,7 +62,7 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public List<ReplyDto> getSubReplies(String replyId) {
+    public List<ReplyDto> getSubReplies(String replyId, String userId) {
         List<ReplyDto> replyDtos = new ArrayList<>();
 
         List<ReplyEntity> replies = replyRepository.findByUpReplyIdOrderByCreateDate(replyId);

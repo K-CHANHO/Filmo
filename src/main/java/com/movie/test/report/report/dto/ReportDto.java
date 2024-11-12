@@ -22,6 +22,7 @@ public class ReportDto extends BaseTimeDTO {
     private String title;
     private String content;
     private String userId;
+    private String nickname; // 닉네임
     private String movieId;
     private String imageUrl; // 메인포스터 url
     private String tagString; // 태그 내용
@@ -31,6 +32,7 @@ public class ReportDto extends BaseTimeDTO {
     private Long likeCount; // 좋아요 수
 //    private boolean isLike; // 좋아요 유무 상태
     private Long viewCount; // 조회수
+
 
 
     public static ReportDto toDto(ReportEntity entity) {
