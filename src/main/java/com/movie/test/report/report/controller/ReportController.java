@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,7 +84,6 @@ public class ReportController {
 
     @Operation(summary = "감상문 삭제", description = "감상문을 삭제하고 관련 데이터(댓글, 태그, 신고내역)도 삭제합니다.")
     @Parameter(name = "reportId", description = "삭제할 감상문의 id", required = true)
-    @PreAuthorize("@reportAccessHandler.getUid(#reportId) == principal.username")
     @GetMapping("/deleteReport/{reportId}")
     public ResponseEntity deleteReport(@PathVariable String reportId){
 
