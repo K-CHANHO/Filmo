@@ -1,5 +1,6 @@
 package com.movie.test.report.like.controller;
 
+import com.movie.test.report.like.dto.LikeCheckDto;
 import com.movie.test.report.like.dto.LikeDto;
 import com.movie.test.report.like.dto.LikeSaveDto;
 import com.movie.test.report.like.service.LikeService;
@@ -46,8 +47,16 @@ public class LikeController {
     })
     @GetMapping("/check")
     public ResponseEntity checkLike(LikeDto likeDTO, @AuthenticationPrincipal CustomUser user){
+
+        LikeDto likeDto = likeService.getLikeDto(likeDTO);
         boolean isExistLike = likeService.checkLike(likeDTO, user.getUserId());
-        return new ResponseEntity(isExistLike, HttpStatus.OK);
+
+        LikeCheckDto returnData = LikeCheckDto.builder()
+                .likeId(likeDto.getLikeId())
+                .isLike(isExistLike)
+                .build();
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     @Operation(summary = "좋아요 수 확인", description = "감상문이나 댓글의 좋아요 수를 확인합니다.")

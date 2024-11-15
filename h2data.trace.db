@@ -2859,3 +2859,7 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:522)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 91 more
+2024-11-15 17:28:10.514960+09:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]59a6c4a7-b747-4282-bf1c-f55b019d14a6\0009\000d\000a17292164437717366beed71"; SQL statement:
+59a6c4a7-b747-4282-bf1c-f55b019d14a6	
+17292164437717366beed71 [42000-224]
