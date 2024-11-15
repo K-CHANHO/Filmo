@@ -78,4 +78,13 @@ public class LikeServiceImpl implements LikeService{
     public void deleteLike(String targetId) {
         likeRepository.deleteByTargetId(targetId);
     }
+
+    @Override
+    public LikeDto getLikeDto(LikeDto likeDto) {
+        LikeEntity entity = likeRepository.findByTargetIdAndUserIdAndType(likeDto.getTargetId(), likeDto.getUserId(), likeDto.getType())
+                .orElseGet(LikeEntity::new);
+
+
+        return LikeDto.toDTO(entity);
+    }
 }

@@ -13,4 +13,6 @@ public interface LikeService {
     void cancelLike(String likeId, String userId);
 
     void deleteLike(String targetId);
+
+    LikeDto getLikeDto(LikeDto likeDto);
 }
