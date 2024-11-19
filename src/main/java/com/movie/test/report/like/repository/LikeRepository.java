@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface LikeRepository extends JpaRepository<LikeEntity, String>, LikeReporisotyCustrom {
+public interface LikeRepository extends JpaRepository<LikeEntity, String>, LikeRepositoryCustom {
 
     boolean existsByTargetIdAndUserIdAndType(String targetId, String userId, String type);
 

@@ -58,7 +58,9 @@ public class LikeServiceImpl implements LikeService{
 
     @Override
     public boolean checkLike(LikeDto likeDTO, String userId) {
-        return likeRepository.existsByTargetIdAndUserIdAndType(likeDTO.getTargetId(), userId, likeDTO.getType());
+        likeDTO.setUserId(userId);
+//        return likeRepository.existsByTargetIdAndUserIdAndType(likeDTO.getTargetId(), userId, likeDTO.getType());
+        return likeRepository.existByLikeDto(likeDTO);
     }
 
     @Override
@@ -81,7 +83,9 @@ public class LikeServiceImpl implements LikeService{
 
     @Override
     public LikeDto getLikeDto(LikeDto likeDto) {
-        LikeEntity entity = likeRepository.findByTargetIdAndUserIdAndType(likeDto.getTargetId(), likeDto.getUserId(), likeDto.getType())
+//        LikeEntity entity = likeRepository.findByTargetIdAndUserIdAndType(likeDto.getTargetId(), likeDto.getUserId(), likeDto.getType())
+//                .orElseGet(LikeEntity::new);
+        LikeEntity entity = likeRepository.findByLikeDto(likeDto)
                 .orElseGet(LikeEntity::new);
 
 
