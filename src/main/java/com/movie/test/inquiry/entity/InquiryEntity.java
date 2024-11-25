@@ -6,10 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.*;
 
 @Entity
 @Getter
@@ -21,6 +18,7 @@ import org.hibernate.annotations.SQLDelete;
 @DynamicInsert
 @Table(name = "mv_inquiry")
 @SQLDelete(sql = "UPDATE mv_inquiry SET isDeleted = true, deleteDate = now() WHERE inquiryId = ?")
+@Where(clause = "isDeleted is not true")
 public class InquiryEntity extends BaseTimeEntity {
 
     @Id

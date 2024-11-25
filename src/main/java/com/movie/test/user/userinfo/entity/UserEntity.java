@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.sql.Timestamp;
 
@@ -17,6 +18,7 @@ import java.sql.Timestamp;
 @ToString
 @Getter
 @SQLDelete(sql = "UPDATE mv_user SET isDeleted = true, deleteDate = now() WHERE userId = ?")
+@Where(clause = "isDeleted is not true")
 public class UserEntity extends BaseTimeEntity {
 
     @Id

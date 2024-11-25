@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "mv_notification")
@@ -17,6 +18,7 @@ import org.hibernate.annotations.SQLDelete;
 @Getter
 @DynamicUpdate
 @SQLDelete(sql = "UPDATE mv_notification SET isDeleted = true, deleteDate = now() WHERE notificationId = ?")
+@Where(clause = "isDeleted is not true")
 public class NotificationEntity extends BaseTimeEntity {
 
     @Id
