@@ -19,7 +19,21 @@ public class QBookmarkEntity extends EntityPathBase<BookmarkEntity> {
 
     public static final QBookmarkEntity bookmarkEntity = new QBookmarkEntity("bookmarkEntity");
 
+    public final com.movie.test.common.entity.QBaseTimeEntity _super = new com.movie.test.common.entity.QBaseTimeEntity(this);
+
     public final StringPath bookmarkId = createString("bookmarkId");
+
+    //inherited
+    public final DateTimePath<java.sql.Timestamp> createDate = _super.createDate;
+
+    //inherited
+    public final DateTimePath<java.sql.Timestamp> deleteDate = _super.deleteDate;
+
+    //inherited
+    public final BooleanPath isDeleted = _super.isDeleted;
+
+    //inherited
+    public final DateTimePath<java.sql.Timestamp> lastModifiedDate = _super.lastModifiedDate;
 
     public final StringPath reportId = createString("reportId");
 

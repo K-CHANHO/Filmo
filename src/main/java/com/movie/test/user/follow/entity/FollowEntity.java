@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "mv_follow")
@@ -19,6 +19,7 @@ import org.hibernate.annotations.UuidGenerator;
 @Builder(toBuilder = true)
 @DynamicUpdate
 @SQLDelete(sql = "UPDATE mv_follow SET isDeleted = true, deleteDate = now() WHERE followId = ?")
+@Where(clause = "isDeleted is not true")
 public class FollowEntity extends BaseTimeEntity {
 
     @Id
