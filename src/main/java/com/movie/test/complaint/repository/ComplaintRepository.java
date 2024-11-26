@@ -16,4 +16,6 @@ public interface ComplaintRepository extends JpaRepository<ComplaintEntity, Stri
     ComplaintEntity findByUserIdAndTargetId(String userId, String targetId);
 
     void deleteByUserIdAndTargetId(String userId, String targetId);
+
+    void deleteByUserId(String userId);
 }

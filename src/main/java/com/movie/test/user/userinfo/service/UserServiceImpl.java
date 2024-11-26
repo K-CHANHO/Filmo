@@ -2,11 +2,24 @@ package com.movie.test.user.userinfo.service;
 
 import com.amazonaws.services.kms.model.NotFoundException;
 import com.movie.test.common.api.s3.service.S3Service;
+import com.movie.test.complaint.repository.ComplaintRepository;
+import com.movie.test.complaint.service.ComplaintService;
+import com.movie.test.inquiry.repository.InquiryRepository;
+import com.movie.test.notification.repository.NotificationRepository;
+import com.movie.test.report.ReportCompactServiceImpl;
+import com.movie.test.report.bookmark.repository.BookmarkRepository;
+import com.movie.test.report.bookmark.service.BookmarkService;
+import com.movie.test.report.hashtag.service.TagService;
+import com.movie.test.report.like.service.LikeService;
+import com.movie.test.report.reply.service.ReplyService;
+import com.movie.test.report.report.service.ReportService;
+import com.movie.test.report.view.service.ViewService;
+import com.movie.test.user.block.repository.BlockRepository;
+import com.movie.test.user.follow.repository.FollowRepository;
 import com.movie.test.user.token.dto.JwtTokenDTO;
+import com.movie.test.user.token.repository.TokenRepository;
 import com.movie.test.user.token.service.JwtTokenProvider;
-import com.movie.test.user.userinfo.dto.UserDto;
-import com.movie.test.user.userinfo.dto.UserInfoModifyDto;
-import com.movie.test.user.userinfo.dto.UserSignupDto;
+import com.movie.test.user.userinfo.dto.*;
 import com.movie.test.user.userinfo.entity.UserEntity;
 import com.movie.test.user.userinfo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +28,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -26,10 +40,19 @@ import java.util.UUID;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
     private final S3Service s3Service;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final UserRepository userRepository;
+    private final ComplaintRepository complaintRepository;
+    private final InquiryRepository inquiryRepository;
+    private final NotificationRepository notificationRepository;
+    private final BlockRepository blockRepository;
+    private final FollowRepository followRepository;
+    private final TokenRepository tokenRepository;
+    private final BookmarkRepository bookmarkRepository;
+
 
     @Override
     public UserDto saveUser(UserSignupDto userSignupDto) {
@@ -143,4 +166,25 @@ public class UserServiceImpl implements UserService {
         Boolean isExist = userRepository.existsByEmailAndType(email, type);
         return isExist;
     }
+
+    @Override
+    @Transactional
+    public void deleteUser(UserDeleteDto userDeleteDto, CustomUser user) {
+        String userId = user.getUserId();
+
+        if(userDeleteDto.getUserId().equals(userId)){
+            complaintRepository.deleteByUserId(userId);
+            inquiryRepository.deleteByUserId(userId);
+            blockRepository.deleteByUserId(userId);
+            followRepository.deleteByUserId(userId);
+            tokenRepository.deleteByUserId(userId);
+            bookmarkRepository.deleteByUserId(userId);
+
+            userRepository.deleteById(userId);
+
+        } else {
+            throw new RuntimeException("잘못된 접근입니다.");
+        }
+    }
+
 }

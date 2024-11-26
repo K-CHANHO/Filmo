@@ -2,6 +2,7 @@ package com.movie.test.user.userinfo.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.movie.test.report.ReportCompactService;
 import com.movie.test.user.token.dto.JwtTokenDTO;
 import com.movie.test.user.token.dto.TokenDTO;
 import com.movie.test.user.token.service.TokenService;
@@ -35,6 +36,7 @@ public class UserController {
     private final UserService userService;
     private final TokenService tokenService;
     private final Gson gson;
+    private final ReportCompactService reportCompactService;
 
     /**
      * 회원가입
@@ -148,6 +150,23 @@ public class UserController {
         UserDto modifiedUserinfo = userService.updateUserinfo(userInfoModifyDto, loginId);
 
         return new ResponseEntity(modifiedUserinfo, HttpStatus.OK);
+
+    }
+
+    /**
+     * 회원탈퇴
+     */
+    @Operation(summary = "회원탈퇴", description = "회원탈퇴 및 모든 데이터 삭제")
+    @DeleteMapping("/delete")
+    public ResponseEntity deleteUser(@RequestBody UserDeleteDto userDeleteDto, @AuthenticationPrincipal CustomUser user){
+
+        if(userDeleteDto.getUserId().equals(user.getUserId())) {
+            reportCompactService.deleteReportByUserId(user.getUserId());
+            userService.deleteUser(userDeleteDto, user);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
 
     }
 }

@@ -4,6 +4,8 @@ import com.movie.test.report.report.dto.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
+import java.util.List;
+
 public interface ReportCompactService {
 
     String saveReport(ReportSaveDto reportSaveDto);
@@ -16,4 +18,6 @@ public interface ReportCompactService {
 
     Slice<ReportSimpleDTO> getReportList(ReportSearchDTO reportSearchDTO, Pageable pageable);
     ReportSimpleDTO getSimpleReport(String reportId);
+
+    void deleteReportByUserId(String userId);
 }

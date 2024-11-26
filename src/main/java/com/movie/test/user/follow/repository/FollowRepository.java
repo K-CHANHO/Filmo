@@ -13,4 +13,6 @@ public interface FollowRepository extends JpaRepository<FollowEntity, String>, F
     Long countByTargetId(String TargetId);
 
     Boolean existsByUserIdAndTargetId(String userId, String targetId);
+
+    void deleteByUserId(String userId);
 }
