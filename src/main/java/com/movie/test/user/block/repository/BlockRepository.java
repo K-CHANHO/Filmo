@@ -13,4 +13,6 @@ public interface BlockRepository extends JpaRepository<BlockEntity, String>, Blo
     Long countByUserId(String userId);
 
     void deleteByBlockIdAndUserId(String blockId, String userId);
+
+    void deleteByUserId(String userId);
 }

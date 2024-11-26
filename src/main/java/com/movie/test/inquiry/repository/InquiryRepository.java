@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InquiryRepository extends JpaRepository<InquiryEntity, String>, InquiryRepositoryCustom {
+    void deleteByUserId(String userId);
 }

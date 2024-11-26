@@ -1,9 +1,7 @@
 package com.movie.test.user.userinfo.service;
 
 import com.movie.test.user.token.dto.JwtTokenDTO;
-import com.movie.test.user.userinfo.dto.UserDto;
-import com.movie.test.user.userinfo.dto.UserInfoModifyDto;
-import com.movie.test.user.userinfo.dto.UserSignupDto;
+import com.movie.test.user.userinfo.dto.*;
 
 import java.util.List;
 
@@ -22,4 +20,6 @@ public interface UserService {
 
     Boolean isExistUser(String email);
     Boolean isExistUser(String email, String type);
+
+    void deleteUser(UserDeleteDto userDeleteDto, CustomUser user);
 }

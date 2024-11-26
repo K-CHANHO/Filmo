@@ -9,4 +9,6 @@ public interface BookmarkRepository extends JpaRepository<BookmarkEntity, String
     Long countByReportId(String reportId);
 
     boolean existsByUserIdAndReportId(String userId, String reportId);
+
+    void deleteByUserId(String userId);
 }

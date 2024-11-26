@@ -201,5 +201,12 @@ public class ReportCompactServiceImpl implements ReportCompactService{
 
     }
 
+    @Override
+    public void deleteReportByUserId(String userId) {
+        List<String> reportIds = reportService.getReportIdByUserId(userId);
 
+        reportIds.stream().forEach(reportId -> deleteReport(reportId));
+
+    }
 }
+
