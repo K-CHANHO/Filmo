@@ -18,7 +18,7 @@ import org.hibernate.annotations.*;
 @DynamicInsert
 @Table(name = "mv_inquiry")
 @SQLDelete(sql = "UPDATE mv_inquiry SET isDeleted = true, deleteDate = now() WHERE inquiryId = ?")
-@Where(clause = "isDeleted is not true")
+@Where(clause = "isDeleted is null || isDeleted = 0")
 public class InquiryEntity extends BaseTimeEntity {
 
     @Id

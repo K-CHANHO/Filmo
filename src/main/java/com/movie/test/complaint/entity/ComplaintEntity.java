@@ -19,7 +19,7 @@ import org.hibernate.annotations.Where;
 @ToString
 @Getter
 @SQLDelete(sql = "UPDATE mv_complaint SET isDeleted = true, deleteDate = now() WHERE complaintId = ?")
-@Where(clause = "isDeleted is not true")
+@Where(clause = "isDeleted is null || isDeleted = 0")
 public class ComplaintEntity extends BaseTimeEntity {
 
     @Id

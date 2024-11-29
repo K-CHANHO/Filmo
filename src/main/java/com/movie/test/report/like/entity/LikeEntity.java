@@ -19,7 +19,7 @@ import org.hibernate.annotations.Where;
 @Getter
 @DynamicUpdate
 @SQLDelete(sql = "UPDATE mv_like SET isDeleted = true, deleteDate = now() WHERE likeId = ?")
-@Where(clause = "isDeleted is not true")
+@Where(clause = "isDeleted is null || isDeleted = 0")
 public class LikeEntity extends BaseTimeEntity {
 
     @Id

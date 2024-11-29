@@ -16,7 +16,7 @@ import org.hibernate.annotations.Where;
 @DynamicUpdate
 @Table(name = "mv_hashtag")
 @SQLDelete(sql = "UPDATE mv_hashtag SET isDeleted = true, deleteDate = now() WHERE tagId = ?")
-@Where(clause = "isDeleted is not true")
+@Where(clause = "isDeleted is null || isDeleted = 0")
 public class TagEntity extends BaseTimeEntity {
 
     @Id
