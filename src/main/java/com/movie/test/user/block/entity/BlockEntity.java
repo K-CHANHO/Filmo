@@ -19,7 +19,7 @@ import org.hibernate.annotations.Where;
 @Builder(toBuilder = true)
 @DynamicUpdate
 @SQLDelete(sql = "UPDATE mv_block SET isDeleted = true, deleteDate = now() WHERE blockId = ?")
-@Where(clause = "isDeleted is not true")
+@Where(clause = "isDeleted is null || isDeleted = 0")
 public class BlockEntity extends BaseTimeEntity {
 
     @Id

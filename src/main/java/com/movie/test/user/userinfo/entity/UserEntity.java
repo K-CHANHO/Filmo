@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 @ToString
 @Getter
 @SQLDelete(sql = "UPDATE mv_user SET isDeleted = true, deleteDate = now() WHERE userId = ?")
-@Where(clause = "isDeleted is not true")
+@Where(clause = "isDeleted is null || isDeleted = 0")
 public class UserEntity extends BaseTimeEntity {
 
     @Id

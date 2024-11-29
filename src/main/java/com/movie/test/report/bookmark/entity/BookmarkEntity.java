@@ -19,7 +19,7 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Getter
 @SQLDelete(sql = "UPDATE mv_bookmark SET isDeleted = true, deleteDate = now() WHERE bookmarkId = ?")
-@Where(clause = "isDeleted is not true")
+@Where(clause = "isDeleted is null || isDeleted = 0")
 public class BookmarkEntity extends BaseTimeEntity {
 
     @Id

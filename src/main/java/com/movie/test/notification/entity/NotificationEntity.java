@@ -18,7 +18,7 @@ import org.hibernate.annotations.Where;
 @Getter
 @DynamicUpdate
 @SQLDelete(sql = "UPDATE mv_notification SET isDeleted = true, deleteDate = now() WHERE notificationId = ?")
-@Where(clause = "isDeleted is not true")
+@Where(clause = "isDeleted is null || isDeleted = 0")
 public class NotificationEntity extends BaseTimeEntity {
 
     @Id
