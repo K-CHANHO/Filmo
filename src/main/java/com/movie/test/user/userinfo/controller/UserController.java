@@ -164,7 +164,7 @@ public class UserController {
         if(userDeleteDto.getUserId().equals(user.getUserId())) {
             reportCompactService.deleteReportByUserId(user.getUserId());
             userService.deleteUser(userDeleteDto, user);
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity("SUCCESS", HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
