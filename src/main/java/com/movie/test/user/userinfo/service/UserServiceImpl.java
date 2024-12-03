@@ -9,10 +9,15 @@ import com.movie.test.notification.repository.NotificationRepository;
 import com.movie.test.report.ReportCompactServiceImpl;
 import com.movie.test.report.bookmark.repository.BookmarkRepository;
 import com.movie.test.report.bookmark.service.BookmarkService;
+import com.movie.test.report.hashtag.repository.TagRepository;
 import com.movie.test.report.hashtag.service.TagService;
+import com.movie.test.report.like.repository.LikeRepository;
 import com.movie.test.report.like.service.LikeService;
+import com.movie.test.report.reply.repository.ReplyRepository;
 import com.movie.test.report.reply.service.ReplyService;
+import com.movie.test.report.report.repository.ReportRepository;
 import com.movie.test.report.report.service.ReportService;
+import com.movie.test.report.view.repository.ViewRepository;
 import com.movie.test.report.view.service.ViewService;
 import com.movie.test.user.block.repository.BlockRepository;
 import com.movie.test.user.follow.repository.FollowRepository;
@@ -47,11 +52,16 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ComplaintRepository complaintRepository;
     private final InquiryRepository inquiryRepository;
-    private final NotificationRepository notificationRepository;
     private final BlockRepository blockRepository;
     private final FollowRepository followRepository;
     private final TokenRepository tokenRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final ReportRepository reportService;
+    private final ReplyRepository replyService;
+    private final TagRepository tagService;
+    private final ComplaintRepository complaintService;
+    private final LikeRepository likeService;
+    private final ViewRepository viewService;
 
 
     @Override
@@ -180,7 +190,10 @@ public class UserServiceImpl implements UserService {
             tokenRepository.deleteByUserId(userId);
             bookmarkRepository.deleteByUserId(userId);
 
-            userRepository.deleteById(userId);
+            reportService.deleteByUserId(userId);
+            replyService.deleteByUserId(userId);
+            complaintService.deleteByUserId(userId);
+            likeService.deleteByUserId(userId);
 
         } else {
             throw new RuntimeException("잘못된 접근입니다.");

@@ -16,4 +16,6 @@ public interface ReplyRepository extends JpaRepository<ReplyEntity, String> , Re
     void deleteByReportId(String reportId);
 
     void deleteByUpReplyId(String upReplyId);
+
+    void deleteByUserId(String userId);
 }

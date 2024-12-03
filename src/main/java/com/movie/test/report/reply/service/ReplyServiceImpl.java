@@ -50,13 +50,13 @@ public class ReplyServiceImpl implements ReplyService {
         List<ReplyDto> replyDtos = new ArrayList<>();
 
         List<ReplyEntity> replies = replyRepository.findFirstDepthReply(reportId, userId);
-        replies.forEach((reply)->{
-            ReplyDto dto = ReplyDto.toDTO(reply);
-            dto.setSubReply(getSubReplies(dto.getReplyId(), userId));
-            dto.setNickname(userRepository.findById(dto.getUserId()).get().getNickname());
+            replies.forEach((reply) -> {
+                ReplyDto dto = ReplyDto.toDTO(reply);
+                dto.setSubReply(getSubReplies(dto.getReplyId(), userId));
+                dto.setNickname(userRepository.findById(dto.getUserId()).get().getNickname());
 
-            replyDtos.add(dto);
-        });
+                replyDtos.add(dto);
+            });
 
         return replyDtos;
     }
