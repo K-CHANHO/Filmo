@@ -54,6 +54,7 @@ public class UserController {
             returnData.addProperty("msg", "이미 가입된 이메일입니다. 가입한 플랫폼으로 로그인해주세요.");
             returnData.addProperty("email", signupUser.getEmail());
             returnData.addProperty("type", signupUser.getType());
+            returnData.addProperty("dup", "Y");
             return new ResponseEntity(returnData, HttpStatus.OK);
         }
 

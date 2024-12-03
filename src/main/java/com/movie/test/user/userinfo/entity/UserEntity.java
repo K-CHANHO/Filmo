@@ -25,13 +25,13 @@ public class UserEntity extends BaseTimeEntity {
     @Column
     private String userId; // 자체 uid
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email; // 소셜 uid
 
     @Column(nullable = false)
     private String type; // 소셜 type
 
-    @Column(unique = true)
+    @Column
     private String nickname; // 닉네임
 
     @Column
