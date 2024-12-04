@@ -1,5 +1,7 @@
 package com.movie.test.report.like.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.movie.test.report.like.dto.LikeCheckDto;
 import com.movie.test.report.like.dto.LikeDto;
 import com.movie.test.report.like.dto.LikeSaveDto;
@@ -37,7 +39,11 @@ public class LikeController {
     @DeleteMapping("/cancel")
     public ResponseEntity cancelLike(String likeId, @AuthenticationPrincipal CustomUser user) {
         likeService.cancelLike(likeId, user.getUserId());
-        return new ResponseEntity(likeId, HttpStatus.OK);
+
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("likeId", likeId);
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     @Operation(summary = "좋아요 확인", description = "감상문이나 댓글을 좋아요 했는지 확인합니다.")
@@ -66,6 +72,10 @@ public class LikeController {
     @GetMapping("/count")
     public ResponseEntity countLike(String targetId){
         Long countLike = likeService.countLike(targetId);
-        return new ResponseEntity(countLike, HttpStatus.OK);
+
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("countLike", countLike);
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 }
