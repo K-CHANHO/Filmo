@@ -1,5 +1,6 @@
 package com.movie.test.report;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.movie.test.report.bookmark.service.BookmarkService;
 import com.movie.test.complaint.service.ComplaintService;
 import com.movie.test.report.hashtag.service.TagService;
@@ -87,7 +88,13 @@ public class ReportCompactServiceImpl implements ReportCompactService{
 
         log.error("userId: {}", reportDTO.getUserId());
         // 닉네임
-        String nickname = userService.getUserInfo(reportDTO.getUserId()).getNickname();
+        String nickname = null;
+        try {
+            nickname = userService.getUserInfo(reportDTO.getUserId()).getNickname();
+            reportDTO.setNickname(nickname);
+        } catch (NotFoundException e){
+        }
+
 
         // 좋아요수
         Long likeCount = likeService.countLike(reportId);
@@ -129,8 +136,14 @@ public class ReportCompactServiceImpl implements ReportCompactService{
         // 1. 감상문 조회
         ReportDto reportDTO = reportService.getReport(reportId);
 
-        String nickname = userService.getUserInfo(reportDTO.getUserId()).getNickname();
-        reportDTO.setNickname(nickname);
+        try {
+            String nickname = userService.getUserInfo(reportDTO.getUserId()).getNickname();
+            reportDTO.setNickname(nickname);
+        } catch (NotFoundException e){
+            reportDTO.setUserId(null);
+            reportDTO.setNickname(null);
+        }
+
 
         // 2. 신고횟수 조회
         reportDTO.setComplaintCount(complaintService.getComplaintCount(reportId));

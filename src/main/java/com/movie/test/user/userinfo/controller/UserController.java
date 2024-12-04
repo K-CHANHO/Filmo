@@ -162,7 +162,7 @@ public class UserController {
     public ResponseEntity deleteUser(@RequestBody UserDeleteDto userDeleteDto, @AuthenticationPrincipal CustomUser user){
 
         if(userDeleteDto.getUserId().equals(user.getUserId())) {
-            reportCompactService.deleteReportByUserId(user.getUserId());
+            //reportCompactService.deleteReportByUserId(user.getUserId());
             userService.deleteUser(userDeleteDto, user);
 
             JsonObject returnData = new JsonObject();

@@ -190,10 +190,12 @@ public class UserServiceImpl implements UserService {
             tokenRepository.deleteByUserId(userId);
             bookmarkRepository.deleteByUserId(userId);
 
-            reportService.deleteByUserId(userId);
+            //reportService.deleteByUserId(userId);
             replyService.deleteByUserId(userId);
             complaintService.deleteByUserId(userId);
             likeService.deleteByUserId(userId);
+
+            userRepository.deleteById(userId);
 
         } else {
             throw new RuntimeException("잘못된 접근입니다.");
