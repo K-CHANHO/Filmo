@@ -161,15 +161,17 @@ public class UserController {
     @DeleteMapping("/delete")
     public ResponseEntity deleteUser(@RequestBody UserDeleteDto userDeleteDto, @AuthenticationPrincipal CustomUser user){
 
+        JsonObject returnData = new JsonObject();
         if(userDeleteDto.getUserId().equals(user.getUserId())) {
             //reportCompactService.deleteReportByUserId(user.getUserId());
             userService.deleteUser(userDeleteDto, user);
 
-            JsonObject returnData = new JsonObject();
-            returnData.addProperty("result", "SUCCESS");
+            returnData.addProperty("success", true);
             return new ResponseEntity(returnData, HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+
+            returnData.addProperty("success", false);
+            return new ResponseEntity(returnData, HttpStatus.FORBIDDEN);
         }
 
     }
