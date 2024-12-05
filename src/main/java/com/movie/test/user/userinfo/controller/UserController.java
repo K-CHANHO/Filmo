@@ -55,7 +55,7 @@ public class UserController {
             returnData.addProperty("email", signupUser.getEmail());
             returnData.addProperty("type", signupUser.getType());
             returnData.addProperty("dup", "Y");
-            return new ResponseEntity(returnData, HttpStatus.OK);
+            return new ResponseEntity(returnData, HttpStatus.ACCEPTED);
         }
 
         return new ResponseEntity(signupUser, HttpStatus.OK);
