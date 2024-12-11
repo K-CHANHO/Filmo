@@ -56,7 +56,7 @@ public class UserController {
             returnData.addProperty("email", signupUser.getEmail());
             returnData.addProperty("type", signupUser.getType());
             returnData.addProperty("dup", "Y");
-            return new ResponseEntity(returnData, HttpStatus.OK);
+            return new ResponseEntity(returnData, HttpStatus.ACCEPTED);
         }
 
         return new ResponseEntity(signupUser, HttpStatus.OK);
@@ -165,16 +165,18 @@ public class UserController {
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity deleteUser(@PathVariable String userId, @AuthenticationPrincipal CustomUser user){
 
+        JsonObject returnData = new JsonObject();
         if(userId.equals(user.getUserId())) {
             //reportCompactService.deleteReportByUserId(user.getUserId());
             UserDeleteDto userDeleteDto = UserDeleteDto.builder().userId(userId).build();
             userService.deleteUser(userDeleteDto, user);
 
-            JsonObject returnData = new JsonObject();
-            returnData.addProperty("result", "SUCCESS");
+            returnData.addProperty("success", true);
             return new ResponseEntity(returnData, HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+
+            returnData.addProperty("success", false);
+            return new ResponseEntity(returnData, HttpStatus.FORBIDDEN);
         }
 
     }
