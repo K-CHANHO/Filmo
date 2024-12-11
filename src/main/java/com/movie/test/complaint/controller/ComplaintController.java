@@ -1,5 +1,6 @@
 package com.movie.test.complaint.controller;
 
+import com.google.gson.JsonObject;
 import com.movie.test.complaint.dto.ComplaintDto;
 import com.movie.test.complaint.dto.ComplaintSaveDto;
 import com.movie.test.complaint.service.ComplaintService;
@@ -34,7 +35,10 @@ public class ComplaintController {
         complaintSaveDto.setUserId(user.getUserId());
         ComplaintDto savedComplaintDto = complaintService.saveComplaint(complaintSaveDto);
 
-        return new ResponseEntity(savedComplaintDto.getComplaintId(), HttpStatus.OK);
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("complaintId", savedComplaintDto.getComplaintId());
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 신고 취소", description = "감상문 신고를 취소합니다. => 신고는 취소 불가", deprecated = true)
