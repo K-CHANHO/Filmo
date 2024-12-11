@@ -64,10 +64,9 @@ public class BlockController {
     })
     @ApiResponse(responseCode = "200", description = "팔로잉/차단 목록 리턴")
     @GetMapping("/list")
-    public ResponseEntity getBlockList(FollowListSearchDTO blockListSearchDTO, @Parameter(hidden = true) Pageable pageable, @AuthenticationPrincipal CustomUser user){
+    public ResponseEntity getBlockList(FollowListSearchDTO blockListSearchDTO, @Parameter(hidden = true) Pageable pageable){
 
         // Slice로 구현 : List를 먼저 구하고 그 안에서 Slice로 자르기.
-        blockListSearchDTO.setUserId(user.getUserId());
         Slice<UserDto> blockUserInfo = blockService.getBlockList(blockListSearchDTO, pageable);
 
         Map<String, Object> resultData = new HashMap<>();
