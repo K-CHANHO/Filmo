@@ -11,6 +11,7 @@ import com.movie.test.user.userinfo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -158,11 +159,15 @@ public class UserController {
      * 회원탈퇴
      */
     @Operation(summary = "회원탈퇴", description = "회원탈퇴 및 모든 데이터 삭제")
-    @DeleteMapping("/delete")
-    public ResponseEntity deleteUser(@RequestBody UserDeleteDto userDeleteDto, @AuthenticationPrincipal CustomUser user){
+    @Parameters({
+            @Parameter(name = "userId", description = "탈퇴할 유저의 id", required = true, in = ParameterIn.PATH)
+    })
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity deleteUser(@PathVariable String userId, @AuthenticationPrincipal CustomUser user){
 
-        if(userDeleteDto.getUserId().equals(user.getUserId())) {
+        if(userId.equals(user.getUserId())) {
             //reportCompactService.deleteReportByUserId(user.getUserId());
+            UserDeleteDto userDeleteDto = UserDeleteDto.builder().userId(userId).build();
             userService.deleteUser(userDeleteDto, user);
 
             JsonObject returnData = new JsonObject();
