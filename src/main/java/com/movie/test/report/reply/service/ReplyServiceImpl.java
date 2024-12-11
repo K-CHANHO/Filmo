@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -65,7 +66,12 @@ public class ReplyServiceImpl implements ReplyService {
     public List<ReplyDto> getSubReplies(String replyId, String userId) {
         List<ReplyDto> replyDtos = new ArrayList<>();
 
-        List<ReplyEntity> replies = replyRepository.findByUpReplyIdOrderByCreateDate(replyId);
+//        List<ReplyEntity> replies = replyRepository.findByUpReplyIdOrderByCreateDate(replyId);
+        HashMap map = new HashMap<>();
+        map.put("upReplyId", replyId);
+        map.put("userId", userId);
+        List<ReplyEntity> replies = replyRepository.findSubReplies(map);
+
         replies.forEach((reply)->{
             ReplyDto dto = ReplyDto.toDTO(reply);
             replyDtos.add(dto);
