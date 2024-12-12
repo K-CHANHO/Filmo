@@ -26,7 +26,7 @@ public class ReportEntity extends BaseTimeEntity {
     @Column
     private String title; // 감상문 제목
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     @Lob
     private String content; // 감상문 내용
 
