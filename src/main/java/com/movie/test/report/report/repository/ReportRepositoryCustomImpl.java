@@ -1,5 +1,6 @@
 package com.movie.test.report.report.repository;
 
+import com.movie.test.complaint.entity.QComplaintEntity;
 import com.movie.test.report.report.dto.ReportSearchDTO;
 import com.movie.test.report.report.entity.QReportEntity;
 import com.movie.test.user.block.entity.QBlockEntity;
@@ -23,6 +24,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
 
     private QReportEntity report = QReportEntity.reportEntity;
     private QBlockEntity block = QBlockEntity.blockEntity;
+    private QComplaintEntity complaint = QComplaintEntity.complaintEntity;
 
     @Override
     public Slice<String> getReportListId(ReportSearchDTO reportSearchDTO, Pageable pageable) {
@@ -35,12 +37,22 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom{
                 )
                 .fetch();
 
+        // 신고한 게시물 ID 구하기
+        List<String> complaintReportId = jpaQueryFactory.select(complaint.targetId)
+                .from(complaint)
+                .where(
+                        complaint.userId.eq(reportSearchDTO.getUserId()),
+                        complaint.type.eq("report")
+                )
+                .fetch();
+
         List<String> reportIdList = jpaQueryFactory.select(report.reportId)
                 .from(report)
                 .where(
                         //report.reportId.lt(reportSearchDTO.getLastReportId()),
                         searchCondition(reportSearchDTO),
-                        report.userId.notIn(blockUserId)
+                        report.userId.notIn(blockUserId),
+                        report.reportId.notIn(complaintReportId)
                 )
                 .orderBy(report.createDate.desc())
                 .limit(pageable.getPageSize() + 1)

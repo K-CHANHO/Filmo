@@ -1,5 +1,6 @@
 package com.movie.test.report.reply.controller;
 
+import com.google.gson.JsonObject;
 import com.movie.test.report.reply.dto.ReplyDto;
 import com.movie.test.report.reply.dto.ReplySaveDto;
 import com.movie.test.report.reply.dto.ReplyUpdateDto;
@@ -65,7 +66,12 @@ public class ReplyController {
     @Parameter(name = "replyId", description = "삭제할 댓글 id", required = true)
     @DeleteMapping("/deleteReply/{replyId}")
     public ResponseEntity deleteReply(@PathVariable String replyId) {
+
         replyService.deleteReply(replyId);
-        return new ResponseEntity("댓글 삭제 성공", HttpStatus.OK);
+
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("success", true);
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 }
