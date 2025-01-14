@@ -79,7 +79,10 @@ public class ReportController {
 
         String reportId = reportCompactService.updateReport(reportUpdateDto);
 
-        return new ResponseEntity(reportId, HttpStatus.OK);
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("value", reportId);
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 삭제", description = "감상문을 삭제하고 관련 데이터(댓글, 태그, 신고내역)도 삭제합니다.")
@@ -89,7 +92,10 @@ public class ReportController {
 
         reportCompactService.deleteReport(reportId);
 
-        return new ResponseEntity(reportId, HttpStatus.OK);
+        JsonObject returnData = new JsonObject();
+        returnData.addProperty("value", reportId);
+
+        return new ResponseEntity(returnData, HttpStatus.OK);
     }
 
     @Operation(summary = "감상문 검색", description = "감상문을 검색합니다. 검색어가 없을 시 전체 감상문을 조회합니다. 다른 사용자가 작성한 감상문을 조회하려면 targetId 값을 추가해주세요.")
